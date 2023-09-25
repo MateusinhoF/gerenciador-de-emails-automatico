@@ -1,16 +1,19 @@
 #!/bin/bash
 
-if which php > /dev/null; then
+if ! command -v php &> /dev/null; then
+    echo "instalando php"
     sudo apt install php
 fi
 
-if which composer > /dev/null; then
+if ! command -v composer &> /dev/null; then
+    echo "instalando composer"
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     php composer-setup.php
     sudo mv composer.phar /usr/local/bin/composer
 fi
 
-if which npm > /dev/null; then
+if ! command -v npm &> /dev/null; then
+    echo "instalando npm"
     sudo apt install npm
 fi
 
