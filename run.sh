@@ -4,6 +4,37 @@ if ! command -v apache2 &> /dev/null; then
     echo "instalando lamp"
     sudo apt-get install lamp-server^
     #sudo chmod -R 777 /var/www
+
+    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/cli/php.ini
+    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/apache2/php.ini
+
+    sed -i "s/;extension=pdo_mysql.*/extension=pdo_mysql/" /etc/php/8.1/cli/php.ini
+    sed -i "s/;extension=pdo_mysql.*/extension=pdo_mysql/" /etc/php/8.1/apache2/php.ini
+
+    sed -i "s/;extension=fileinfo.*/extension=fileinfo/" /etc/php/8.1/cli/php.ini
+    sed -i "s/;extension=fileinfo.*/extension=fileinfo/" /etc/php/8.1/apache2/php.ini
+
+    sed -i "s/;extension=mbstring.*/extension=mbstring/" /etc/php/8.1/cli/php.ini
+    sed -i "s/;extension=mbstring.*/extension=mbstring/" /etc/php/8.1/apache2/php.ini
+
+    sed -i "s/;extension=openssl.*/extension=openssl/" /etc/php/8.1/cli/php.ini
+    sed -i "s/;extension=openssl.*/extension=openssl/" /etc/php/8.1/apache2/php.ini
+#
+#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/cli/php.ini
+#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/apache2/php.ini
+#
+#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/cli/php.ini
+#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/apache2/php.ini
+#
+#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/cli/php.ini
+#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/apache2/php.ini
+#
+#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/cli/php.ini
+#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/apache2/php.ini
+#
+#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/cli/php.ini
+#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/apache2/php.ini
+
 fi
 
 if ! command -v composer &> /dev/null; then
