@@ -2,7 +2,7 @@
 
 if ! command -v apache2 &> /dev/null; then
     echo "instalando lamp"
-    sudo apt-get install lamp-serve^
+    sudo apt-get install lamp-server^
     #sudo chmod -R 777 /var/www
 fi
 
