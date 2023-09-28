@@ -3,6 +3,7 @@
 if ! command -v apache2 &> /dev/null; then
     echo "instalando lamp"
     sudo apt-get install lamp-server^
+    sudo apt-get install php-xml #php-curl php-pdo
     #sudo chmod -R 777 /var/www
 
     sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/cli/php.ini
@@ -19,21 +20,6 @@ if ! command -v apache2 &> /dev/null; then
 
     sed -i "s/;extension=openssl.*/extension=openssl/" /etc/php/8.1/cli/php.ini
     sed -i "s/;extension=openssl.*/extension=openssl/" /etc/php/8.1/apache2/php.ini
-#
-#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/cli/php.ini
-#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/apache2/php.ini
-#
-#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/cli/php.ini
-#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/apache2/php.ini
-#
-#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/cli/php.ini
-#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/apache2/php.ini
-#
-#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/cli/php.ini
-#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/apache2/php.ini
-#
-#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/cli/php.ini
-#    sed -i "s/;extension=curl.*/extension=curl/" /etc/php/8.1/apache2/php.ini
 
 fi
 
