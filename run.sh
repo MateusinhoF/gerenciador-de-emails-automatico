@@ -1,8 +1,9 @@
 #!/bin/bash
 
-if ! command -v php &> /dev/null; then
-    echo "instalando php"
-    sudo apt install php php-xml php-curl php-pdo
+if ! command -v apache2 &> /dev/null; then
+    echo "instalando lamp"
+    sudo apt-get install lamp-serve^
+    #sudo chmod -R 777 /var/www
 fi
 
 if ! command -v composer &> /dev/null; then
@@ -12,13 +13,13 @@ if ! command -v composer &> /dev/null; then
     sudo mv composer.phar /usr/local/bin/composer
 fi
 
-if ! command -v npm &> /dev/null; then
-    echo "instalando npm"
-    sudo apt install npm
-fi
+#if ! command -v npm &> /dev/null; then
+#    echo "instalando npm"
+#    sudo apt install npm
+#fi
 
 composer install
-npm install
+#npm install
 cp .env.example .env
 
 sed -i "s/DB_DATABASE=.*/DB_DATABASE=gestor-de-emails-automatico/" .env
@@ -29,12 +30,15 @@ sed -i "s/MAIL_PORT=.*/MAIL_PORT=587/" .env
 sed -i "s/MAIL_ENCRYPTION=.*/MAIL_ENCRYPTION=tls/" .env
 
 
-#talve precise
+#talvez precise
 #find * -type d -exec chmod 755 {} \;
 #find * -type f -exec chmod 644 {} \;
 #chmod 755 gestor-de-emails-automatico/
-##reescrever o arquivo env
+
+ln -s ./gestor-de-emails-automatico /var/www/gestor-de-emails-automatico
 
 php artisan key:generate
 php artisan migrate
-php artisan serve
+#php artisan serve
+
+#/etc/init.d/httpd restart
