@@ -38,20 +38,36 @@ fi
 
 composer install
 #npm install
+
+USUARIO_DB="user_laravel"
+SENHA_DB="sfgd645aerg1sb"
+
+sudo mysql -u root <<EOF
+
+USE mysql;
+CREATE USER '$USUARIO_DB'@'localhost' IDENTIFIED BY '$SENHA_DB';
+GRANT ALL PRIVILEGES ON *.* TO '$USUARIO_DB'@'localhost';
+UPDATE user SET plugin='caching_sha2_password' WHERE user='$USUARIO_DB';
+FLUSH PRIVILEGES;
+exit;
+EOF
+
+sudo systemctl restart mysql
+
 cp .env.example .env
 
 sed -i "s/DB_DATABASE=.*/DB_DATABASE=gestor-de-emails-automatico/" .env
-sed -i "s/DB_USERNAME=.*/DB_USERNAME=root/" .env
-sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=root/" .env
+sed -i "s/DB_USERNAME=.*/DB_USERNAME=$USUARIO_DB/" .env
+sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$SENHA_DB/" .env
 sed -i "s/MAIL_HOST=.*/MAIL_HOST=smtp.gmail.com/" .env
 sed -i "s/MAIL_PORT=.*/MAIL_PORT=587/" .env
 sed -i "s/MAIL_ENCRYPTION=.*/MAIL_ENCRYPTION=tls/" .env
 
 
 #talvez precise
-find * -type d -exec chmod 755 {} \;
-find * -type f -exec chmod 644 {} \;
-chmod 755 gestor-de-emails-automatico/
+#find * -type d -exec chmod 755 {} \;
+#find * -type f -exec chmod 644 {} \;
+#chmod 755 ../gestor-de-emails-automatico/
 
 sudo ln -s ../gestor-de-emails-automatico /var/www/gestor-de-emails-automatico
 
