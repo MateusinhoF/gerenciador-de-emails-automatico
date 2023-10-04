@@ -4,6 +4,7 @@ if ! command -v apache2 &> /dev/null; then
     echo "instalando lamp"
     sudo apt-get install lamp-server^
     sudo apt-get install php-xml php-curl php-pdo php-mbstring
+    sudo apt-get install zip unzip php-zip
     #sudo chmod -R 777 /var/www
 
 #    sudo sed -i "s/;extension=curl/extension=curl/" /etc/php/8.1/cli/php.ini
@@ -48,14 +49,15 @@ sed -i "s/MAIL_ENCRYPTION=.*/MAIL_ENCRYPTION=tls/" .env
 
 
 #talvez precise
-#find * -type d -exec chmod 755 {} \;
-#find * -type f -exec chmod 644 {} \;
-#chmod 755 gestor-de-emails-automatico/
+find * -type d -exec chmod 755 {} \;
+find * -type f -exec chmod 644 {} \;
+chmod 755 gestor-de-emails-automatico/
 
-ln -s ./gestor-de-emails-automatico /var/www/gestor-de-emails-automatico
+sudo ln -s ../gestor-de-emails-automatico /var/www/gestor-de-emails-automatico
 
 php artisan key:generate
-php artisan migrate
+php artisan migrate  #ta precisando rodar sudo
+
+#comando para inserir o comando no cron
 #php artisan serve
 
-#/etc/init.d/httpd restart
