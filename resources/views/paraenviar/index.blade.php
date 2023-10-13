@@ -1,11 +1,13 @@
 <x-template titulodapagina="" tituloHeader="Index Envio">
 
-    <div class="d-flex justify-content-around">
-        <x-link href="{{route('paraenviar.create')}}" texto="Cadastrar Envio"/>
+    <div class="mx-auto col-md-12 bg-secondary">
+
+    <div class="p-0 d-flex justify-content-end">
         <x-link href="{{route('logout')}}" texto="Sair"/>
     </div>
 
     <div class="d-flex justify-content-around pt-3 pb-3">
+        <x-link href="{{route('paraenviar.create')}}" texto="Cadastrar Envio"/>
         <x-link class="link-info link-offset-2 link-underline link-underline-opacity-0 link-opacity-50-hover" href="{{route('listadeemails.index')}}" texto="Ver Listas de Emails"/>
         <x-link class="link-info link-offset-2 link-underline link-underline-opacity-0 link-opacity-50-hover" href="{{route('corpoemail.index')}}" texto="Ver Corpo de Emails"/>
         <x-link class="link-info link-offset-2 link-underline link-underline-opacity-0 link-opacity-50-hover" href="{{route('nomes.index')}}" texto="Ver Nomes"/>
@@ -83,4 +85,5 @@
     </div>
 
     <x-errors/>
+    </div>
 </x-template>

@@ -49,7 +49,7 @@ CREATE USER '$USUARIO_DB'@'localhost' IDENTIFIED BY '$SENHA_DB';
 GRANT ALL PRIVILEGES ON *.* TO '$USUARIO_DB'@'localhost';
 UPDATE user SET plugin='caching_sha2_password' WHERE user='$USUARIO_DB';
 FLUSH PRIVILEGES;
-exit;
+exit
 EOF
 
 sudo systemctl restart mysql

@@ -9,25 +9,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <title>{{$titulodapagina ?? 'Gestor de Email'}}</title>
 </head>
-<body>
+<body class="bg-dark">
 <header>
-    <div class="container mt-4">
-        <div class="row align-items-center">
-            <div class="col-md-10 mx-auto col-lg-5">
-                <h1>
-                    {{$tituloHeader ?? 'Sem definição de acesso'}}
-                </h1>
-            </div>
-        </div>
+    <div class="container mt-4 mb-4 mx-auto d-flex justify-content-center align-items-center">
+        <h1 class="text-white">
+            {{$tituloHeader ?? 'Sem definição de acesso'}}
+        </h1>
     </div>
-
 </header>
 <section>
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-10 mx-auto col-lg-5">
-                {{$slot}}
-            </div>
+        <div class="row align-items-center justify-content-center">
+            {{$slot}}
         </div>
     </div>
 </section>

@@ -11,7 +11,7 @@
         name="{{$nome}}"
         id="{{$nome}}"
         value="{{$valor ?? ''}}"
-        class="form-control"
+        class="form-control color-input-background"
     >
 
 </div>

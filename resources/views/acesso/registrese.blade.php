@@ -1,18 +1,22 @@
 <x-template titulodapagina="Registre-se" tituloHeader="Criar Cadastro">
 
-    <x-link  href="{{route('login')}}" texto="Login"/>
+    <div class="mx-auto p-4 col-md-7 bg-secondary">
 
-    <form action="{{route('store')}}" method="post" class="p-4 p-md-5 border rouded-3 bg-light">
-        @csrf
+        <x-link  href="{{route('login')}}" texto="Login"/>
 
-        <x-input nome="name" texto="Nome" tipo="text"/>
+        <form action="{{route('store')}}" method="post" class="mt-3 p-4 p-md-5 bg-light form-group mb-3">
+            @csrf
 
-        <x-input nome="email" texto="E-mail" tipo="email"/>
+            <x-input nome="name" texto="Nome" tipo="text"/>
 
-        <x-input nome="password" texto="password" tipo="password"/>
+            <x-input nome="email" texto="E-mail" tipo="email"/>
 
-        <input type="submit" value="Cadastrar" class="btn btn-primary">
-    </form>
+            <x-input nome="password" texto="Senha" tipo="password"/>
 
-    <x-errors/>
+            <input type="submit" value="Cadastrar" class="btn btn-primary">
+        </form>
+
+        <x-errors/>
+
+    </div>
 </x-template>
