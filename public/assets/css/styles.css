@@ -4,3 +4,11 @@
 .color-input-background{
     background-color: #f0f1f2;
 }
+.color-link-sair{
+    border-style: solid;
+    border-color: #fa0101;
+    border-width: 2px;
+    background-color: #f9dcdc;
+
+    color: #fa0101;
+}
