@@ -4,7 +4,9 @@
 
         <x-link  href="{{route('login')}}" texto="Login"/>
 
-        <form action="{{route('store')}}" method="post" class="mt-3 p-4 p-md-5 bg-light form-group mb-3">
+        <form action="{{route('store')}}" method="post"
+              class="mt-3 p-4 p-md-5 form-group mb-3 color-forms-background"
+        >
             @csrf
 
             <x-input nome="name" texto="Nome" tipo="text"/>
