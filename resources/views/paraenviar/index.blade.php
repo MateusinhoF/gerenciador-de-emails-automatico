@@ -15,7 +15,7 @@
     </div>
 
     <div>
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover text-center">
             <thead>
             <tr>
                 <th>Titulo</th>
@@ -26,7 +26,7 @@
                 <th>Nomes</th>
                 <th>Data Inicio</th>
                 <th>Data Fim</th>
-                <th>Continuar Envio</th>
+                <th>Situação</th>
                 <th>Opções</th>
             </tr>
             </thead>
@@ -63,20 +63,14 @@
                     </td>
                     <td>
                         @if($envio->continuar_envio)
-                            <a
-                                class="btn btn-secondary"
-                                href="{{route('paraenviar.alterarenvio', ['id'=>$envio->id])}}"
-                            >Encerrar</a>
+                            <x-link-enviando href="{{route('paraenviar.alterarenvio', ['id'=>$envio->id])}}"/>
                         @else
-                            <a
-                                class="btn btn-info"
-                                href="{{route('paraenviar.alterarenvio', ['id'=>$envio->id])}}"
-                            >Retomar</a>
+                            <x-link-parado href="{{route('paraenviar.alterarenvio', ['id'=>$envio->id])}}"/>
                         @endif
                     </td>
                     <td>
-                        <x-link href="{{route('paraenviar.edit', ['id'=>$envio->id])}}" texto="Editar"/>
-                        <x-link href="{{route('paraenviar.destroy', ['id'=>$envio->id])}}" texto="Excluir"/>
+                        <x-link-editar href="{{route('paraenviar.edit', ['id'=>$envio->id])}}"/>
+                        <x-link-excluir href="{{route('paraenviar.destroy', ['id'=>$envio->id])}}"/>
                     </td>
 
                 </tr>

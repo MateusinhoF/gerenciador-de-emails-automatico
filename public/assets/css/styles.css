@@ -8,7 +8,40 @@
     border-style: solid;
     border-color: #fa0101;
     border-width: 2px;
+    border-radius: 10px;
     background-color: #f9dcdc;
-
     color: #fa0101;
+}
+.color-link-sair:hover{
+    border-color: #eb5d5c;
+    background-color: #f9e6e6;
+
+}
+.color-link-editar{
+    color: #00d80c;
+}
+.color-link-editar:hover{
+    color: #59db60;
+
+}
+.color-link-excluir{
+    color: #fa0101;
+}
+.color-link-excluir:hover{
+    color: #eb5d5c;
+
+}
+.color-link-enviando{
+    color: #00c3e6;
+    font-weight: bold;
+}
+.color-link-enviando:hover{
+    color: #52cfe6;
+}
+.color-link-parado{
+    color: #ff7100;
+    font-weight: bold;
+}
+.color-link-parado:hover{
+    color: #fcad6d;
 }
