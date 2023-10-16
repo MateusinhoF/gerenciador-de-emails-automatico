@@ -1,6 +1,6 @@
-<x-template titulodapagina="" tituloHeader="Editar Nomes">
+<x-template titulodapagina="Editar Email" tituloHeader="Editar Email">
     <div class="mx-auto col-md-12 bg-secondary">
-        
+
         <div class="d-flex justify-content-around m-3">
             <x-link href="{{route('emails.index')}}" texto="Voltar"/>
             <x-link-sair/>

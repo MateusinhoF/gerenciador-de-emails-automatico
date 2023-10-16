@@ -1,4 +1,4 @@
-<x-template titulodapagina="" tituloHeader="Emails Index">
+<x-template titulodapagina="Emails" tituloHeader="Emails">
     <div class="mx-auto col-md-12 bg-secondary">
 
         <div class="d-flex justify-content-around m-3">

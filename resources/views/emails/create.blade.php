@@ -1,4 +1,4 @@
-<x-template titulodapagina="" tituloHeader="Cadastrar Email">
+<x-template titulodapagina="Cadastrar Email" tituloHeader="Cadastrar Email">
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
             <x-link href="{{route('emails.index')}}" texto="Voltar"/>
