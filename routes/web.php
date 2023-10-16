@@ -9,6 +9,7 @@ use App\Http\Controllers\CorpoEmailController;
 use App\Http\Controllers\ListaDeEmailsController;
 use App\Http\Controllers\ParaEnviarController;
 use App\Http\Controllers\TituloListaDeEmailsController;
+use App\Http\Controllers\ConfiguracoesUsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,5 +79,12 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/titulolistadeemails/{id}/edit', [TituloListaDeEmailsController::class, 'edit'])->name('titulolistadeemails.edit');
     Route::post('/titulolistadeemails/{id}', [TituloListaDeEmailsController::class, 'update'])->name('titulolistadeemails.update');
     Route::get('/titulolistadeemails/{id}/destroy', [TituloListaDeEmailsController::class, 'destroy'])->name('titulolistadeemails.destroy');
+
+    Route::get('/configuracoesusuario', [ConfiguracoesUsuarioController::class, 'index'])->name('configuracoesusuario.index');
+    Route::get('/configuracoesusuario/create', [ConfiguracoesUsuarioController::class, 'create'])->name('configuracoesusuario.create');
+    Route::post('/configuracoesusuario', [ConfiguracoesUsuarioController::class, 'store'])->name('configuracoesusuario.store');
+    Route::get('/configuracoesusuario/{id}/edit', [ConfiguracoesUsuarioController::class, 'edit'])->name('configuracoesusuario.edit');
+    Route::post('/configuracoesusuario/{id}', [ConfiguracoesUsuarioController::class, 'update'])->name('configuracoesusuario.update');
+    Route::get('/configuracoesusuario/{id}/destroy', [ConfiguracoesUsuarioController::class, 'destroy'])->name('configuracoesusuario.destroy');
 
 });

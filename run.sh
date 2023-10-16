@@ -69,7 +69,8 @@ sed -i "s/MAIL_ENCRYPTION=.*/MAIL_ENCRYPTION=tls/" .env
 #find * -type f -exec chmod 644 {} \;
 #chmod 755 ../gestor-de-emails-automatico/
 
-sudo ln -s ../gestor-de-emails-automatico /var/www/gestor-de-emails-automatico
+#isso nao funciona direito pelo visto vou ter que mover para a pasta do apache
+#sudo ln -s ../gestor-de-emails-automatico /var/www/gestor-de-emails-automatico
 
 php artisan key:generate
 php artisan migrate  #ta precisando rodar sudo
