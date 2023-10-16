@@ -80,14 +80,3 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/titulolistadeemails/{id}/destroy', [TituloListaDeEmailsController::class, 'destroy'])->name('titulolistadeemails.destroy');
 
 });
-
-//rota de criacao de usuario
-//rota de configuracao de usuario
-//rota de criacao de textos
-//rota de criacao de nomes
-//rota de criacao de texto de email
-//rota de assuntos (definir como queue para diferenciar os trabalhos)
-//rota de emails envonvidos
-//rota de envio para rabbitmq
-//rota de envio de email
-//rota de cancelamento de envio de emails
