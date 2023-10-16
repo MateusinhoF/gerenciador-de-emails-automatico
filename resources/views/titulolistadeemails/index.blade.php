@@ -1,31 +1,33 @@
-<x-template titulodapagina="" tituloHeader="Emails Titulo Lista de Emails">
+<x-template titulodapagina="Titulo Lista de Emails" tituloHeader="Titulo Lista de Emails">
 
-    <div class="d-flex justify-content-around">
-        <x-link href="{{route('titulolistadeemails.create')}}" texto="Cadastrar Titulo"/>
-        <x-link href="{{route('paraenviar.index')}}" texto="Voltar"/>
-        <x-link href="{{route('logout')}}" texto="Sair"/>
-    </div>
+    <div class="mx-auto col-md-12 bg-secondary">
+        <div class="d-flex justify-content-around m-3">
+            <x-link href="{{route('titulolistadeemails.create')}}" texto="Cadastrar Titulo"/>
+            <x-link href="{{route('paraenviar.index')}}" texto="Voltar"/>
+            <x-link-sair/>
+        </div>
 
-    <div>
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <th>Titulo</th>
-                <th>Opções</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach ($titulos as $titulo)
+        <div>
+            <table class="table table-striped table-hover">
+                <thead>
                 <tr>
-                    <td>{{$titulo->titulo}}</td>
-                    <td>
-                        <x-link href="{{route('titulolistadeemails.edit', ['id'=>$titulo->id])}}" texto="Editar"/>
-                        <x-link href="{{route('titulolistadeemails.destroy', ['id'=>$titulo->id])}}" texto="Excluir"/>
-                    </td>
+                    <th>Titulo</th>
+                    <th>Opções</th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach ($titulos as $titulo)
+                    <tr>
+                        <td>{{$titulo->titulo}}</td>
+                        <td>
+                            <x-link-editar href="{{route('titulolistadeemails.edit', ['id'=>$titulo->id])}}"/>
+                            <x-link-excluir href="{{route('titulolistadeemails.destroy', ['id'=>$titulo->id])}}"/>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+        <x-errors/>
     </div>
-    <x-errors/>
 </x-template>
