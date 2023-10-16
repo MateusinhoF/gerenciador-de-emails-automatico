@@ -7,7 +7,7 @@
             <x-link-sair/>
         </div>
 
-        <form action="{{route('paraenviar.store')}}" method="post" class="p-4 color-forms-background">
+        <form action="{{route('paraenviar.store')}}" method="post" class="m-3 p-4 color-forms-background">
 
             @csrf
             <x-input nome="titulo" texto="Titulo" tipo="text"/>
