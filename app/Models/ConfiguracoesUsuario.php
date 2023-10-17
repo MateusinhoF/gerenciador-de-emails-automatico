@@ -14,7 +14,7 @@ class ConfiguracoesUsuario extends Model
     protected $fillable = [
         'user_id',
         'email',
-        'senha'
+        'senha_email'
     ];
 
     public static function Equals(ConfiguracoesUsuario $configuracoesUsuario1, ConfiguracoesUsuario $configuracoesUsuario2)

@@ -42,4 +42,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public static function Equals(User $user1, User $user2)
+    {
+        $isEquals = true;
+
+        if ($user1->email != $user2->email) {
+            $isEquals = false;
+        }
+
+        return $isEquals;
+    }
 }

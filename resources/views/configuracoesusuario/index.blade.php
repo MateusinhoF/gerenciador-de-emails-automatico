@@ -3,11 +3,11 @@
 
         <div class="d-flex justify-content-around m-3">
             @if(!isset($configuracoes[0]))
-                <x-link href="{{route('configuracoesusuario.create')}}" texto="Cadastrar Emails"/>
+                <x-link href="{{route('configuracoesusuario.create')}}" texto="Cadastrar Email de Envio"/>
             @else
-                <x-link href="{{route('configuracoesusuario.edit', ['id'=>$configuracoes[0]->id])}}" texto="Editar Emails"/>
+                <x-link href="{{route('configuracoesusuario.edit', ['id'=>$configuracoes[0]->id])}}" texto="Editar Email de Envio"/>
             @endif
-            <x-link href="{{route('configuracoesusuario.index')}}" texto="Voltar"/>
+            <x-link href="{{route('paraenviar.index')}}" texto="Voltar"/>
             <x-link-sair/>
         </div>
 

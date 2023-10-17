@@ -6,12 +6,13 @@ use App\Models\ConfiguracoesUsuario;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class ConfiguracoesUsuarioController extends Controller
 {
     public function index(){
-        $configuracoes = DB::table('configuracoes_usuario')->select('id','email')->get();
+        $configuracoes = DB::table('configuracoes_usuario')->where('user_id','=',Auth::user()->getAuthIdentifier())->select('id','email')->get();
         return view('configuracoesusuario/index', ['configuracoes'=>$configuracoes]);
     }
 
@@ -25,13 +26,13 @@ class ConfiguracoesUsuarioController extends Controller
             'senha'=>'required'
         ]);
 
-        //encriptar a senha
-        $senha = $request->senha;
+        $senha = $request->senha.'578g';
+        $senha = Crypt::encrypt($senha);
 
         $configuracao = [
-            'users_id' => 'id atual',
+            'user_id' => Auth::user()->getAuthIdentifier(),
             'email' => $request->email,
-            'senha' => $senha
+            'senha_email' => $senha
         ];
 
         try{
@@ -46,11 +47,15 @@ class ConfiguracoesUsuarioController extends Controller
         try{
             $configuracoes = ConfiguracoesUsuario::find($id);
             $user = User::find($configuracoes->user_id);
+
+            if($user->id != Auth::user()->getAuthIdentifier()){
+                return redirect(route('configuracoesusuario.index'))->withErrors(['errors'=>'Usuario logado divergente com o cadastrado']);
+            }
         }catch(Exception $e){
             return redirect(route('configuracoesusuario.index'))->withErrors(['errors'=>'Erro ao encontrar configurações: '.$e->getMessage()]);
         }
 
-        return view('emails/update',['configuracoes'=>$configuracoes, 'user'=>$user]);
+        return view('configuracoesusuario/update',['configuracoes'=>$configuracoes, 'user'=>$user]);
     }
 
     public function update(Request $request, string $id){
@@ -79,7 +84,14 @@ class ConfiguracoesUsuarioController extends Controller
         if(!User::Equals($usuario,$novousuario)){
             try{
                 $usuario->email = $novousuario->email;
-                $usuario->senha = $novousuario->senha;
+                $usuario->password = $novousuario->senha;
+                $usuario->save();
+            }catch (Exception $e){
+                return redirect(route('configuracoesusuario.edit'))->withErrors(['errors'=>'Erro ao salvar nova configuração: '.$e->getMessage()]);
+            }
+        }elseif (isset($request->senha)){
+            try{
+                $usuario->password = $novousuario->senha;
                 $usuario->save();
             }catch (Exception $e){
                 return redirect(route('configuracoesusuario.edit'))->withErrors(['errors'=>'Erro ao salvar nova configuração: '.$e->getMessage()]);
@@ -89,13 +101,21 @@ class ConfiguracoesUsuarioController extends Controller
         $novoconfiguracao->email = $request->emailenvio;
 
         if (isset($request->senhaenvio)){
-            $novoconfiguracao->senha = $request->senhaenvio;
+            $senha = $request->senhaenvio.'578g';
+            $novoconfiguracao->senha = Crypt::encrypt($senha);
         }
 
         if(!ConfiguracoesUsuario::Equals($configuracoes,$novoconfiguracao)){
             try{
                 $configuracoes->email = $novoconfiguracao->email;
-                $configuracoes->senha = $novoconfiguracao->senha;
+                $configuracoes->senha_email = $novoconfiguracao->senha;
+                $configuracoes->save();
+            }catch (Exception $e){
+                return redirect(route('configuracoesusuario.edit'))->withErrors(['errors'=>'Erro ao salvar nova configuração: '.$e->getMessage()]);
+            }
+        }elseif (isset($request->senhaenvio)){
+            try{
+                $configuracoes->senha_email = $novoconfiguracao->senha;
                 $configuracoes->save();
             }catch (Exception $e){
                 return redirect(route('configuracoesusuario.edit'))->withErrors(['errors'=>'Erro ao salvar nova configuração: '.$e->getMessage()]);

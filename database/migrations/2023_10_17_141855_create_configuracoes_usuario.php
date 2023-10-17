@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->references('id')->on('users');
             $table->string('email');
-            $table->string('senha_email');
+            $table->string('senha_email',255);
             $table->timestamps();
         });
     }
