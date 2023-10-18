@@ -6,7 +6,7 @@
             <x-link href="{{route('listadeemails.index')}}" texto="Ver Listas de Emails"/>
             <x-link href="{{route('corpoemail.index')}}" texto="Ver Corpo de Emails"/>
             <x-link href="{{route('nomes.index')}}" texto="Ver Nomes"/>
-            <x-link href="{{route('configuracoesusuario.index')}}" texto="Configurações"/>
+            <x-link href="{{route('configuracoesusuario.edit')}}" texto="Configurações"/>
             <x-link-sair/>
         </div>
 

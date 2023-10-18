@@ -80,11 +80,7 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/titulolistadeemails/{id}', [TituloListaDeEmailsController::class, 'update'])->name('titulolistadeemails.update');
     Route::get('/titulolistadeemails/{id}/destroy', [TituloListaDeEmailsController::class, 'destroy'])->name('titulolistadeemails.destroy');
 
-    Route::get('/configuracoesusuario', [ConfiguracoesUsuarioController::class, 'index'])->name('configuracoesusuario.index');
-    Route::get('/configuracoesusuario/create', [ConfiguracoesUsuarioController::class, 'create'])->name('configuracoesusuario.create');
-    Route::post('/configuracoesusuario', [ConfiguracoesUsuarioController::class, 'store'])->name('configuracoesusuario.store');
-    Route::get('/configuracoesusuario/{id}/edit', [ConfiguracoesUsuarioController::class, 'edit'])->name('configuracoesusuario.edit');
+    Route::get('/configuracoesusuario/edit', [ConfiguracoesUsuarioController::class, 'edit'])->name('configuracoesusuario.edit');
     Route::post('/configuracoesusuario/{id}', [ConfiguracoesUsuarioController::class, 'update'])->name('configuracoesusuario.update');
-    Route::get('/configuracoesusuario/{id}/destroy', [ConfiguracoesUsuarioController::class, 'destroy'])->name('configuracoesusuario.destroy');
 
 });
