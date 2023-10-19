@@ -66,16 +66,16 @@ sed -i "s/MAIL_FROM_NAME=.*/MAIL_FROM_NAME=$NOMEENVIO/" .env
 
 
 #talvez precise
-#find * -type d -exec chmod 755 {} \;
-#find * -type f -exec chmod 644 {} \;
-#chmod 755 ../gestor-de-emails-automatico/
+#sudo find . -type d -exec chmod 755 {} \;
+#sudo find . -type f -exec chmod 644 {} \;
+#sudo chmod 755 ../gestor-de-emails-automatico/
 
 
 php artisan key:generate
 php artisan migrate  #ta precisando rodar sudo
 
-mv /var/www/html /var/www/html_bck
-ln -s public /var/www/html
+sudo mv /var/www/html /var/www/html_bck
+sudo ln -s public /var/www/html
 
 #comando para inserir o comando no cron
 
