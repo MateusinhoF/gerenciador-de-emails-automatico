@@ -12,6 +12,10 @@ if ! command -v apache2 &> /dev/null; then
 
 fi
 
+#sudo mv ../gestor-de-emails-automatico /var/www/
+#cd /var/www/gestor-de-emails-automatico
+
+
 if ! command -v composer &> /dev/null; then
     echo "instalando composer"
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -66,12 +70,12 @@ sed -i "s/MAIL_FROM_NAME=.*/MAIL_FROM_NAME=$NOMEENVIO/" .env
 #find * -type f -exec chmod 644 {} \;
 #chmod 755 ../gestor-de-emails-automatico/
 
-#isso nao funciona direito pelo visto vou ter que mover para a pasta do apache
-#sudo ln -s ../gestor-de-emails-automatico /var/www/gestor-de-emails-automatico
-sudo mv ../gestor-de-emails-automatico /var/www/
 
 php artisan key:generate
 php artisan migrate  #ta precisando rodar sudo
+
+mv /var/www/html /var/www/html_bck
+ln -s public /var/www/html
 
 #comando para inserir o comando no cron
 
