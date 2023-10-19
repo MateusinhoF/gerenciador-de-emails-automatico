@@ -45,4 +45,6 @@
 .color-link-parado:hover{
     color: #fcad6d;
 }
-
+.font-size-small{
+    font-size: 14px;
+}

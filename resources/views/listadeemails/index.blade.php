@@ -1,12 +1,17 @@
 <x-template titulodapagina="Lista de Emails" tituloHeader="Lista de Emails">
     <div class="mx-auto col-md-12 bg-secondary">
 
-        <div class="d-flex justify-content-around m-3">
-            <x-link href="{{route('listadeemails.create')}}" texto="Cadastrar Lista"/>
-            <x-link href="{{route('titulolistadeemails.create')}}" texto="Cadastrar Titulo"/>
-            <x-link href="{{route('emails.create')}}" texto="Cadastrar Emails"/>
-            <x-link href="{{route('paraenviar.index')}}" texto="Voltar"/>
-            <x-link-sair/>
+        <div class="m-3">
+            <div class="d-flex justify-content-around mb-3">
+                <x-link href="{{route('listadeemails.create')}}" texto="Cadastrar Lista"/>
+                <x-link href="{{route('titulolistadeemails.create')}}" texto="Cadastrar Titulo"/>
+                <x-link href="{{route('emails.create')}}" texto="Cadastrar Emails"/>
+                <x-link href="{{route('paraenviar.index')}}" texto="Voltar"/>
+                <x-link-sair/>
+            </div>
+            <div class="font-size-small">
+                <p class="m-0 p-0">*Para cadastrar uma lista de emails é necessário cadastrar os emails antes, depois cadastrar um título para a lista e após isso vincular os emails ao título.</p>
+            </div>
         </div>
 
         <div>

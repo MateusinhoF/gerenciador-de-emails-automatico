@@ -1,15 +1,20 @@
 <x-template titulodapagina="Envio" tituloHeader="Envio">
     <div class="mx-auto col-md-12 bg-secondary">
 
-        <div class="d-flex justify-content-around m-3">
-            <x-link href="{{route('paraenviar.create')}}" texto="Cadastrar Envio"/>
-            <x-link href="{{route('listadeemails.index')}}" texto="Ver Listas de Emails"/>
-            <x-link href="{{route('corpoemail.index')}}" texto="Ver Corpo de Emails"/>
-            <x-link href="{{route('nomes.index')}}" texto="Ver Nomes"/>
-            <x-link href="{{route('configuracoesusuario.edit')}}" texto="Configurações"/>
-            <x-link-sair/>
+        <div class="m-3">
+            <div class="d-flex justify-content-around mb-3">
+                <x-link href="{{route('paraenviar.create')}}" texto="Cadastrar Envio"/>
+                <x-link href="{{route('listadeemails.index')}}" texto="Ver Listas de Emails"/>
+                <x-link href="{{route('corpoemail.index')}}" texto="Ver Corpo de Emails"/>
+                <x-link href="{{route('nomes.index')}}" texto="Ver Nomes"/>
+                <x-link href="{{route('configuracoesusuario.edit')}}" texto="Configurações"/>
+                <x-link-sair/>
+            </div>
+            <div class="font-size-small">
+                <p class="m-0 p-0">*Para cadastrar um novo envio é necessário antes preencher um corpo de emaill e uma lista de email.</p>
+                <p class="m-0 p-0">*Os nomes não são obrigatórios para envio.</p>
+            </div>
         </div>
-
         <div>
             <table class="table table-striped table-hover text-center">
                 <thead>
