@@ -68,7 +68,7 @@ sed -i "s/MAIL_FROM_NAME=.*/MAIL_FROM_NAME=$NOMEENVIO/" .env
 
 #isso nao funciona direito pelo visto vou ter que mover para a pasta do apache
 #sudo ln -s ../gestor-de-emails-automatico /var/www/gestor-de-emails-automatico
-sudo cp ../gestor-de-emails-automatico /var/www/
+sudo mv ../gestor-de-emails-automatico /var/www/
 
 php artisan key:generate
 php artisan migrate  #ta precisando rodar sudo
