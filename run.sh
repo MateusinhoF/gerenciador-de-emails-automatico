@@ -12,8 +12,8 @@ if ! command -v apache2 &> /dev/null; then
 
 fi
 
-#sudo mv ../gestor-de-emails-automatico /var/www/
-#cd /var/www/gestor-de-emails-automatico
+sudo cp ../gestor-de-emails-automatico /var/www/html/gestor-de-emails-automatico/
+cd /var/www/gestor-de-emails-automatico
 
 
 if ! command -v composer &> /dev/null; then
@@ -66,9 +66,10 @@ sed -i "s/MAIL_FROM_NAME=.*/MAIL_FROM_NAME=$NOMEENVIO/" .env
 
 
 #talvez precise
-#sudo find . -type d -exec chmod 755 {} \;
-#sudo find . -type f -exec chmod 644 {} \;
-#sudo chmod 755 ../gestor-de-emails-automatico/
+sudo find . -type d -exec chmod 755 {} \;
+sudo find . -type f -exec chmod 644 {} \;
+sudo chmod 755 ../gestor-de-emails-automatico/
+sudo chown -R root:root ../gestor-de-emails-automatico/
 
 
 php artisan key:generate
@@ -77,8 +78,25 @@ php artisan migrate  #ta precisando rodar sudo
 sudo mv /var/www/html /var/www/html_bck
 sudo ln -s public /var/www/html
 
-#comando para inserir o comando no cron
+###
+#sudo nano /etc/apache2/sites-available/seuprojeto.conf
+conf = "<VirtualHost *:8080>
+#    ServerAdmin acho q não precisa
+    ServerName gestor
+    DocumentRoot /var/www/html/gestor-de-emails-automatico/public
 
+    <Directory /var/www/html/gestor-de-emails-automatico/public>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog \${APACHE_LOG_DIR}/error.log
+    CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>"
+sudo echo $conf >> /etc/apache2/sites-available/gestoremails.conf
+
+#comando para inserir o comando no cron
 temp_file="/tmp/crontab.tempfile"
 cp /etc/crontab "$temp_file"
 echo "*  *   * * * root cd /var/www/gestor-de-emails-automatico && php artisan schedule:run >> dev/null 2>&1" >> "$temp_file"
