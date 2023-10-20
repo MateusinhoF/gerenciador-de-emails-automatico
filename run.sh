@@ -80,7 +80,7 @@ sudo ln -s public /var/www/html
 
 ###
 #sudo nano /etc/apache2/sites-available/seuprojeto.conf
-conf = "<VirtualHost *:8080>
+CONF = "<VirtualHost *:8080>
 #    ServerAdmin acho q não precisa
     ServerName gestor
     DocumentRoot /var/www/html/gestor-de-emails-automatico/public
@@ -94,12 +94,12 @@ conf = "<VirtualHost *:8080>
     ErrorLog \${APACHE_LOG_DIR}/error.log
     CustomLog \${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>"
-sudo echo $conf >> /etc/apache2/sites-available/gestoremails.conf
+sudo echo "$CONF" >> /etc/apache2/sites-available/gestoremails.conf
 
 #comando para inserir o comando no cron
-temp_file="/tmp/crontab.tempfile"
-cp /etc/crontab "$temp_file"
-echo "*  *   * * * root cd /var/www/gestor-de-emails-automatico && php artisan schedule:run >> dev/null 2>&1" >> "$temp_file"
+TEMPFILE="/tmp/crontab.tempfile"
+cp /etc/crontab "$TEMPFILE"
+echo "*  *   * * * root cd /var/www/gestor-de-emails-automatico && php artisan schedule:run >> dev/null 2>&1" >> "$TEMPFILE"
 sudo cp "$temp_file" /etc/crontab
-rm "$temp_file"
+rm "$TEMPFILE"
 sudo service cron restart
