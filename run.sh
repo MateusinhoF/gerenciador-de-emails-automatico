@@ -46,14 +46,14 @@ sed -i "s/DB_DATABASE=.*/DB_DATABASE=gestor-de-emails-automatico/" .env
 sed -i "s/DB_USERNAME=.*/DB_USERNAME=$USUARIO_DB/" .env
 sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$SENHA_DB/" .env
 
-echo "digite o nome que aparecera no cabeçalho do email"
+echo "digite o nome que aparecera no cabeçalho do email:"
 read NOMEENVIO
 
-echo "digite o email para envio"
+echo "digite o email para envio:"
 read EMAILENVIO
 
-echo "digite a senha do email"
-read SENHAENVIO
+echo "digite a senha do email:"
+read -s SENHAENVIO
 
 
 sed -i "s/MAIL_HOST=.*/MAIL_HOST=smtp.gmail.com/" .env
@@ -75,14 +75,13 @@ sudo chown -R root:root ../gestor-de-emails-automatico/
 php artisan key:generate
 php artisan migrate  #ta precisando rodar sudo
 
-sudo mv /var/www/html /var/www/html_bck
-sudo ln -s public /var/www/html
+#sudo mv /var/www/html /var/www/html_bck
+#sudo ln -s public /var/www/html
 
 ###
 #sudo nano /etc/apache2/sites-available/seuprojeto.conf
-CONF = "<VirtualHost *:8080>
-#    ServerAdmin acho q não precisa
-    ServerName gestor
+CONF = "<VirtualHost localhost:8080>
+    ServerName localhost
     DocumentRoot /var/www/html/gestor-de-emails-automatico/public
 
     <Directory /var/www/html/gestor-de-emails-automatico/public>
@@ -94,12 +93,16 @@ CONF = "<VirtualHost *:8080>
     ErrorLog \${APACHE_LOG_DIR}/error.log
     CustomLog \${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>"
-sudo echo "$CONF" >> /etc/apache2/sites-available/gestoremails.conf
+cd /etc/apach2/sites-available
+sudo echo "$CONF" >> gestoremails.conf
+sudo a2ensite gestoremails.conf
+sudo systemctl restart apach2
+
 
 #comando para inserir o comando no cron
-TEMPFILE="/tmp/crontab.tempfile"
-cp /etc/crontab "$TEMPFILE"
-echo "*  *   * * * root cd /var/www/gestor-de-emails-automatico && php artisan schedule:run >> dev/null 2>&1" >> "$TEMPFILE"
-sudo cp "$temp_file" /etc/crontab
-rm "$TEMPFILE"
-sudo service cron restart
+#TEMPFILE="/tmp/crontab.tempfile"
+#cp /etc/crontab "$TEMPFILE"
+#echo "*  *   * * * root cd /var/www/gestor-de-emails-automatico && php artisan schedule:run >> dev/null 2>&1" >> "$TEMPFILE"
+#sudo cp "$temp_file" /etc/crontab
+#rm "$TEMPFILE"
+#sudo service cron restart
