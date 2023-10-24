@@ -17,12 +17,7 @@ sudo cp -r ../gestor-de-emails-automatico /var/www/gestor-de-emails-automatico
 if ! command -v composer &> /dev/null; then
     echo "instalando composer"
     sudo apt-get install composer
-#    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-#    php composer-setup.php
-#    sudo mv composer.phar /usr/local/bin/composer
 fi
-
-composer install
 
 USUARIO_DB="user_laravel"
 SENHA_DB="sfgd645aerg1sb"
@@ -72,25 +67,23 @@ sudo sed -i "s/MAIL_FROM_NAME=.*/MAIL_FROM_NAME=$NOMEENVIO/" .env
 #sudo chmod 755 ../gestor-de-emails-automatico/
 #sudo chown -R root:root ../gestor-de-emails-automatico/
 
-
-php artisan key:generate
+sudo composer install
+sudo php artisan key:generate
 php artisan migrate
 
-#sudo mv /var/www/html /var/www/html_bck
-#sudo ln -s public /var/www/html
+sudo chown -R www-data:www-data /var/www/gestor-de-emails-automatico/
+sudo chmod -R 755 /var/www/gestor-de-emails-automatico/app/Console
 
-###
-#sudo nano /etc/apache2/sites-available/seuprojeto.conf
 CONF="<VirtualHost *:80>
     ServerAdmin webmaster@localhost
-    ServerName gestor-de-emails-automatico
+    ServerName gestor-de-emails-automatico.com
     DocumentRoot /var/www/gestor-de-emails-automatico/public
 
-#    <Directory /var/www/gestor-de-emails-automatico/public>
-#        Options Indexes FollowSymLinks
-#        AllowOverride All
-#        Require all granted
-#    </Directory>
+    <Directory /var/www/gestor-de-emails-automatico/public>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
 
     ErrorLog \${APACHE_LOG_DIR}/error.log
     CustomLog \${APACHE_LOG_DIR}/access.log combined
@@ -98,7 +91,7 @@ CONF="<VirtualHost *:80>
 cd /etc/apache2/sites-available/
 echo "$CONF" | sudo tee -a gestoremails.conf
 sudo a2ensite gestoremails.conf
-#sudo a2dissite 000-default.conf
+sudo a2dissite 000-default.conf
 sudo systemctl restart apache2
 
 IP_ADDRESS="127.0.0.1"
@@ -112,9 +105,6 @@ sudo systemctl restart apache2
 
 
 #comando para inserir o comando no cron
-#TEMPFILE="/tmp/crontab.tempfile"
-#cp /etc/crontab "$TEMPFILE"
-#echo "*  *   * * * root cd /var/www/gestor-de-emails-automatico && php artisan schedule:run >> dev/null 2>&1" >> "$TEMPFILE"
-#sudo cp "$temp_file" /etc/crontab
-#rm "$TEMPFILE"
-#sudo service cron restart
+echo "* *   * * *   www-data    php /var/www/gestor-de-emails-automatico/artisan schedule:run" | sudo tee -a /etc/crontab
+sudo service cron restart
+
