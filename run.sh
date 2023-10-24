@@ -92,6 +92,7 @@ cd /etc/apache2/sites-available/
 echo "$CONF" | sudo tee -a gestoremails.conf
 sudo a2ensite gestoremails.conf
 sudo a2dissite 000-default.conf
+sudo a2enmod rewrite
 sudo systemctl restart apache2
 
 IP_ADDRESS="127.0.0.1"
