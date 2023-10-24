@@ -12,7 +12,7 @@
 
             <x-input nome="titulo" texto="Titulo" tipo="text"/>
 
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center ">
                 <input type="submit" value="Cadastrar Titulo" class="btn btn-primary">
             </div>
 

@@ -3,7 +3,7 @@
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
             <x-link href="{{route('titulolistadeemails.index')}}" texto="Voltar"/>
-            <x-link href="{{route('logout')}}" texto="Sair"/>
+            <x-link-sair/>
         </div>
 
         <form action="{{route('titulolistadeemails.update',['id'=>$titulo->id])}}" method="post" class="m-3 p-4 color-forms-background">
