@@ -12,8 +12,7 @@ if ! command -v apache2 &> /dev/null; then
 
 fi
 
-sudo cp -r ../gestor-de-emails-automatico /var/www/
-cd /var/www/gestor-de-emails-automatico
+sudo cp -r ../gestor-de-emails-automatico /var/www/ && cd /var/www/gestor-de-emails-automatico
 
 
 if ! command -v composer &> /dev/null; then
@@ -73,7 +72,7 @@ sed -i "s/MAIL_FROM_NAME=.*/MAIL_FROM_NAME=$NOMEENVIO/" .env
 
 
 php artisan key:generate
-php artisan migrate  #ta precisando rodar sudo
+php artisan migrate
 
 #sudo mv /var/www/html /var/www/html_bck
 #sudo ln -s public /var/www/html
@@ -94,7 +93,7 @@ CONF="<VirtualHost *:80>
     ErrorLog \${APACHE_LOG_DIR}/error.log
     CustomLog \${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>"
-cd /etc/apach2/sites-available
+cd /etc/apache2/sites-available
 sudo echo "$CONF" >> gestoremails.conf
 sudo a2ensite gestoremails.conf
 #sudo a2dissite 000-default.conf
@@ -106,6 +105,7 @@ if ! grep -q "$HOST_NAME" /etc/hosts; then
     echo "$IP_ADDRESS   $HOST_NAME" | sudo tee -a /etc/hosts
 else
     sudo sed -i "s/.*$HOST_NAME.*/$IP_ADDRESS   $HOST_NAME/g" /etc/hosts
+fi
 sudo systemctl restart apach2
 
 
