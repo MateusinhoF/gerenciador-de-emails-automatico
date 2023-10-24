@@ -41,7 +41,7 @@ sudo systemctl restart mysql
 
 cd /var/www/gestor-de-emails-automatico
 
-cp .env.example .env
+sudo cp .env.example .env
 
 sudo sed -i "s/DB_DATABASE=.*/DB_DATABASE=gestor-de-emails-automatico/" .env
 sudo sed -i "s/DB_USERNAME=.*/DB_USERNAME=$USUARIO_DB/" .env
@@ -96,10 +96,10 @@ CONF="<VirtualHost *:80>
     CustomLog \${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>"
 cd /etc/apache2/sites-available/
-sudo echo "$CONF" >> gestoremails.conf
+echo "$CONF" | sudo tee -a gestoremails.conf
 sudo a2ensite gestoremails.conf
 #sudo a2dissite 000-default.conf
-sudo systemctl restart apach2
+sudo systemctl restart apache2
 
 IP_ADDRESS="127.0.0.1"
 HOST_NAME="gestor-de-emails-automatico"
@@ -108,7 +108,7 @@ if ! grep -q "$HOST_NAME" /etc/hosts; then
 else
     sudo sed -i "s/.*$HOST_NAME.*/$IP_ADDRESS   $HOST_NAME/g" /etc/hosts
 fi
-sudo systemctl restart apach2
+sudo systemctl restart apache2
 
 
 #comando para inserir o comando no cron
