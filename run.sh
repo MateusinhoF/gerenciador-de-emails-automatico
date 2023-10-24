@@ -12,14 +12,14 @@ if ! command -v apache2 &> /dev/null; then
 
 fi
 
-sudo cp -r ../gestor-de-emails-automatico /var/www/ && cd /var/www/gestor-de-emails-automatico
-
+sudo cp -r ../gestor-de-emails-automatico /var/www/gestor-de-emails-automatico
 
 if ! command -v composer &> /dev/null; then
     echo "instalando composer"
-    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-    php composer-setup.php
-    sudo mv composer.phar /usr/local/bin/composer
+    sudo apt-get install composer
+#    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+#    php composer-setup.php
+#    sudo mv composer.phar /usr/local/bin/composer
 fi
 
 composer install
@@ -39,11 +39,13 @@ EOF
 
 sudo systemctl restart mysql
 
+cd /var/www/gestor-de-emails-automatico
+
 cp .env.example .env
 
-sed -i "s/DB_DATABASE=.*/DB_DATABASE=gestor-de-emails-automatico/" .env
-sed -i "s/DB_USERNAME=.*/DB_USERNAME=$USUARIO_DB/" .env
-sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$SENHA_DB/" .env
+sudo sed -i "s/DB_DATABASE=.*/DB_DATABASE=gestor-de-emails-automatico/" .env
+sudo sed -i "s/DB_USERNAME=.*/DB_USERNAME=$USUARIO_DB/" .env
+sudo sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$SENHA_DB/" .env
 
 echo "digite o nome que aparecera no cabeçalho do email:"
 read NOMEENVIO
@@ -55,13 +57,13 @@ echo "digite a senha do email:"
 read -s SENHAENVIO
 
 
-sed -i "s/MAIL_HOST=.*/MAIL_HOST=smtp.gmail.com/" .env
-sed -i "s/MAIL_PORT=.*/MAIL_PORT=587/" .env
-sed -i "s/MAIL_USERNAME=.*/MAIL_USERNAME=$EMAILENVIO/" .env
-sed -i "s/MAIL_PASSWORD=.*/MAIL_PASSWORD=$SENHAENVIO/" .env
-sed -i "s/MAIL_ENCRYPTION=.*/MAIL_ENCRYPTION=tls/" .env
-sed -i "s/MAIL_FROM_ADDRESS=.*/MAIL_FROM_ADDRESS=$EMAILENVIO/" .env
-sed -i "s/MAIL_FROM_NAME=.*/MAIL_FROM_NAME=$NOMEENVIO/" .env
+sudo sed -i "s/MAIL_HOST=.*/MAIL_HOST=smtp.gmail.com/" .env
+sudo sed -i "s/MAIL_PORT=.*/MAIL_PORT=587/" .env
+sudo sed -i "s/MAIL_USERNAME=.*/MAIL_USERNAME=$EMAILENVIO/" .env
+sudo sed -i "s/MAIL_PASSWORD=.*/MAIL_PASSWORD=$SENHAENVIO/" .env
+sudo sed -i "s/MAIL_ENCRYPTION=.*/MAIL_ENCRYPTION=tls/" .env
+sudo sed -i "s/MAIL_FROM_ADDRESS=.*/MAIL_FROM_ADDRESS=$EMAILENVIO/" .env
+sudo sed -i "s/MAIL_FROM_NAME=.*/MAIL_FROM_NAME=$NOMEENVIO/" .env
 
 
 #talvez precise
@@ -93,7 +95,7 @@ CONF="<VirtualHost *:80>
     ErrorLog \${APACHE_LOG_DIR}/error.log
     CustomLog \${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>"
-cd /etc/apache2/sites-available
+cd /etc/apache2/sites-available/
 sudo echo "$CONF" >> gestoremails.conf
 sudo a2ensite gestoremails.conf
 #sudo a2dissite 000-default.conf
