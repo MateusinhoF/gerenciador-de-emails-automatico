@@ -12,7 +12,7 @@ if ! command -v apache2 &> /dev/null; then
 
 fi
 
-sudo cp ../gestor-de-emails-automatico /var/www/html/gestor-de-emails-automatico/
+sudo cp -r ../gestor-de-emails-automatico /var/www/
 cd /var/www/gestor-de-emails-automatico
 
 
@@ -66,10 +66,10 @@ sed -i "s/MAIL_FROM_NAME=.*/MAIL_FROM_NAME=$NOMEENVIO/" .env
 
 
 #talvez precise
-sudo find . -type d -exec chmod 755 {} \;
-sudo find . -type f -exec chmod 644 {} \;
-sudo chmod 755 ../gestor-de-emails-automatico/
-sudo chown -R root:root ../gestor-de-emails-automatico/
+#sudo find . -type d -exec chmod 755 {} \;
+#sudo find . -type f -exec chmod 644 {} \;
+#sudo chmod 755 ../gestor-de-emails-automatico/
+#sudo chown -R root:root ../gestor-de-emails-automatico/
 
 
 php artisan key:generate
@@ -80,15 +80,16 @@ php artisan migrate  #ta precisando rodar sudo
 
 ###
 #sudo nano /etc/apache2/sites-available/seuprojeto.conf
-CONF = "<VirtualHost localhost:8080>
-    ServerName localhost
-    DocumentRoot /var/www/html/gestor-de-emails-automatico/public
+CONF="<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName gestor-de-emails-automatico
+    DocumentRoot /var/www/gestor-de-emails-automatico/public
 
-    <Directory /var/www/html/gestor-de-emails-automatico/public>
-        Options Indexes FollowSymLinks
-        AllowOverride All
-        Require all granted
-    </Directory>
+#    <Directory /var/www/gestor-de-emails-automatico/public>
+#        Options Indexes FollowSymLinks
+#        AllowOverride All
+#        Require all granted
+#    </Directory>
 
     ErrorLog \${APACHE_LOG_DIR}/error.log
     CustomLog \${APACHE_LOG_DIR}/access.log combined
@@ -96,6 +97,15 @@ CONF = "<VirtualHost localhost:8080>
 cd /etc/apach2/sites-available
 sudo echo "$CONF" >> gestoremails.conf
 sudo a2ensite gestoremails.conf
+#sudo a2dissite 000-default.conf
+sudo systemctl restart apach2
+
+IP_ADDRESS="127.0.0.1"
+HOST_NAME="gestor-de-emails-automatico"
+if ! grep -q "$HOST_NAME" /etc/hosts; then
+    echo "$IP_ADDRESS   $HOST_NAME" | sudo tee -a /etc/hosts
+else
+    sudo sed -i "s/.*$HOST_NAME.*/$IP_ADDRESS   $HOST_NAME/g" /etc/hosts
 sudo systemctl restart apach2
 
 
