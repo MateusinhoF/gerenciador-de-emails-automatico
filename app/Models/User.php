@@ -18,9 +18,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'login',
         'email',
-        'password',
+        'senha_login',
+        'senha_email',
     ];
 
     /**
@@ -29,7 +30,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        'senha_login',
         'remember_token',
     ];
 
@@ -40,13 +41,16 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'senha_login' => 'hashed',
     ];
 
     public static function Equals(User $user1, User $user2)
     {
         $isEquals = true;
 
+        if ($user1->login != $user2->login) {
+            $isEquals = false;
+        }
         if ($user1->email != $user2->email) {
             $isEquals = false;
         }

@@ -9,11 +9,13 @@
         <form action="{{route('configuracoesusuario.update',['id'=>$user->id])}}" method="post" class="m-3 p-4 color-forms-background">
 
             @csrf
+            <x-input nome="login" texto="Login" tipo="login" valor="{{$user->login}}"/>
+
             <x-input nome="email" texto="Email" tipo="text" valor="{{$user->email}}"/>
 
-            <x-input nome="senha" texto="Senha de acesso" tipo="password"/>
+            <x-input nome="senha_login" texto="Senha de Login" tipo="password"/>
 
-            <x-input nome="senha_email" texto="Senha de envio" tipo="password"/>
+            <x-input nome="senha_email" texto="Senha de Email" tipo="password"/>
 
             <div class="d-flex justify-content-center">
                 <input type="submit" value="Alterar" class="btn btn-primary">

@@ -23,6 +23,7 @@ class ConfiguracoesUsuarioController extends Controller
 
     public function update(Request $request, string $id){
         $request->validate([
+            'login'=>'required',
             'email'=>'required|email',
         ]);
 
@@ -33,9 +34,10 @@ class ConfiguracoesUsuarioController extends Controller
         }
 
         $novousuario = $usuario->replicate();
+        $novousuario->login = $request->login;
         $novousuario->email = $request->email;
-        if (isset($request->senha)){
-            $novousuario->senha = $request->senha;
+        if (isset($request->senha_login)){
+            $novousuario->senha_login = $request->senha_login;
         }
         if (isset($request->senha_email)){
             $novousuario->senha_email = $request->senha_email;
@@ -43,18 +45,25 @@ class ConfiguracoesUsuarioController extends Controller
 
         if(!User::Equals($usuario,$novousuario)){
             try{
+                $usuario->login = $novousuario->login;
                 $usuario->email = $novousuario->email;
-                $usuario->password = $novousuario->senha;
                 $usuario->save();
             }catch (Exception $e){
-                return redirect(route('configuracoesusuario.edit'))->withErrors(['errors'=>'Erro ao salvar nova configuração: '.$e->getMessage()]);
+                return redirect(route('configuracoesusuario.edit'))->withErrors(['errors'=>'Erro ao salvar novo login ou email: '.$e->getMessage()]);
             }
-        }elseif (isset($request->senha)){
+        }elseif (isset($request->senha_login)){
             try{
-                $usuario->password = $novousuario->senha;
+                $usuario->senha_login = $novousuario->senha_login;
                 $usuario->save();
             }catch (Exception $e){
-                return redirect(route('configuracoesusuario.edit'))->withErrors(['errors'=>'Erro ao salvar nova configuração: '.$e->getMessage()]);
+                return redirect(route('configuracoesusuario.edit'))->withErrors(['errors'=>'Erro ao salvar nova senha de login: '.$e->getMessage()]);
+            }
+        }elseif (isset($request->senha_email)){
+            try{
+                $usuario->senha_email = $novousuario->senha_email;
+                $usuario->save();
+            }catch (Exception $e){
+                return redirect(route('configuracoesusuario.edit'))->withErrors(['errors'=>'Erro ao salvar nova senha de email: '.$e->getMessage()]);
             }
         }
 

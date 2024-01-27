@@ -27,11 +27,12 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required',
+            'login'=>'required',
             'email'=>'required|email',
-            'password'=>'required',
+            'senha_login'=>'required',
+            'senha_email'=>'required'
         ]);
-        $usuario = $request->only('name','password','email');
+        $usuario = $request->only('login','senha_login','email','senha_email');
 
         try{
             User::create($usuario);
@@ -47,8 +48,8 @@ class AuthController extends Controller
     public function logar(Request $request){
 
         $validator = $request->validate([
-            'email'=>'required|email',
-            'password'=>'required'
+            'login'=>'required',
+            'senha'=>'required'
         ]);
 
         $validate = Auth::attempt($validator);

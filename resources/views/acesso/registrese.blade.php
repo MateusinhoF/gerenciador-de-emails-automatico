@@ -9,11 +9,13 @@
         >
             @csrf
 
-            <x-input nome="name" texto="Nome" tipo="text"/>
+            <x-input nome="login" texto="Login" tipo="text"/>
 
             <x-input nome="email" texto="E-mail" tipo="email"/>
 
-            <x-input nome="password" texto="Senha" tipo="password"/>
+            <x-input nome="senha_login" texto="Senha de Login" tipo="password"/>
+
+            <x-input nome="senha_email" texto="Senha de Email" tipo="password"/>
 
             <input type="submit" value="Cadastrar" class="btn btn-primary">
         </form>
