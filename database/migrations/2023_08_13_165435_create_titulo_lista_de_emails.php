@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
             $table->string('titulo');
-            $table->boolean('em_uso')->default(false);
             $table->timestamps();
         });
     }

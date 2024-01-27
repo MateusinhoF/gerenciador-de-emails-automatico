@@ -12,12 +12,7 @@
 
             <div class="form-control color-input-background">
                 <div class="form-group">
-                    <label for="titulo">Selecione um titulo:</label>
-                    <select name="titulo" id="titulo" class="form-select">
-                        @foreach($listatitulos as $titulo)
-                            <option value="{{$titulo->id}}">{{$titulo->titulo}}</option>
-                        @endforeach
-                    </select>
+                    <x-input nome="titulo" texto="Titulo" tipo="text"/>
                 </div>
             </div>
 

@@ -23,14 +23,14 @@ class ListaDeEmailsController extends Controller
     }
 
     public function create(){
-        $listatitulos = DB::table('titulo_lista_de_emails')->where('em_uso','=',false )->orderBy('id','desc')->get();
-
-        if ($listatitulos->count() == 0){
-            return redirect(route('listadeemails.index'))->withErrors(['errors'=>'Erro não ha titulo disponivel']);
-        }
+//        $listatitulos = DB::table('titulo_lista_de_emails')->where('em_uso','=',false )->orderBy('id','desc')->get();
+//
+//        if ($listatitulos->count() == 0){
+//            return redirect(route('listadeemails.index'))->withErrors(['errors'=>'Erro não ha titulo disponivel']);
+//        }
 
         $emails = DB::table('emails')->orderBy('id','desc')->get();
-        return view('listadeemails/create',['listatitulos'=>$listatitulos, 'emails'=>$emails]);
+        return view('listadeemails/create',[/*'listatitulos'=>$listatitulos,*/ 'emails'=>$emails]);
     }
 
     public function store(Request $request){
@@ -41,9 +41,9 @@ class ListaDeEmailsController extends Controller
         ]);
 
         try {
-            $titulo = TituloListaDeEmails::find($request->titulo);
+            $titulo = TituloListaDeEmails::create(['titulo' => $request->titulo]);
         }catch(Exception $e){
-            return redirect(route('listadeemails.create'))->withErrors(['errors'=>'Erro titulo não encontrado '.$e->getMessage()]);
+            return redirect(route('listadeemails.create'))->withErrors(['errors'=>'Erro ao criar título '.$e->getMessage()]);
         }
         try{
             foreach ($request->email as $email){
@@ -54,7 +54,6 @@ class ListaDeEmailsController extends Controller
                 ];
                 ListaDeEmails::create($lista);
             }
-            $titulo->em_uso = true;
             $titulo->save();
         }catch(Exception $e){
             return redirect(route('listadeemails.create'))->withErrors(['errors'=>'Erro ao cadastrar lista '.$e->getMessage()]);
@@ -151,7 +150,6 @@ class ListaDeEmailsController extends Controller
                 foreach ($lista as $index) {
                     ListaDeEmails::destroy($index->id);
                 }
-                $titulo->em_uso = false;
                 $titulo->save();
             }else{
                 return redirect(route('listadeemails.index'))->withErrors(['errors'=>'Erro, lista não encontrado']);
