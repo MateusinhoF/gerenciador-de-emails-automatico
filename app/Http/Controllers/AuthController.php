@@ -29,10 +29,10 @@ class AuthController extends Controller
         $request->validate([
             'login'=>'required',
             'email'=>'required|email',
-            'senha_login'=>'required',
+            'password'=>'required',
             'senha_email'=>'required'
         ]);
-        $usuario = $request->only('login','senha_login','email','senha_email');
+        $usuario = $request->only('login','password','email','senha_email');
 
         try{
             User::create($usuario);
@@ -49,7 +49,7 @@ class AuthController extends Controller
 
         $validator = $request->validate([
             'login'=>'required',
-            'senha'=>'required'
+            'password'=>'required'
         ]);
 
         $validate = Auth::attempt($validator);
@@ -57,7 +57,7 @@ class AuthController extends Controller
         if($validate){
             return $this->redirectUsuario();
         }else{
-            return redirect(route('login'))->withErrors(['errors'=>'Email ou senha inválidos']);
+            return redirect(route('login'))->withErrors(['errors'=>'Login ou senha inválidos']);
         }
     }
 

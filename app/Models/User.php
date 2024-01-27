@@ -20,7 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'login',
         'email',
-        'senha_login',
+        'password',
         'senha_email',
     ];
 
@@ -30,7 +30,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'senha_login',
+        'password',
         'remember_token',
     ];
 
@@ -41,7 +41,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'senha_login' => 'hashed',
+        'password' => 'hashed',
     ];
 
     public static function Equals(User $user1, User $user2)

@@ -36,8 +36,8 @@ class ConfiguracoesUsuarioController extends Controller
         $novousuario = $usuario->replicate();
         $novousuario->login = $request->login;
         $novousuario->email = $request->email;
-        if (isset($request->senha_login)){
-            $novousuario->senha_login = $request->senha_login;
+        if (isset($request->password)){
+            $novousuario->password = $request->password;
         }
         if (isset($request->senha_email)){
             $novousuario->senha_email = $request->senha_email;
@@ -51,9 +51,9 @@ class ConfiguracoesUsuarioController extends Controller
             }catch (Exception $e){
                 return redirect(route('configuracoesusuario.edit'))->withErrors(['errors'=>'Erro ao salvar novo login ou email: '.$e->getMessage()]);
             }
-        }elseif (isset($request->senha_login)){
+        }elseif (isset($request->password)){
             try{
-                $usuario->senha_login = $novousuario->senha_login;
+                $usuario->password = $novousuario->password;
                 $usuario->save();
             }catch (Exception $e){
                 return redirect(route('configuracoesusuario.edit'))->withErrors(['errors'=>'Erro ao salvar nova senha de login: '.$e->getMessage()]);

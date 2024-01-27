@@ -13,7 +13,7 @@
 
             <x-input nome="email" texto="E-mail" tipo="email"/>
 
-            <x-input nome="senha_login" texto="Senha de Login" tipo="password"/>
+            <x-input nome="password" texto="Senha de Login" tipo="password"/>
 
             <x-input nome="senha_email" texto="Senha de Email" tipo="password"/>
 

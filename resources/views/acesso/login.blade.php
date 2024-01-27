@@ -6,7 +6,7 @@
               class="mt-3 p-4 p-md-5 form-group mb-3 color-forms-background"
         >
             @csrf
-            <x-input nome="text" texto="Login" tipo="text"/>
+            <x-input nome="login" texto="Login" tipo="text"/>
 
             <x-input nome="password" texto="Senha" tipo="password"/>
 
