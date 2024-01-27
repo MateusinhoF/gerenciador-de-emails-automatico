@@ -12,7 +12,7 @@ class CorpoEmailController extends Controller
 
     public function index(){
 
-        $corpoemails = DB::table('corpo_email')->orderBy('id','desc')->get();
+        $corpoemails = DB::table('corpo_email')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         return view('corpoemail/index',['corpoemails'=>$corpoemails]);
     }
 
@@ -45,7 +45,7 @@ class CorpoEmailController extends Controller
 
     public function edit(string $id){
         try{
-            $corpoemail = CorpoEmail::find($id);
+            $corpoemail = CorpoEmail::find($id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
         }catch(Exception $e){
             return redirect(route('corpoemail.index'))->withErrors(['errors'=>'Erro ao encontrar corpo de email: '.$e->getMessage()]);
         }
@@ -61,7 +61,7 @@ class CorpoEmailController extends Controller
         ]);
 
         try {
-            $corpo = CorpoEmail::find($id);
+            $corpo = CorpoEmail::find($id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
         }catch (Exception $e){
             return redirect(route('corpoemail.edit'))->withErrors(['errors'=>'Erro ao encontrar corpo de email: '.$e->getMessage()]);
         }
@@ -87,7 +87,7 @@ class CorpoEmailController extends Controller
 
     public function destroy(string $id){
         try{
-            $corpo = CorpoEmail::find($id);
+            $corpo = CorpoEmail::find($id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
             if($corpo){
                 $corpo->delete();
