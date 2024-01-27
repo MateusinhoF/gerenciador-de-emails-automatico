@@ -12,6 +12,7 @@ class ParaEnviar extends Model
     protected $table = 'para_enviar';
 
     protected $fillable = [
+        'user_id',
         'titulo',
         'nomes_id',
         'corpo_email_id',

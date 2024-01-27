@@ -12,6 +12,7 @@ class Emails extends Model
     protected $table = 'emails';
 
     protected $fillable = [
+        'user_id',
         'email',
         'descricao'
     ];

@@ -12,6 +12,7 @@ class ListaDeEmails extends Model
     protected $table = 'lista_de_emails';
 
     protected $fillable = [
+        'user_id',
         'titulo_lista_de_emails_id',
         'emails_id'
     ];

@@ -12,6 +12,7 @@ class CorpoEmail extends Model
     protected $table = 'corpo_email';
 
     protected $fillable = [
+        'user_id',
         'titulo',
         'assunto',
         'texto'

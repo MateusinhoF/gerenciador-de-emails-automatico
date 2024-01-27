@@ -13,6 +13,7 @@ class TituloListaDeEmails extends Model
     protected $table = 'titulo_lista_de_emails';
 
     protected $fillable = [
+        'user_id',
         'titulo'
     ];
 

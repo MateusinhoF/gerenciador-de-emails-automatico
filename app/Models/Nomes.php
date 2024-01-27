@@ -12,6 +12,7 @@ class Nomes extends Model
     protected $table = 'nomes';
 
     protected $fillable = [
+        'user_id',
         'nome1',
         'nome2',
         'nome3',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CorpoEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CorpoEmailController extends Controller
@@ -28,6 +29,7 @@ class CorpoEmailController extends Controller
         ]);
 
         $corpo = [
+            'user_id'=>Auth::user()->getAuthIdentifier(),
             'titulo'=>$request->titulo,
             'assunto'=>$request->assunto,
             'texto'=>$request->texto
