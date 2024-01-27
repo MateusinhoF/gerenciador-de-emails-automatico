@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Emails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class EmailsController extends Controller
 {
     public function index(){
-        $emails = DB::table('emails')->orderBy('id','desc')->get();
+        $emails = DB::table('emails')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         return view('emails/index', ['emails'=>$emails]);
     }
 
@@ -23,6 +24,7 @@ class EmailsController extends Controller
         ]);
 
         $email = [
+            'user_id' => Auth::user()->getAuthIdentifier(),
             'email'=>$request->email,
             'descricao'=>$request->descricao
         ];
@@ -37,7 +39,7 @@ class EmailsController extends Controller
 
     public function edit(string $id){
         try{
-            $email = Emails::find($id);
+            $email = Emails::find($id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
         }catch(Exception $e){
             return redirect(route('emails.index'))->withErrors(['errors'=>'Erro ao encontrar email: '.$e->getMessage()]);
         }
@@ -51,7 +53,7 @@ class EmailsController extends Controller
         ]);
 
         try {
-            $email = Emails::find($id);
+            $email = Emails::find($id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
         }catch (Exception $e){
             return redirect(route('emails.edit'))->withErrors(['errors'=>'Erro ao encontrar email: '.$e->getMessage()]);
         }
@@ -75,7 +77,7 @@ class EmailsController extends Controller
 
     public function destroy(string $id){
         try{
-            $email = Emails::find($id);
+            $email = Emails::find($id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
 
             if($email){
                 $email->delete();
