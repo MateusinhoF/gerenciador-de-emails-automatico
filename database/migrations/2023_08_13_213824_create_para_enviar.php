@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('para_enviar', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
             $table->string('titulo');
             $table->foreignIdFor(Nomes::class)->nullable()->references('id')->on('nomes');
             $table->foreignIdFor(CorpoEmail::class)->references('id')->on('corpo_email');

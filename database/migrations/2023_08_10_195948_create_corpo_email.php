@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('corpo_email', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
             $table->string('titulo');
             $table->string('assunto');
             $table->string('texto');

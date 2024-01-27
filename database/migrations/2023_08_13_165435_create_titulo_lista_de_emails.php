@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('titulo_lista_de_emails', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
             $table->string('titulo');
             $table->boolean('em_uso')->default(false);
             $table->timestamps();

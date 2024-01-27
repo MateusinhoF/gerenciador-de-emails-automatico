@@ -11,7 +11,9 @@
             @csrf
             <x-input nome="email" texto="Email" tipo="text" valor="{{$user->email}}"/>
 
-            <x-input nome="senha" texto="Senha" tipo="password"/>
+            <x-input nome="senha" texto="Senha de acesso" tipo="password"/>
+
+            <x-input nome="senha_email" texto="Senha de envio" tipo="password"/>
 
             <div class="d-flex justify-content-center">
                 <input type="submit" value="Alterar" class="btn btn-primary">

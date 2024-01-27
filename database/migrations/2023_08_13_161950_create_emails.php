@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
             $table->string('email');
             $table->string('descricao')->nullable();
             $table->timestamps();

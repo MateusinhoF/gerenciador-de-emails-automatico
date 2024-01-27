@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('lista_de_emails', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
             $table->foreignIdFor(TituloListaDeEmails::class)->references('id')->on('titulo_lista_de_emails');
             $table->foreignIdFor(Emails::class)->references('id')->on('emails');
             $table->timestamps();

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('nomes', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
             $table->string('nome1');
             $table->string('nome2')->nullable();
             $table->string('nome3')->nullable();

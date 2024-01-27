@@ -37,6 +37,9 @@ class ConfiguracoesUsuarioController extends Controller
         if (isset($request->senha)){
             $novousuario->senha = $request->senha;
         }
+        if (isset($request->senha_email)){
+            $novousuario->senha_email = $request->senha_email;
+        }
 
         if(!User::Equals($usuario,$novousuario)){
             try{
