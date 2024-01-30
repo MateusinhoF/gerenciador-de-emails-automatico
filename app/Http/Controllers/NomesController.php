@@ -13,7 +13,7 @@ class NomesController extends Controller
 
     public function index(){
 
-        $nomes = DB::table('nomes')->orderBy('id','desc')->get();
+        $nomes = DB::table('nomes')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         return view('nomes/index',['nomes'=>$nomes]);
     }
 
@@ -28,6 +28,7 @@ class NomesController extends Controller
         ]);
 
         $nomes = [
+            'user_id'=>Auth::user()->getAuthIdentifier(),
             'nome1'=>$request->nome1,
             'nome2'=>$request->nome2,
             'nome3'=>$request->nome3,

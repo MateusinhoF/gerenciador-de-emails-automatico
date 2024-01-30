@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/paraenviar/{id}', [ParaEnviarController::class, 'update'])->name('paraenviar.update');
     Route::get('/paraenviar/{id}/destroy', [ParaEnviarController::class, 'destroy'])->name('paraenviar.destroy');
     Route::get('/paraenviar/{id}/alterarenvio', [ParaEnviarController::class, 'alterarEnvio'])->name('paraenviar.alterarenvio');
-    
+
     Route::get('/configuracoesusuario/edit', [ConfiguracoesUsuarioController::class, 'edit'])->name('configuracoesusuario.edit');
     Route::post('/configuracoesusuario/{id}', [ConfiguracoesUsuarioController::class, 'update'])->name('configuracoesusuario.update');
 

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('nome3')->nullable();
             $table->string('nome4')->nullable();
             $table->string('nome5')->nullable();
-            $table->boolean('em_uso')->default(false);
             $table->timestamps();
         });
     }
