@@ -39,7 +39,7 @@ class EmailsController extends Controller
 
     public function edit(string $id){
         try{
-            $email = Emails::find($id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
+            $email = Emails::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
         }catch(Exception $e){
             return redirect(route('emails.index'))->withErrors(['errors'=>'Erro ao encontrar email: '.$e->getMessage()]);
         }
@@ -53,7 +53,7 @@ class EmailsController extends Controller
         ]);
 
         try {
-            $email = Emails::find($id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
+            $email = Emails::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
         }catch (Exception $e){
             return redirect(route('emails.edit'))->withErrors(['errors'=>'Erro ao encontrar email: '.$e->getMessage()]);
         }
@@ -77,7 +77,7 @@ class EmailsController extends Controller
 
     public function destroy(string $id){
         try{
-            $email = Emails::find($id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
+            $email = Emails::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
             if($email){
                 $email->delete();

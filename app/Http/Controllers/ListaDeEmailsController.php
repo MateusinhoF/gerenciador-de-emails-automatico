@@ -43,7 +43,7 @@ class ListaDeEmailsController extends Controller
         }
         try{
             foreach ($request->email as $email){
-                $email = Emails::find($email);
+                $email = Emails::find($email)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
                 $lista = [
                     'user_id'=>Auth::user()->getAuthIdentifier(),
                     'titulo_lista_de_emails_id'=>$titulo->id,

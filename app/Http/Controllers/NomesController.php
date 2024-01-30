@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Nomes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 
@@ -44,7 +45,7 @@ class NomesController extends Controller
 
     public function edit(string $id){
         try{
-            $nomes = Nomes::find($id);
+            $nomes = Nomes::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
         }catch(Exception $e){
             return redirect(route('nomes.index'))->withErrors(['errors'=>'Erro ao encontrar nomes: '.$e->getMessage()]);
         }
@@ -58,7 +59,7 @@ class NomesController extends Controller
         ]);
 
         try {
-            $nomes = Nomes::find($id);
+            $nomes = Nomes::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
         }catch (Exception $e){
             return redirect(route('nomes.edit'))->withErrors(['errors'=>'Erro ao encontrar nomes: '.$e->getMessage()]);
         }
@@ -88,7 +89,7 @@ class NomesController extends Controller
 
     public function destroy(string $id){
         try{
-            $nomes = Nomes::find($id);
+            $nomes = Nomes::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
             if($nomes){
                 $nomes->delete();

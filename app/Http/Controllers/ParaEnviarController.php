@@ -7,6 +7,7 @@ use App\Models\Nomes;
 use App\Models\ParaEnviar;
 use App\Models\TituloListaDeEmails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 
@@ -55,17 +56,17 @@ class ParaEnviarController extends Controller
         ];
 
         try{
-            CorpoEmail::find($paraenviar['corpo_email_id']);
-            TituloListaDeEmails::find($paraenviar['titulo_lista_de_emails_id']);
+            CorpoEmail::find($paraenviar['corpo_email_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            TituloListaDeEmails::find($paraenviar['titulo_lista_de_emails_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
             if (isset($paraenviar['titulo_lista_de_emails_cc_id'])){
-                TituloListaDeEmails::find($paraenviar['titulo_lista_de_emails_cc_id']);
+                TituloListaDeEmails::find($paraenviar['titulo_lista_de_emails_cc_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
             }
             if (isset($paraenviar['titulo_lista_de_emails_cco_id'])){
-                TituloListaDeEmails::find($paraenviar['titulo_lista_de_emails_cco_id']);
+                TituloListaDeEmails::find($paraenviar['titulo_lista_de_emails_cco_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
             }
             if (isset($paraenviar['nomes_id'])){
-                Nomes::find($paraenviar['nomes_id']);
+                Nomes::find($paraenviar['nomes_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
             }
         }catch(Exception $e){
             return redirect(route('paraenviar.create'))->withErrors(['errors'=>'Erro ao pesquisar dados de envio '.$e->getMessage()]);
@@ -80,7 +81,7 @@ class ParaEnviarController extends Controller
 
     public function edit(string $id){
         try{
-            $paraenviar = ParaEnviar::find($id);
+            $paraenviar = ParaEnviar::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
         }catch(Exception $e){
             return redirect(route('paraenbiar.index'))->withErrors(['errors'=>'Erro ao encontrar envio: '.$e->getMessage()]);
         }
@@ -99,7 +100,7 @@ class ParaEnviarController extends Controller
         ]);
 
         try {
-            $paraenviar = ParaEnviar::find($id);
+            $paraenviar = ParaEnviar::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
         }catch (Exception $e){
             return redirect(route('paraenviar.edit'))->withErrors(['errors'=>'Erro ao encontrar envio: '.$e->getMessage()]);
         }
@@ -135,7 +136,7 @@ class ParaEnviarController extends Controller
 
     public function destroy(string $id){
         try{
-            $paraenviar = ParaEnviar::find($id);
+            $paraenviar = ParaEnviar::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
             if($paraenviar){
                 $paraenviar->delete();
@@ -152,7 +153,7 @@ class ParaEnviarController extends Controller
     public function alterarEnvio(string $id)
     {
         try {
-            $paraenvia = ParaEnviar::find($id);
+            $paraenvia = ParaEnviar::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
             $paraenvia->continuar_envio = !$paraenvia->continuar_envio;
             $paraenvia->save();
         } catch (Exception $e){
