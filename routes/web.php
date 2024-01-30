@@ -72,14 +72,7 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/paraenviar/{id}', [ParaEnviarController::class, 'update'])->name('paraenviar.update');
     Route::get('/paraenviar/{id}/destroy', [ParaEnviarController::class, 'destroy'])->name('paraenviar.destroy');
     Route::get('/paraenviar/{id}/alterarenvio', [ParaEnviarController::class, 'alterarEnvio'])->name('paraenviar.alterarenvio');
-
-    Route::get('/titulolistadeemails', [TituloListaDeEmailsController::class, 'index'])->name('titulolistadeemails.index');
-    Route::get('/titulolistadeemails/create', [TituloListaDeEmailsController::class, 'create'])->name('titulolistadeemails.create');
-    Route::post('/titulolistadeemails', [TituloListaDeEmailsController::class, 'store'])->name('titulolistadeemails.store');
-    Route::get('/titulolistadeemails/{id}/edit', [TituloListaDeEmailsController::class, 'edit'])->name('titulolistadeemails.edit');
-    Route::post('/titulolistadeemails/{id}', [TituloListaDeEmailsController::class, 'update'])->name('titulolistadeemails.update');
-    Route::get('/titulolistadeemails/{id}/destroy', [TituloListaDeEmailsController::class, 'destroy'])->name('titulolistadeemails.destroy');
-
+    
     Route::get('/configuracoesusuario/edit', [ConfiguracoesUsuarioController::class, 'edit'])->name('configuracoesusuario.edit');
     Route::post('/configuracoesusuario/{id}', [ConfiguracoesUsuarioController::class, 'update'])->name('configuracoesusuario.update');
 
