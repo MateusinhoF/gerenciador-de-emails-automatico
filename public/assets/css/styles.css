@@ -48,3 +48,12 @@
 .font-size-small{
     font-size: 14px;
 }
+.color-link-proximo{
+    color: #69d7ff;
+    /*color: #67b0f0;*/
+    font-weight: bold;
+    border: 1px #69d7ff solid;
+}
+.color-link-proximo:hover{
+    color: #69e9ff;
+}

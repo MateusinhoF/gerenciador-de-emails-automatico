@@ -45,6 +45,7 @@ class ParaEnviarController extends Controller
         ]);
 
         $paraenviar = [
+            'user_id'=>Auth::user()->getAuthIdentifier(),
             'titulo'=>$request->titulo,
             'corpo_email_id'=>$request->corpoemail,
             'titulo_lista_de_emails_id'=>$request->listatitulos,
@@ -56,17 +57,17 @@ class ParaEnviarController extends Controller
         ];
 
         try{
-            CorpoEmail::find($paraenviar['corpo_email_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
-            TituloListaDeEmails::find($paraenviar['titulo_lista_de_emails_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            CorpoEmail::where('id','=',$paraenviar['corpo_email_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            TituloListaDeEmails::where('id','=',$paraenviar['titulo_lista_de_emails_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
             if (isset($paraenviar['titulo_lista_de_emails_cc_id'])){
-                TituloListaDeEmails::find($paraenviar['titulo_lista_de_emails_cc_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+                TituloListaDeEmails::where('id','=',$paraenviar['titulo_lista_de_emails_cc_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
             }
             if (isset($paraenviar['titulo_lista_de_emails_cco_id'])){
-                TituloListaDeEmails::find($paraenviar['titulo_lista_de_emails_cco_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+                TituloListaDeEmails::where('id','=',$paraenviar['titulo_lista_de_emails_cco_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
             }
             if (isset($paraenviar['nomes_id'])){
-                Nomes::find($paraenviar['nomes_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+                Nomes::where('id','=',$paraenviar['nomes_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
             }
         }catch(Exception $e){
             return redirect(route('paraenviar.create'))->withErrors(['errors'=>'Erro ao pesquisar dados de envio '.$e->getMessage()]);
@@ -86,9 +87,9 @@ class ParaEnviarController extends Controller
             return redirect(route('paraenbiar.index'))->withErrors(['errors'=>'Erro ao encontrar envio: '.$e->getMessage()]);
         }
 
-        $corpoemails = DB::table('corpo_email')->orderBy('id','desc')->get();
-        $listatitulos = DB::table('titulo_lista_de_emails')->orderBy('id','desc')->get();
-        $nomes = DB::table('nomes')->orderBy('id','desc')->get();
+        $corpoemails = DB::table('corpo_email')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        $listatitulos = DB::table('titulo_lista_de_emails')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        $nomes = DB::table('nomes')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         return view('paraenviar/update',['paraenviar'=>$paraenviar, 'corpoemails'=>$corpoemails, 'listatitulos'=>$listatitulos, 'nomes'=>$nomes]);
     }
 

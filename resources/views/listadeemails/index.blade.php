@@ -3,6 +3,7 @@
 
         <div class="m-3">
             <div class="d-flex justify-content-around mb-3">
+                <x-link-proximo href="{{route('paraenviar.index')}}" texto="Próximo"/>
                 <x-link href="{{route('listadeemails.create')}}" texto="Cadastrar Lista"/>
                 <x-link href="{{route('emails.create')}}" texto="Cadastrar Emails"/>
                 <x-link href="{{route('paraenviar.index')}}" texto="Voltar"/>
