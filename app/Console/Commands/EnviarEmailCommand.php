@@ -32,29 +32,33 @@ class EnviarEmailCommand extends Command
      */
     public function handle()
     {
-        $paraenviar = DB::table('para_enviar')->where('continuar_envio','=',true)->get();
+        $users = DB::table('users')->get();
 
-        foreach ($paraenviar as $enviar) {
+        foreach ($users as $user) {
+            $paraenviar = DB::table('para_enviar')->where('continuar_envio', '=', true)->where('user_id','=', $user->id)->get();
 
-            if(isset($enviar->data_inicio)){
-                $hoje = Carbon::today();
+            foreach ($paraenviar as $enviar) {
 
-                if($hoje->greaterThanOrEqualTo($enviar->data_inicio) && $hoje->lessThanOrEqualTo($enviar->data_fim)){
-                    $this->enviar($enviar);
-                }else{
-                    DB::table('para_enviar')
-                        ->where('id','=',$enviar->id)
-                        ->update(['continuar_envio'=>false]);
+                if (isset($enviar->data_inicio)) {
+                    $hoje = Carbon::today();
+
+                    if ($hoje->greaterThanOrEqualTo($enviar->data_inicio) && $hoje->lessThanOrEqualTo($enviar->data_fim)) {
+                        $this->enviar($enviar);
+                    } else {
+                        DB::table('para_enviar')
+                            ->where('id', '=', $enviar->id)
+                            ->update(['continuar_envio' => false]);
+                    }
                 }
-            }
 
-            if(!isset($enviar->data_inicio)){
-                $this->enviar($enviar);
+                if (!isset($enviar->data_inicio)) {
+                    $this->enviar($enviar, $user->email, $user->senha_email);
+                }
             }
         }
     }
 
-    private function enviar($enviar){
+    private function enviar($enviar, $email, $senha){
 
         $emails = $this->buscarListaEmails($enviar->titulo_lista_de_emails_id);
         $emailscc = $this->buscarListaEmails($enviar->titulo_lista_de_emails_cc_id);
@@ -71,13 +75,27 @@ class EnviarEmailCommand extends Command
         $corpoemail->texto = Str::replace('@nome4',$nomes->nome4??'',$corpoemail->texto);
         $corpoemail->texto = Str::replace('@nome5',$nomes->nome5??'',$corpoemail->texto);
 
+        $config = [
+            'driver' => 'smtp',
+            'host' => 'smtp.gmail.com',
+            'port' => 587,
+            'encryption' => 'tls',
+            'username' => $email,
+            'password' => $senha
+        ];
+
+        config(['mail.mailers.smtp' => $config]);
+
         Mail::to($emails)
             ->cc($emailscc)
             ->bcc($emailscco)
             ->send(new EnviarEmail([
                 'assunto'=>$corpoemail->assunto,
                 'corpo'=>$corpoemail->texto
-            ]));
+                ]
+            ));
+
+        config(['mail.mailers.smtp' => config('mail.mailers.smpt')]);
 
     }
 

@@ -52,13 +52,13 @@ echo "digite a senha do email:"
 read -s SENHAENVIO
 
 
-sudo sed -i "s/MAIL_HOST=.*/MAIL_HOST=smtp.gmail.com/" .env
-sudo sed -i "s/MAIL_PORT=.*/MAIL_PORT=587/" .env
-sudo sed -i "s/MAIL_USERNAME=.*/MAIL_USERNAME=$EMAILENVIO/" .env
-sudo sed -i "s/MAIL_PASSWORD=.*/MAIL_PASSWORD=$SENHAENVIO/" .env
-sudo sed -i "s/MAIL_ENCRYPTION=.*/MAIL_ENCRYPTION=tls/" .env
-sudo sed -i "s/MAIL_FROM_ADDRESS=.*/MAIL_FROM_ADDRESS=$EMAILENVIO/" .env
-sudo sed -i "s/MAIL_FROM_NAME=.*/MAIL_FROM_NAME=$NOMEENVIO/" .env
+#sudo sed -i "s/MAIL_HOST=.*/MAIL_HOST=smtp.gmail.com/" .env
+#sudo sed -i "s/MAIL_PORT=.*/MAIL_PORT=587/" .env
+#sudo sed -i "s/MAIL_USERNAME=.*/MAIL_USERNAME=$EMAILENVIO/" .env
+#sudo sed -i "s/MAIL_PASSWORD=.*/MAIL_PASSWORD=$SENHAENVIO/" .env
+#sudo sed -i "s/MAIL_ENCRYPTION=.*/MAIL_ENCRYPTION=tls/" .env
+#sudo sed -i "s/MAIL_FROM_ADDRESS=.*/MAIL_FROM_ADDRESS=$EMAILENVIO/" .env
+#sudo sed -i "s/MAIL_FROM_NAME=.*/MAIL_FROM_NAME=$NOMEENVIO/" .env
 
 
 #talvez precise
