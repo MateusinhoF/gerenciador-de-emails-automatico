@@ -81,11 +81,12 @@ class EnviarEmailCommand extends Command
             'port' => 587,
             'encryption' => 'tls',
             'username' => $email,
-            'password' => $senha
+            'password' => $senha,
         ];
 
-        config(['mail.mailers.smtp' => $config]);
+        \Illuminate\Support\Facades\Config::set('mail.mailers.smtp', $config);
 
+        echo 'antes de efetuar envio';
         Mail::to($emails)
             ->cc($emailscc)
             ->bcc($emailscco)
@@ -94,9 +95,10 @@ class EnviarEmailCommand extends Command
                 'corpo'=>$corpoemail->texto
                 ]
             ));
+        echo 'depois de efetuar envio';
+        \Illuminate\Support\Facades\Config::set('mail.mailers.smtp', config('mail.mailers.smtp'));
 
-        config(['mail.mailers.smtp' => config('mail.mailers.smpt')]);
-
+        echo 'zerado o mail';
     }
 
     private function buscarListaEmails($titulo_lista_de_emails_id){
