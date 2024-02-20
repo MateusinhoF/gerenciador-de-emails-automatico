@@ -6,6 +6,7 @@ use App\Mail\EnviarEmail;
 use App\Models\ParaEnviar;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -84,21 +85,23 @@ class EnviarEmailCommand extends Command
             'password' => $senha,
         ];
 
-        \Illuminate\Support\Facades\Config::set('mail.mailers.smtp', $config);
+        Config::set('mail.mailers.smtp.driver', 'smtp');
+        Config::set('mail.mailers.smtp.host', 'smtp.gmail.com');
+        Config::set('mail.mailers.smtp.port', 587);
+        Config::set('mail.mailers.smtp.encryption', 'tls');
+        Config::set('mail.mailers.smtp.username', $email);
+        Config::set('mail.mailers.smtp.password', $senha);
 
-        echo 'antes de efetuar envio';
         Mail::to($emails)
             ->cc($emailscc)
             ->bcc($emailscco)
             ->send(new EnviarEmail([
                 'assunto'=>$corpoemail->assunto,
-                'corpo'=>$corpoemail->texto
+                'corpo'=>$corpoemail->texto,
+                'anexo'=>$corpoemail->anexo
                 ]
             ));
-        echo 'depois de efetuar envio';
-        \Illuminate\Support\Facades\Config::set('mail.mailers.smtp', config('mail.mailers.smtp'));
 
-        echo 'zerado o mail';
     }
 
     private function buscarListaEmails($titulo_lista_de_emails_id){
