@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('lista_anexos', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(VinculadorAnexos::class)->references('id')->on('vinculador_anexos');
             $table->foreignIdFor(User::class)->references('id')->on('users');
+            $table->foreignIdFor(VinculadorAnexos::class)->references('id')->on('vinculador_anexos');
             $table->foreignIdFor(Anexos::class)->references('id')->on('anexos');
 
             $table->timestamps();

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('vinculador_anexos', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
-            $table->string('hash');
             $table->timestamps();
         });
     }

@@ -9,6 +9,7 @@ use App\Models\VinculadorAnexos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Mockery\Exception;
 
@@ -35,8 +36,7 @@ class CorpoEmailController extends Controller
         if ($request->hasFile('anexos')){
 
             $vinculadoranexos = [
-                'user_id'=>Auth::user()->getAuthIdentifier(),
-                'hash'=>Str::random(40)
+                'user_id'=>Auth::user()->getAuthIdentifier()
             ];
 
             try{
@@ -48,9 +48,9 @@ class CorpoEmailController extends Controller
             foreach ($request->file('anexos') as $anexo){
 
                 if ($anexo->isValid()){
-                    $hashname = Str::random(40);
-                    $anexo->move(base_path().'/anexos', $hashname.'.'.$anexo->extension());
-//                    dd($a);
+                    $hashname = Str::random(40).'.'.$anexo->extension();
+                    $anexo->move(base_path().'/anexos', $hashname);
+
                     $anexoDB = [
                         'user_id'=>Auth::user()->getAuthIdentifier(),
                         'nome'=>$anexo->getClientOriginalName(),
@@ -142,7 +142,21 @@ class CorpoEmailController extends Controller
             $corpo = CorpoEmail::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
             if($corpo){
+                $vinculadoranexos = VinculadorAnexos::where('id','=',$corpo->vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+                $listaanexos = DB::table('lista_anexos')->where('vinculador_anexos_id','=', $vinculadoranexos->id)->where('user_id','=',Auth::user()->getAuthIdentifier())->get();
                 $corpo->delete();
+
+                foreach ($listaanexos as $identificador){
+                    $anexo = Anexos::where('id','=',$identificador->anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+
+                    File::delete(base_path().'/anexos/'.$anexo->hashname);
+
+                    $anexo->delete();
+                }
+
+                ListaAnexos::destroy($listaanexos);
+                $vinculadoranexos->delete();
+
             }else{
                 return redirect(route('corpoemail.index'))->withErrors(['errors'=>'Erro, corpo de email não encontrado']);
             }
