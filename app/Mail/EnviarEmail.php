@@ -57,6 +57,8 @@ class EnviarEmail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        return [
+            $this->dataemail['anexos']
+        ];
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\Nomes;
 use App\Models\CorpoEmail;
 use App\Models\TituloListaDeEmails;
+use App\Models\VinculadorAnexos;
 
 return new class extends Migration
 {

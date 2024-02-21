@@ -15,7 +15,8 @@ class CorpoEmail extends Model
         'user_id',
         'titulo',
         'assunto',
-        'texto'
+        'texto',
+        'vinculador_anexos_id'
     ];
 
     public static function Equals(CorpoEmail $corpo1, CorpoEmail $corpo2)
@@ -29,6 +30,9 @@ class CorpoEmail extends Model
             $isEquals = false;
         }
         if ($corpo1->texto != $corpo2->texto) {
+            $isEquals = false;
+        }
+        if ($corpo1->vinculador_anexos_id != $corpo2->vinculador_anexos_id) {
             $isEquals = false;
         }
 

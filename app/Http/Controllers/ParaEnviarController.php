@@ -15,6 +15,7 @@ class ParaEnviarController extends Controller
 {
     public function index(){
         $paraenviar = DB::table('para_enviar')
+            ->where('para_enviar.user_id','=',Auth::user()->getAuthIdentifier())
             ->leftJoin('nomes','nomes.id','=','para_enviar.nomes_id')
             ->leftJoin('corpo_email','corpo_email.id','=','para_enviar.corpo_email_id')
             ->leftJoin('titulo_lista_de_emails AS titulo_envio','titulo_envio.id','=','para_enviar.titulo_lista_de_emails_id')
@@ -30,9 +31,9 @@ class ParaEnviarController extends Controller
     }
 
     public function create(){
-        $listatitulos = DB::table('titulo_lista_de_emails')->orderBy('id','desc')->get();
-        $nomes = DB::table('nomes')->orderBy('nome1')->orderBy('nome2')->orderBy('nome3')->orderBy('nome4')->orderBy('nome5')->get();
-        $corpoemails = DB::table('corpo_email')->orderBy('id','desc')->get();
+        $listatitulos = DB::table('titulo_lista_de_emails')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        $nomes = DB::table('nomes')->orderBy('nome1')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('nome2')->orderBy('nome3')->orderBy('nome4')->orderBy('nome5')->get();
+        $corpoemails = DB::table('corpo_email')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
 
         return view('paraenviar/create', ['listatitulos'=>$listatitulos,'nomes'=>$nomes,'corpoemails'=>$corpoemails]);
     }

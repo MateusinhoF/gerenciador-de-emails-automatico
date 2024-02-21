@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anexos;
 use App\Models\CorpoEmail;
+use App\Models\ListaAnexos;
+use App\Models\VinculadorAnexos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Mockery\Exception;
 
 class CorpoEmailController extends Controller
 {
@@ -21,18 +26,65 @@ class CorpoEmailController extends Controller
     }
 
     public function store(Request $request){
-
         $request->validate([
             'titulo'=>'required',
             'assunto'=>'required',
             'texto'=>'required'
         ]);
 
+        if ($request->hasFile('anexos')){
+
+            $vinculadoranexos = [
+                'user_id'=>Auth::user()->getAuthIdentifier(),
+                'hash'=>Str::random(40)
+            ];
+
+            try{
+                $vinculadoranexosDB = VinculadorAnexos::create($vinculadoranexos);
+            }catch (Exception $e){
+                return redirect(route('corpoemail.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email, vincular anexo: '.$e->getMessage()]);
+            }
+
+            foreach ($request->file('anexos') as $anexo){
+
+                if ($anexo->isValid()){
+                    $hashname = Str::random(40);
+                    $anexo->move(base_path().'/anexos', $hashname.'.'.$anexo->extension());
+//                    dd($a);
+                    $anexoDB = [
+                        'user_id'=>Auth::user()->getAuthIdentifier(),
+                        'nome'=>$anexo->getClientOriginalName(),
+                        'hashname'=>$hashname
+                    ];
+                    try{
+                        $anexoDB = Anexos::create($anexoDB);
+                    }catch (Exception $e){
+                        return redirect(route('corpoemail.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email, anexo: '.$e->getMessage()]);
+                    }
+
+                    $listaanexos = [
+                        'user_id'=>Auth::user()->getAuthIdentifier(),
+                        'vinculador_anexos_id'=>$vinculadoranexosDB->id,
+                        'anexos_id'=>$anexoDB->id
+                    ];
+
+                    try{
+                        ListaAnexos::create($listaanexos);
+                    }catch (Exception $e){
+                        return redirect(route('corpoemail.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email, lista de anexo: '.$e->getMessage()]);
+                    }
+                }else{
+                    return redirect(route('corpoemail.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email, erro no anexo: '.$anexo->getErrorMessage()]);
+                }
+            }
+        }
+
         $corpo = [
             'user_id'=>Auth::user()->getAuthIdentifier(),
             'titulo'=>$request->titulo,
             'assunto'=>$request->assunto,
-            'texto'=>$request->texto
+            'texto'=>$request->texto,
+            'vinculador_anexos_id'=>$vinculadoranexosDB->id
         ];
 
         try{
