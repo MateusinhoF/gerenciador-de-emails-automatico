@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('assunto');
             $table->string('texto');
-            $table->foreignIdFor(\App\Models\VinculadorAnexos::class)->references('id')->on('vinculador_anexos')->nullable();
+            $table->foreignIdFor(\App\Models\VinculadorAnexos::class)->nullable()->references('id')->on('vinculador_anexos');
             $table->timestamps();
         });
     }

@@ -84,7 +84,7 @@ class CorpoEmailController extends Controller
             'titulo'=>$request->titulo,
             'assunto'=>$request->assunto,
             'texto'=>$request->texto,
-            'vinculador_anexos_id'=>$vinculadoranexosDB->id
+            'vinculador_anexos_id'=>$vinculadoranexosDB->id ?? null
         ];
 
         try{
@@ -98,11 +98,19 @@ class CorpoEmailController extends Controller
     public function edit(string $id){
         try{
             $corpoemail = CorpoEmail::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            $vinculadoranexos = VinculadorAnexos::where('id','=',$corpoemail->vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            $listaanexos = DB::table('lista_anexos')->where('vinculador_anexos_id','=', $vinculadoranexos->id)->where('user_id','=',Auth::user()->getAuthIdentifier())->get();
+            $anexos = [];
+            foreach ($listaanexos as $identificador){
+                $anexo = Anexos::where('id','=',$identificador->anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+
+                array_push($anexos, base_path().'/anexos/'.$anexo->hashname);
+            }
         }catch(Exception $e){
             return redirect(route('corpoemail.index'))->withErrors(['errors'=>'Erro ao encontrar corpo de email: '.$e->getMessage()]);
         }
 
-        return view('corpoemail/update',['corpoemail'=>$corpoemail]);
+        return view('corpoemail/update',['corpoemail'=>$corpoemail, 'anexos'=>$anexos]);
     }
 
     public function update(Request $request, string $id){

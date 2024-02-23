@@ -8,8 +8,9 @@ use App\Http\Controllers\EmailsController;
 use App\Http\Controllers\CorpoEmailController;
 use App\Http\Controllers\ListaDeEmailsController;
 use App\Http\Controllers\ParaEnviarController;
-use App\Http\Controllers\TituloListaDeEmailsController;
+//use App\Http\Controllers\TituloListaDeEmailsController;
 use App\Http\Controllers\ConfiguracoesUsuarioController;
+use App\Http\Controllers\AnexosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,13 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/paraenviar/{id}', [ParaEnviarController::class, 'update'])->name('paraenviar.update');
     Route::get('/paraenviar/{id}/destroy', [ParaEnviarController::class, 'destroy'])->name('paraenviar.destroy');
     Route::get('/paraenviar/{id}/alterarenvio', [ParaEnviarController::class, 'alterarEnvio'])->name('paraenviar.alterarenvio');
+
+    Route::get('/anexos/{id}', [AnexosController::class, 'index'])->name('anexos.index');
+    Route::get('/anexos/create', [AnexosController::class, 'create'])->name('anexos.create');
+    Route::post('/anexos', [AnexosController::class, 'store'])->name('anexos.store');
+    Route::get('/anexos/{id}/{vinculador_anexos_id}/edit', [AnexosController::class, 'edit'])->name('anexos.edit');
+    Route::post('/anexos/{id}/{vinculador_anexos_id}', [AnexosController::class, 'update'])->name('anexos.update');
+    Route::get('/anexos/{id}/{vinculador_anexos_id}/destroy', [AnexosController::class, 'destroy'])->name('anexos.destroy');
 
     Route::get('/configuracoesusuario/edit', [ConfiguracoesUsuarioController::class, 'edit'])->name('configuracoesusuario.edit');
     Route::post('/configuracoesusuario/{id}', [ConfiguracoesUsuarioController::class, 'update'])->name('configuracoesusuario.update');

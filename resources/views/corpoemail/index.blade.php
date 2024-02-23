@@ -15,6 +15,7 @@
                     <th>Titulo</th>
                     <th>Assunto</th>
                     <th>Texto</th>
+                    <th>Anexo</th>
                     <th>Opções</th>
                 </tr>
                 </thead>
@@ -24,6 +25,18 @@
                         <td>{{$corpo->titulo}}</td>
                         <td>{{$corpo->assunto}}</td>
                         <td>{{$corpo->texto}}</td>
+                        <td>
+                            @if($corpo->vinculador_anexos_id != null)
+                                <a
+                                    class="link-success p-1 link-offset-2 link-underline link-underline-opacity-0 link-opacity-50-hover"
+                                    href="{{route('anexos.index', ['id'=>$corpo->vinculador_anexos_id])}}"
+                                >
+                                    ver
+                                </a>
+                            @else
+
+                            @endif
+                        </td>
                         <td>
                             <x-link-editar href="{{route('corpoemail.edit', ['id'=>$corpo->id])}}"/>
                             <x-link-excluir href="{{route('corpoemail.destroy', ['id'=>$corpo->id])}}"/>

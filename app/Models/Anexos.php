@@ -25,9 +25,6 @@ class Anexos extends Model
         if ($anexo1->nome != $anexo2->nome) {
             $isEquals = false;
         }
-        if ($anexo1->hashname != $anexo2->hashname) {
-            $isEquals = false;
-        }
 
         return $isEquals;
     }
