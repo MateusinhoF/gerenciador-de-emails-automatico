@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Mockery\Exception;
 
 class AnexosController extends Controller
@@ -17,14 +18,14 @@ class AnexosController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $id)
+    public function index(string $vinculador_anexos_id)
     {
         try {
-            VinculadorAnexos::where('id','=',$id)->first();
+            VinculadorAnexos::where('id','=',$vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
         }catch(Exception $e){
             return redirect(route('corpoemail.index'))->withErrors(['errors'=>'Erro ao procurar anexos '.$e->getMessage()]);
         }
-        $listaanexos = DB::table('lista_anexos')->where('vinculador_anexos_id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        $listaanexos = DB::table('lista_anexos')->where('vinculador_anexos_id','=',$vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         $anexos = [];
 
         foreach ($listaanexos as $identificador){
@@ -32,25 +33,134 @@ class AnexosController extends Controller
 
             array_push($anexos, $anexo);
         }
-        return view('anexos/index', ['anexos'=>$anexos, 'vinculador_anexos_id'=>$id]);
+        return view('anexos/index', ['anexos'=>$anexos, 'vinculador_anexos_id'=>$vinculador_anexos_id]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $vinculador_anexos_id)
     {
-        //
+        try {
+            VinculadorAnexos::where('id','=',$vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+        }catch(Exception $e){
+            return redirect(route('corpoemail.index'))->withErrors(['errors'=>'Erro ao adicionar anexo '.$e->getMessage()]);
+        }
+        return view('anexos/create', ['vinculador_anexos_id'=>$vinculador_anexos_id]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, string $vinculador_anexos_id)
     {
-        //
+        if ($request->hasFile('anexos')){
+
+            try {
+                VinculadorAnexos::where('id','=',$vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            }catch(Exception $e){
+                return redirect(route('corpoemail.index'))->withErrors(['errors'=>'Erro ao adicionar anexo '.$e->getMessage()]);
+            }
+
+            foreach ($request->file('anexos') as $anexo){
+
+                if ($anexo->isValid()){
+                    $hashname = Str::random(40).'.'.$anexo->extension();
+                    $anexo->move(base_path().'/anexos', $hashname);
+
+                    $anexoDB = [
+                        'user_id'=>Auth::user()->getAuthIdentifier(),
+                        'nome'=>$anexo->getClientOriginalName(),
+                        'hashname'=>$hashname
+                    ];
+                    try{
+                        $anexoDB = Anexos::create($anexoDB);
+                    }catch (Exception $e){
+                        return redirect(route('anexos.create', ['vinculador_anexos_id'=>$vinculador_anexos_id]))->withErrors(['errors'=>'Erro ao adicionar anexo ao corpo de email, anexo: '.$e->getMessage()]);
+                    }
+
+                    $listaanexos = [
+                        'user_id'=>Auth::user()->getAuthIdentifier(),
+                        'vinculador_anexos_id'=>$vinculador_anexos_id,
+                        'anexos_id'=>$anexoDB->id
+                    ];
+
+                    try{
+                        ListaAnexos::create($listaanexos);
+                    }catch (Exception $e){
+                        return redirect(route('anexos.create', ['vinculador_anexos_id'=>$vinculador_anexos_id]))->withErrors(['errors'=>'Erro ao adicionar anexos ao corpo de email, lista de anexo: '.$e->getMessage()]);
+                    }
+                }else{
+                    return redirect(route('anexos.create', ['vinculador_anexos_id'=>$vinculador_anexos_id]))->withErrors(['errors'=>'Erro ao adicionar anexos corpo de email, erro no anexo: '.$anexo->getErrorMessage()]);
+                }
+            }
+        }
+
+        return redirect(route('anexos.index', ['vinculador_anexos_id'=>$vinculador_anexos_id]));
+
     }
 
+    public function novoAnexo(string $corpoemail_id)
+    {
+        return view('anexos/novoAnexo', ['corpoemail_id'=>$corpoemail_id]);
+    }
+
+    public function storeNovoAnexo(Request $request, string $corpoemail_id){
+
+        if ($request->hasFile('anexos')){
+            try {
+                $corpoemail = CorpoEmail::where('id','=',$corpoemail_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            }catch(Exception $e){
+                return redirect(route('corpoemail.index'))->withErrors(['errors'=>'Erro ao adicionar anexo '.$e->getMessage()]);
+            }
+            $vinculador_anexos = [
+                'user_id'=>Auth::user()->getAuthIdentifier()
+            ];
+            try {
+                $vinculador_anexos = VinculadorAnexos::create($vinculador_anexos);
+            }catch(Exception $e){
+                return redirect(route('corpoemail.index'))->withErrors(['errors'=>'Erro ao adicionar anexo '.$e->getMessage()]);
+            }
+
+            foreach ($request->file('anexos') as $anexo){
+
+                if ($anexo->isValid()){
+                    $hashname = Str::random(40).'.'.$anexo->extension();
+                    $anexo->move(base_path().'/anexos', $hashname);
+
+                    $anexoDB = [
+                        'user_id'=>Auth::user()->getAuthIdentifier(),
+                        'nome'=>$anexo->getClientOriginalName(),
+                        'hashname'=>$hashname
+                    ];
+                    try{
+                        $anexoDB = Anexos::create($anexoDB);
+                    }catch (Exception $e){
+                        return redirect(route('anexos.novoAnexo', ['corpoemail_id'=>$corpoemail_id]))->withErrors(['errors'=>'Erro ao adicionar anexo ao corpo de email, anexo: '.$e->getMessage()]);
+                    }
+
+                    $listaanexos = [
+                        'user_id'=>Auth::user()->getAuthIdentifier(),
+                        'vinculador_anexos_id'=>$vinculador_anexos->id,
+                        'anexos_id'=>$anexoDB->id
+                    ];
+
+                    try{
+                        ListaAnexos::create($listaanexos);
+                    }catch (Exception $e){
+                        return redirect(route('anexos.novoAnexo', ['corpoemail_id'=>$corpoemail_id]))->withErrors(['errors'=>'Erro ao adicionar anexos ao corpo de email, lista de anexo: '.$e->getMessage()]);
+                    }
+                }else{
+                    return redirect(route('anexos.novoAnexo', ['corpoemail_id'=>$corpoemail_id]))->withErrors(['errors'=>'Erro ao adicionar anexos corpo de email, erro no anexo: '.$anexo->getErrorMessage()]);
+                }
+            }
+
+            $corpoemail->vinculador_anexos_id = $vinculador_anexos->id;
+            $corpoemail->save();
+        }
+
+        return redirect(route('corpoemail.index'));
+    }
     /**
      * Display the specified resource.
      */
@@ -116,14 +226,17 @@ class AnexosController extends Controller
 
                 $listaanexos = DB::table('lista_anexos')->where('vinculador_anexos_id','=', $vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->get();
 
-                if ($listaanexos->count() == 1){
-                    $vinculadoranexos = VinculadorAnexos::where('id','=',$listaanexo->vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
-                    VinculadorAnexos::destroy($vinculadoranexos);
-                }
-
                 File::delete(base_path().'/anexos/'.$anexo->hashname);
                 $listaanexo->delete();
                 Anexos::destroy($anexo);
+
+                if ($listaanexos->count() == 1){
+                    CorpoEmail::where('vinculador_anexos_id','=',$vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->update(['vinculador_anexos_id'=>null]);
+                    $vinculadoranexos = VinculadorAnexos::where('id','=',$listaanexo->vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+                    VinculadorAnexos::destroy($vinculadoranexos);
+
+                    return redirect(route('corpoemail.index'));
+                }
 
             }else{
                 return redirect(route('anexos.index', ['id'=>$vinculador_anexos_id]))->withErrors(['errors'=>'Erro, anexo não encontrado']);
@@ -132,6 +245,6 @@ class AnexosController extends Controller
             return redirect(route('anexos.index', ['id'=>$vinculador_anexos_id]))->withErrors(['errors'=>'Erro na exclusão: '.$e->getMessage()]);
         }
 
-        return redirect(route('anexos.index', ['id'=>$vinculador_anexos_id]));
+        return redirect(route('anexos.index', ['vinculador_anexos_id'=>$vinculador_anexos_id]));
     }
 }

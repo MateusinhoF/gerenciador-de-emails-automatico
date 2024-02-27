@@ -5,7 +5,7 @@
             <x-link-sair/>
         </div>
 
-        <form action="{{route('anexos.update',['id'=>$corpoemail->id])}}" method="post" enctype="multipart/form-data" class="m-3 p-4 color-forms-background">
+        <form action="{{route('corpoemail.update',['id'=>$corpoemail->id])}}" method="post" enctype="multipart/form-data" class="m-3 p-4 color-forms-background">
 
             @csrf
             <x-input nome="titulo" texto="Titulo" tipo="text" valor="{{$corpoemail->titulo}}"/>

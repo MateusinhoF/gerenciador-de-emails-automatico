@@ -1,8 +1,8 @@
-<x-template titulodapagina="Corpo de Email" tituloHeader="Corpo de Email">
+<x-template titulodapagina="Anexos de Email" tituloHeader="Anexos de Email">
 
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
-            <x-link href="{{route('anexos.create')}}" texto="Cadastrar Anexo"/>
+            <x-link href="{{route('anexos.create', ['vinculador_anexos_id'=>$vinculador_anexos_id])}}" texto="Adicionar Anexo"/>
             <x-link href="{{route('corpoemail.index')}}" texto="Voltar"/>
             <x-link-sair/>
         </div>

@@ -74,9 +74,11 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/paraenviar/{id}/destroy', [ParaEnviarController::class, 'destroy'])->name('paraenviar.destroy');
     Route::get('/paraenviar/{id}/alterarenvio', [ParaEnviarController::class, 'alterarEnvio'])->name('paraenviar.alterarenvio');
 
-    Route::get('/anexos/{id}', [AnexosController::class, 'index'])->name('anexos.index');
-    Route::get('/anexos/create', [AnexosController::class, 'create'])->name('anexos.create');
-    Route::post('/anexos', [AnexosController::class, 'store'])->name('anexos.store');
+    Route::get('/anexos/{vinculador_anexos_id}', [AnexosController::class, 'index'])->name('anexos.index');
+    Route::get('/anexos/create/{vinculador_anexos_id}', [AnexosController::class, 'create'])->name('anexos.create');
+    Route::get('/anexos/novoAnexo/{corpoemail_id}', [AnexosController::class, 'novoAnexo'])->name('anexos.novoAnexo');
+    Route::post('/anexos/{vinculador_anexos_id}', [AnexosController::class, 'store'])->name('anexos.store');
+    Route::post('/anexos/{corpoemail_id}/storeNovoAnexo', [AnexosController::class, 'storeNovoAnexo'])->name('anexos.storeNovoAnexo');
     Route::get('/anexos/{id}/{vinculador_anexos_id}/edit', [AnexosController::class, 'edit'])->name('anexos.edit');
     Route::post('/anexos/{id}/{vinculador_anexos_id}', [AnexosController::class, 'update'])->name('anexos.update');
     Route::get('/anexos/{id}/{vinculador_anexos_id}/destroy', [AnexosController::class, 'destroy'])->name('anexos.destroy');

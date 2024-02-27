@@ -29,12 +29,17 @@
                             @if($corpo->vinculador_anexos_id != null)
                                 <a
                                     class="link-success p-1 link-offset-2 link-underline link-underline-opacity-0 link-opacity-50-hover"
-                                    href="{{route('anexos.index', ['id'=>$corpo->vinculador_anexos_id])}}"
+                                    href="{{route('anexos.index', ['vinculador_anexos_id'=>$corpo->vinculador_anexos_id])}}"
                                 >
-                                    ver
+                                    Visualizar
                                 </a>
                             @else
-
+                                <a
+                                    class="link-primary p-1 link-offset-2 link-underline link-underline-opacity-0 link-opacity-50-hover"
+                                    href="{{route('anexos.novoAnexo', ['corpoemail_id'=>$corpo->id])}}"
+                                >
+                                    Adicionar
+                                </a>
                             @endif
                         </td>
                         <td>
