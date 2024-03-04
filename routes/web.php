@@ -83,7 +83,9 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/anexos/{id}/{vinculador_anexos_id}', [AnexosController::class, 'update'])->name('anexos.update');
     Route::get('/anexos/{id}/{vinculador_anexos_id}/destroy', [AnexosController::class, 'destroy'])->name('anexos.destroy');
 
-    Route::get('/configuracoesusuario/edit', [ConfiguracoesUsuarioController::class, 'edit'])->name('configuracoesusuario.edit');
+    Route::get('/configuracoesusuario/edit/{id}', [ConfiguracoesUsuarioController::class, 'edit'])->name('configuracoesusuario.edit');
     Route::post('/configuracoesusuario/{id}', [ConfiguracoesUsuarioController::class, 'update'])->name('configuracoesusuario.update');
+    Route::get('/configuracoesusuario/destroyimg/{id}', [ConfiguracoesUsuarioController::class, 'destroyimg'])->name('configuracoesusuario.destroyimg');
+    Route::get('/configuracoesusuario/downloadassinatura/{id}', [ConfiguracoesUsuarioController::class, 'downloadAssinatura'])->name('configuracoesusuario.downloadassinatura');
 
 });
