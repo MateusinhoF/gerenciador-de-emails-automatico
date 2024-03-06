@@ -16,7 +16,11 @@
 <br>
 
 <div class="options-text">
-    <div>Att.</div>
-    <div>Rosane</div>
+    @if($assinatura != null)
+        <div>Att. {{$assinatura}}</div>
+    @endif
+    @if($imagem_assinatura != null)
+        <img src="{{$message->embed(base_path().'/assinaturas/'.$imagem_assinatura)}}"/>
+    @endif
 </div>
 

@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -45,7 +46,9 @@ class EnviarEmail extends Mailable
         return new Content(
             markdown: 'envioemails.enviar.index',
             with: [
-                'corpo'=>$this->dataemail['corpo']
+                'corpo'=>$this->dataemail['corpo'],
+                'assinatura'=>$this->dataemail['assinatura'],
+                'imagem_assinatura'=>$this->dataemail['imagem_assinatura']
             ]
         );
     }
@@ -57,8 +60,19 @@ class EnviarEmail extends Mailable
      */
     public function attachments(): array
     {
-        return [
-            $this->dataemail['anexos']
-        ];
+        $attachments = [];
+
+        if ($this->dataemail['anexos'] != null) {
+            foreach ($this->dataemail['anexos'] as $anexo) {
+
+                array_push(
+                    $attachments,
+                    Attachment::fromPath(base_path() . '/anexos/' . $anexo->hashname)
+                        ->as($anexo->nome)
+                );
+            }
+        }
+
+        return $attachments;
     }
 }

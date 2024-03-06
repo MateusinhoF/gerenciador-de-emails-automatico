@@ -3,8 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Mail\EnviarEmail;
+use App\Models\Anexos;
 use App\Models\ParaEnviar;
 use Carbon\Carbon;
+use Faker\Core\File;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -44,7 +46,7 @@ class EnviarEmailCommand extends Command
                     $hoje = Carbon::today();
 
                     if ($hoje->greaterThanOrEqualTo($enviar->data_inicio) && $hoje->lessThanOrEqualTo($enviar->data_fim)) {
-                        $this->enviar($enviar);
+                        $this->enviar($enviar, $user);
                     } else {
                         DB::table('para_enviar')
                             ->where('id', '=', $enviar->id)
@@ -53,13 +55,13 @@ class EnviarEmailCommand extends Command
                 }
 
                 if (!isset($enviar->data_inicio)) {
-                    $this->enviar($enviar, $user->email, $user->senha_email);
+                    $this->enviar($enviar, $user);
                 }
             }
         }
     }
 
-    private function enviar($enviar, $email, $senha){
+    private function enviar($enviar, $user){
 
         $emails = $this->buscarListaEmails($enviar->titulo_lista_de_emails_id);
         $emailscc = $this->buscarListaEmails($enviar->titulo_lista_de_emails_cc_id);
@@ -76,21 +78,24 @@ class EnviarEmailCommand extends Command
         $corpoemail->texto = Str::replace('@nome4',$nomes->nome4??'',$corpoemail->texto);
         $corpoemail->texto = Str::replace('@nome5',$nomes->nome5??'',$corpoemail->texto);
 
-        $config = [
-            'driver' => 'smtp',
-            'host' => 'smtp.gmail.com',
-            'port' => 587,
-            'encryption' => 'tls',
-            'username' => $email,
-            'password' => $senha,
-        ];
+        $listaAnexos = DB::table('lista_anexos')->where('user_id','=',$user->id)->where('vinculador_anexos_id','=',$corpoemail->vinculador_anexos_id)->get();
+        $anexos = [];
+
+        if ($listaAnexos != null) {
+            foreach ($listaAnexos as $anexo) {
+                $anexo = Anexos::where('user_id', '=', $user->id)->where('id', '=', $anexo->anexos_id)->first();
+                array_push($anexos, $anexo);
+            }
+        }
+
+
 
         Config::set('mail.mailers.smtp.driver', 'smtp');
         Config::set('mail.mailers.smtp.host', 'smtp.gmail.com');
         Config::set('mail.mailers.smtp.port', 587);
         Config::set('mail.mailers.smtp.encryption', 'tls');
-        Config::set('mail.mailers.smtp.username', $email);
-        Config::set('mail.mailers.smtp.password', $senha);
+        Config::set('mail.mailers.smtp.username', $user->email);
+        Config::set('mail.mailers.smtp.password', $user->senha_email);
 
         Mail::to($emails)
             ->cc($emailscc)
@@ -98,7 +103,9 @@ class EnviarEmailCommand extends Command
             ->send(new EnviarEmail([
                 'assunto'=>$corpoemail->assunto,
                 'corpo'=>$corpoemail->texto,
-                'anexo'=>$corpoemail->anexo
+                'anexos'=>$anexos,
+                'assinatura'=>$user->assinatura,
+                'imagem_assinatura'=>$user->imagem_assinatura,
                 ]
             ));
 
