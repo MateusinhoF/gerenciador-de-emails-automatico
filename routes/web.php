@@ -59,6 +59,8 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/emails/{id}', [EmailsController::class, 'update'])->name('emails.update');
     Route::get('/emails/{id}/destroy', [EmailsController::class, 'destroy'])->name('emails.destroy');
 
+    Route::get('/listadeemails/receivelistemail', [ListaDeEmailsController::class, 'receiveListEmail'])->name('listadeemails.receivelistemail');
+    Route::post('/listadeemails/storelistemail', [ListaDeEmailsController::class, 'storeListEmail'])->name('listadeemails.storelistemail');
     Route::get('/listadeemails', [ListaDeEmailsController::class, 'index'])->name('listadeemails.index');
     Route::get('/listadeemails/create', [ListaDeEmailsController::class, 'create'])->name('listadeemails.create');
     Route::post('/listadeemails', [ListaDeEmailsController::class, 'store'])->name('listadeemails.store');

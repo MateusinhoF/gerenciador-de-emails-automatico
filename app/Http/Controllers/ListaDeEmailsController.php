@@ -161,4 +161,55 @@ class ListaDeEmailsController extends Controller
         return redirect(route('listadeemails.index'));
     }
 
+    public function receiveListEmail(){
+        return view('listadeemails/receivelistemail');
+    }
+
+    public function storeListEmail(Request $request){
+        $request->validate([
+            'titulo'=>'required',
+            'lista'=>'required'
+        ]);
+
+        $tituloListaEmail = [
+            'user_id'=>Auth::user()->getAuthIdentifier(),
+            'titulo'=>$request->titulo
+        ];
+        try {
+            $tituloListaEmail = TituloListaDeEmails::create($tituloListaEmail);
+        }catch(Exception $e){
+            return redirect(route('listadeemails.index'))->withErrors(['errors'=>'Erro ao cadastrar titulo: '.$e->getMessage()]);
+        }
+
+        $listaparatratar = preg_split("/[\s,]+|\n/",$request->lista);
+
+        foreach ($listaparatratar as $possivelemail){
+            if (strpos($possivelemail, "@") > 0){
+                $email = preg_replace('/[^a-zA-Z0-9@\.\-_]/', '', $possivelemail);
+
+                $email = [
+                    'user_id'=>Auth::user()->getAuthIdentifier(),
+                    'email'=>$email,
+                ];
+                try {
+                    $email = Emails::create($email);
+                }catch(Exception $e){
+                    return redirect(route('listadeemails.index'))->withErrors(['errors'=>'Erro ao cadastrar email: '.$e->getMessage()]);
+                }
+
+                try {
+                    $listaEmail = [
+                        'user_id'=>Auth::user()->getAuthIdentifier(),
+                        'titulo_lista_de_emails_id'=>$tituloListaEmail->id,
+                        'emails_id'=>$email->id
+                    ];
+                    ListaDeEmails::create($listaEmail);
+                }catch(Exception $e){
+                    return redirect(route('listadeemails.index'))->withErrors(['errors'=>'Erro ao cadastrar lista de emails: '.$e->getMessage()]);
+                }
+            }
+        }
+
+        return redirect(route('listadeemails.index'));
+    }
 }
