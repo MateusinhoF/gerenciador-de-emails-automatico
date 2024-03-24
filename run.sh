@@ -19,8 +19,29 @@ if ! command -v composer &> /dev/null; then
     sudo apt-get install composer
 fi
 
-USUARIO_DB="user_laravel"
-SENHA_DB="sfgd645aerg1sb"
+USUARIO_DB=""
+SENHA_DB=""
+
+while [ true ]; do
+    echo "digite um usuário para o banco de dados"
+    read USUARIO_DB
+
+    if [ -z "$USUARIO_DB" ]; then
+            echo "Por favor, digite um usuário para continuar."
+    else
+        break
+    fi
+done
+while [ true ]; do
+    echo "digite uma senha para o banco de dados"
+    read -s SENHA_DB
+
+    if [ -z "$SENHA_DB" ]; then
+            echo "Por favor, digite uma senha para continuar."
+    else
+        break
+    fi
+done
 
 sudo mysql -u root <<EOF
 
