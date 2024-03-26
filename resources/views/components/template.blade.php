@@ -13,8 +13,13 @@
 <header>
     <div class="container mt-4 mb-4 mx-auto d-flex justify-content-center align-items-center">
         <h1 class="text-white">
-            {{$tituloHeader ?? 'Sem definição de acesso'}}
+            Gestor de Emails Automatico
         </h1>
+    </div>
+    <div class="container mt-4 mb-4 mx-auto d-flex justify-content-center align-items-center">
+        <h2 class="text-white">
+            {{$tituloHeader ?? 'Sem definição de acesso'}}
+        </h2>
     </div>
 </header>
 <section>
@@ -24,8 +29,10 @@
         </div>
     </div>
 </section>
-<footer>
-
+<footer class="container mt-4 mb-4 mx-auto d-flex justify-content-center align-items-center">
+    <a href="https://www.utfpr.edu.br/" class="d-flex justify-content-center align-items-center">
+        <img class="img-utfpr" src="/assets/images/utfpr_logo.png" height="50%" width="50%">
+    </a>
 </footer>
 </body>
 </html>
