@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Faker\Core\File;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -88,14 +89,14 @@ class EnviarEmailCommand extends Command
             }
         }
 
-
+        $senha_email = Crypt::decrypt($user->senha_email);
 
         Config::set('mail.mailers.smtp.driver', 'smtp');
         Config::set('mail.mailers.smtp.host', 'smtp.gmail.com');
         Config::set('mail.mailers.smtp.port', 587);
         Config::set('mail.mailers.smtp.encryption', 'tls');
         Config::set('mail.mailers.smtp.username', $user->email);
-        Config::set('mail.mailers.smtp.password', $user->senha_email);
+        Config::set('mail.mailers.smtp.password', $senha_email);
 
         Mail::to($emails)
             ->cc($emailscc)

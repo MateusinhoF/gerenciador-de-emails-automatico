@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class AuthController extends Controller
 {
@@ -33,7 +34,7 @@ class AuthController extends Controller
             'senha_email'=>'required'
         ]);
         $usuario = $request->only('login','password','email','senha_email');
-
+        $usuario['senha_email'] = Crypt::encrypt($usuario['senha_email']);
         try{
             User::create($usuario);
         }

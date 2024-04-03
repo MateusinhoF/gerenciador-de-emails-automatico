@@ -60,6 +60,7 @@ class ConfiguracoesUsuarioController extends Controller
         }
         if (isset($request->senha_email)){
             $usuario->senha_email = $novousuario->senha_email;
+            $usuario->senha_email = Crypt::encrypt($usuario->senha_email);
         }
 
         if (isset($request->assinatura)){
