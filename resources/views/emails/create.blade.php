@@ -9,8 +9,9 @@
 
             @csrf
 
+            <x-input nome="nome" texto="Nome" tipo="text"/>
             <x-input nome="email" texto="Email" tipo="text"/>
-            <x-input nome="descricao" texto="Descrição" tipo="text"/>
+            <x-input nome="telefone" texto="Telefone" tipo="text"/>
 
 
             <div class="d-flex justify-content-center">

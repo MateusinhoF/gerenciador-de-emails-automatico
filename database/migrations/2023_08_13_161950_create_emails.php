@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
+            $table->string('nome');
             $table->string('email');
-            $table->string('descricao')->nullable();
+            $table->string('telefone')->nullable();
             $table->timestamps();
         });
     }

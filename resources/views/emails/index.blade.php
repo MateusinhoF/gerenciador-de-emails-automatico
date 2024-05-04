@@ -12,16 +12,18 @@
             <table class="table table-striped table-hover text-center">
                 <thead>
                 <tr>
+                    <th>Nome</th>
                     <th>Email</th>
-                    <th>Descrição</th>
+                    <th>Telefone</th>
                     <th>Opções</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($emails as $email)
                     <tr>
+                        <td>{{$email->nome}}</td>
                         <td>{{$email->email}}</td>
-                        <td>{{$email->descricao}}</td>
+                        <td>{{$email->telefone}}</td>
                         <td>
                             <x-link-editar href="{{route('emails.edit', ['id'=>$email->id])}}"/>
                             <x-link-excluir href="{{route('emails.destroy', ['id'=>$email->id])}}"/>

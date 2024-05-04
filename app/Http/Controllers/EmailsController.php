@@ -20,13 +20,15 @@ class EmailsController extends Controller
 
     public function store(Request $request){
         $request->validate([
+            'nome'=>'required|nome',
             'email'=>'required|email'
         ]);
 
         $email = [
             'user_id' => Auth::user()->getAuthIdentifier(),
+            'nome'=>$request->nome,
             'email'=>$request->email,
-            'descricao'=>$request->descricao
+            'telefone'=>$request->telefone
         ];
 
         try{
@@ -49,6 +51,7 @@ class EmailsController extends Controller
 
     public function update(Request $request, string $id){
         $request->validate([
+            'nome'=>'required|nome',
             'email'=>'required|email'
         ]);
 
@@ -59,13 +62,15 @@ class EmailsController extends Controller
         }
         $novoEmail = $email->replicate();
 
+        $novoEmail->nome = $request->nome;
         $novoEmail->email = $request->email;
-        $novoEmail->descricao = $request->descricao;
+        $novoEmail->telefone = $request->telefone;
 
         if(!Emails::Equals($email,$novoEmail)){
             try{
+                $email->nome = $novoEmail->nome;
                 $email->email = $novoEmail->email;
-                $email->descricao = $novoEmail->descricao;
+                $email->telefone = $novoEmail->telefone;
                 $email->save();
             }catch (Exception $e){
                 return redirect(route('emails.edit'))->withErrors(['errors'=>'Erro ao salvar novo email: '.$e->getMessage()]);
