@@ -1,11 +1,11 @@
-<x-template titulodapagina="Cadastrar Email" tituloHeader="Cadastrar Email">
+<x-template titulodapagina="Cadastrar Envio" tituloHeader="Cadastrar Envio">
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
-            <x-link href="{{route('emails.index')}}" texto="Voltar"/>
+            <x-link href="{{route('envios.index')}}" texto="Voltar"/>
             <x-link-sair/>
         </div>
 
-        <form action="{{route('emails.store')}}" method="post" class="m-3 p-4 color-forms-background">
+        <form action="{{route('envios.store')}}" method="post" class="m-3 p-4 color-forms-background">
 
             @csrf
 
@@ -15,7 +15,7 @@
 
 
             <div class="d-flex justify-content-center">
-                <input type="submit" value="Cadastrar Email" class="btn btn-primary">
+                <input type="submit" value="Cadastrar Envio" class="btn btn-primary">
             </div>
 
         </form>

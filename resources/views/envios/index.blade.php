@@ -2,8 +2,8 @@
     <div class="mx-auto col-md-12 bg-secondary">
 
         <div class="d-flex justify-content-around m-3">
-            <x-link-proximo href="{{route('listadeemails.index')}}" texto="Próximo"/>
-            <x-link href="{{route('emails.create')}}" texto="Cadastrar Emails"/>
+            <x-link-proximo href="{{route('listadeenvios.index')}}" texto="Próximo"/>
+            <x-link href="{{route('envios.create')}}" texto="Cadastrar Envio"/>
             <x-link href="{{route('paraenviar.index')}}" texto="Voltar"/>
             <x-link-sair/>
         </div>
@@ -19,14 +19,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($emails as $email)
+                @foreach ($envios as $envio)
                     <tr>
-                        <td>{{$email->nome}}</td>
-                        <td>{{$email->email}}</td>
-                        <td>{{$email->telefone}}</td>
+                        <td>{{$envio->nome}}</td>
+                        <td>{{$envio->email}}</td>
+                        <td>{{$envio->telefone}}</td>
                         <td>
-                            <x-link-editar href="{{route('emails.edit', ['id'=>$email->id])}}"/>
-                            <x-link-excluir href="{{route('emails.destroy', ['id'=>$email->id])}}"/>
+                            <x-link-editar href="{{route('envios.edit', ['id'=>$envio->id])}}"/>
+                            <x-link-excluir href="{{route('envios.destroy', ['id'=>$envio->id])}}"/>
                         </td>
                     </tr>
                 @endforeach

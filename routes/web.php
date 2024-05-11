@@ -52,21 +52,21 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/corpoemail/{id}', [CorpoEmailController::class, 'update'])->name('corpoemail.update');
     Route::get('/corpoemail/{id}/destroy', [CorpoEmailController::class, 'destroy'])->name('corpoemail.destroy');
 
-    Route::get('/emails', [EnviosController::class, 'index'])->name('emails.index');
-    Route::get('/emails/create', [EnviosController::class, 'create'])->name('emails.create');
-    Route::post('/emails', [EnviosController::class, 'store'])->name('emails.store');
-    Route::get('/emails/{id}/edit', [EnviosController::class, 'edit'])->name('emails.edit');
-    Route::post('/emails/{id}', [EnviosController::class, 'update'])->name('emails.update');
-    Route::get('/emails/{id}/destroy', [EnviosController::class, 'destroy'])->name('emails.destroy');
+    Route::get('/envios', [EnviosController::class, 'index'])->name('envios.index');
+    Route::get('/envios/create', [EnviosController::class, 'create'])->name('envios.create');
+    Route::post('/envios', [EnviosController::class, 'store'])->name('envios.store');
+    Route::get('/envios/{id}/edit', [EnviosController::class, 'edit'])->name('envios.edit');
+    Route::post('/envios/{id}', [EnviosController::class, 'update'])->name('envios.update');
+    Route::get('/envios/{id}/destroy', [EnviosController::class, 'destroy'])->name('envios.destroy');
 
-    Route::get('/listadeemails/receivelistemail', [ListaDeEnviosController::class, 'receiveListEmail'])->name('listadeemails.receivelistemail');
-    Route::post('/listadeemails/storelistemail', [ListaDeEnviosController::class, 'storeListEmail'])->name('listadeemails.storelistemail');
-    Route::get('/listadeemails', [ListaDeEnviosController::class, 'index'])->name('listadeemails.index');
-    Route::get('/listadeemails/create', [ListaDeEnviosController::class, 'create'])->name('listadeemails.create');
-    Route::post('/listadeemails', [ListaDeEnviosController::class, 'store'])->name('listadeemails.store');
-    Route::get('/listadeemails/{id}/edit', [ListaDeEnviosController::class, 'edit'])->name('listadeemails.edit');
-    Route::post('/listadeemails/{id}', [ListaDeEnviosController::class, 'update'])->name('listadeemails.update');
-    Route::get('/listadeemails/{id}/destroy', [ListaDeEnviosController::class, 'destroy'])->name('listadeemails.destroy');
+    Route::get('/listadeenvios/receivelistenvio', [ListaDeEnviosController::class, 'receiveListEnvio'])->name('listadeenvios.receivelistenvio');
+    Route::post('/listadeenvios/storelistenvio', [ListaDeEnviosController::class, 'storeListEnvios'])->name('listadeenvios.storelistenvio');
+    Route::get('/listadeenvios', [ListaDeEnviosController::class, 'index'])->name('listadeenvios.index');
+    Route::get('/listadeenvios/create', [ListaDeEnviosController::class, 'create'])->name('listadeenvios.create');
+    Route::post('/listadeenvios', [ListaDeEnviosController::class, 'store'])->name('listadeenvios.store');
+    Route::get('/listadeenvios/{id}/edit', [ListaDeEnviosController::class, 'edit'])->name('listadeenvios.edit');
+    Route::post('/listadeenvios/{id}', [ListaDeEnviosController::class, 'update'])->name('listadeenvios.update');
+    Route::get('/listadeenvios/{id}/destroy', [ListaDeEnviosController::class, 'destroy'])->name('listadeenvios.destroy');
 
     Route::get('/paraenviar', [ParaEnviarController::class, 'index'])->name('paraenviar.index');
     Route::get('/paraenviar/create', [ParaEnviarController::class, 'create'])->name('paraenviar.create');

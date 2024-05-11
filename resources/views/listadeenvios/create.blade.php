@@ -1,12 +1,12 @@
-<x-template titulodapagina="Cadastrar Lista de Emails" tituloHeader="Cadastrar Lista de Emails">
+<x-template titulodapagina="Cadastrar Lista de Envios" tituloHeader="Cadastrar Lista de Envios">
 
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
-            <x-link href="{{route('listadeemails.index')}}" texto="Voltar"/>
+            <x-link href="{{route('listadeenvios.index')}}" texto="Voltar"/>
             <x-link-sair/>
         </div>
 
-        <form action="{{route('listadeemails.store')}}" method="post" class="m-3 p-4 color-forms-background">
+        <form action="{{route('listadeenvios.store')}}" method="post" class="m-3 p-4 color-forms-background">
 
             @csrf
 
@@ -17,10 +17,10 @@
             </div>
 
             <div class="form-control mt-2 mb-3 color-input-background">
-                @foreach($emails as $email)
+                @foreach($envios as $envio)
                     <div class="form-check">
-                        <input type="checkbox" id="{{$email->id}}" name="email[]" value="{{$email->id}}">
-                        <label for="{{$email->id}}">{{$email->email}}</label>
+                        <input type="checkbox" id="{{$envio->id}}" name="envios[]" value="{{$envio->id}}">
+                        <label for="{{$envio->id}}">{{$envio->email}}</label>
                     </div>
                 @endforeach
             </div>

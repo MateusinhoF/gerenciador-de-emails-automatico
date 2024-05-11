@@ -2,11 +2,11 @@
 
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
-            <x-link href="{{route('listadeemails.index')}}" texto="Voltar"/>
+            <x-link href="{{route('listadeeenvios.index')}}" texto="Voltar"/>
             <x-link-sair/>
         </div>
 
-        <form action="{{route('listadeemails.storelistemail')}}" method="post" class="m-3 p-4 color-forms-background">
+        <form action="{{route('listadeenvios.storelistenvios')}}" method="post" class="m-3 p-4 color-forms-background">
 
             @csrf
 
