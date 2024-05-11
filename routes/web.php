@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AcessoNegadoController;
 use App\Http\Controllers\NomesController;
-use App\Http\Controllers\EmailsController;
+use App\Http\Controllers\EnviosController;
 use App\Http\Controllers\CorpoEmailController;
-use App\Http\Controllers\ListaDeEmailsController;
+use App\Http\Controllers\ListaDeEnviosController;
 use App\Http\Controllers\ParaEnviarController;
 //use App\Http\Controllers\TituloListaDeEmailsController;
 use App\Http\Controllers\ConfiguracoesUsuarioController;
@@ -52,21 +52,21 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/corpoemail/{id}', [CorpoEmailController::class, 'update'])->name('corpoemail.update');
     Route::get('/corpoemail/{id}/destroy', [CorpoEmailController::class, 'destroy'])->name('corpoemail.destroy');
 
-    Route::get('/emails', [EmailsController::class, 'index'])->name('emails.index');
-    Route::get('/emails/create', [EmailsController::class, 'create'])->name('emails.create');
-    Route::post('/emails', [EmailsController::class, 'store'])->name('emails.store');
-    Route::get('/emails/{id}/edit', [EmailsController::class, 'edit'])->name('emails.edit');
-    Route::post('/emails/{id}', [EmailsController::class, 'update'])->name('emails.update');
-    Route::get('/emails/{id}/destroy', [EmailsController::class, 'destroy'])->name('emails.destroy');
+    Route::get('/emails', [EnviosController::class, 'index'])->name('emails.index');
+    Route::get('/emails/create', [EnviosController::class, 'create'])->name('emails.create');
+    Route::post('/emails', [EnviosController::class, 'store'])->name('emails.store');
+    Route::get('/emails/{id}/edit', [EnviosController::class, 'edit'])->name('emails.edit');
+    Route::post('/emails/{id}', [EnviosController::class, 'update'])->name('emails.update');
+    Route::get('/emails/{id}/destroy', [EnviosController::class, 'destroy'])->name('emails.destroy');
 
-    Route::get('/listadeemails/receivelistemail', [ListaDeEmailsController::class, 'receiveListEmail'])->name('listadeemails.receivelistemail');
-    Route::post('/listadeemails/storelistemail', [ListaDeEmailsController::class, 'storeListEmail'])->name('listadeemails.storelistemail');
-    Route::get('/listadeemails', [ListaDeEmailsController::class, 'index'])->name('listadeemails.index');
-    Route::get('/listadeemails/create', [ListaDeEmailsController::class, 'create'])->name('listadeemails.create');
-    Route::post('/listadeemails', [ListaDeEmailsController::class, 'store'])->name('listadeemails.store');
-    Route::get('/listadeemails/{id}/edit', [ListaDeEmailsController::class, 'edit'])->name('listadeemails.edit');
-    Route::post('/listadeemails/{id}', [ListaDeEmailsController::class, 'update'])->name('listadeemails.update');
-    Route::get('/listadeemails/{id}/destroy', [ListaDeEmailsController::class, 'destroy'])->name('listadeemails.destroy');
+    Route::get('/listadeemails/receivelistemail', [ListaDeEnviosController::class, 'receiveListEmail'])->name('listadeemails.receivelistemail');
+    Route::post('/listadeemails/storelistemail', [ListaDeEnviosController::class, 'storeListEmail'])->name('listadeemails.storelistemail');
+    Route::get('/listadeemails', [ListaDeEnviosController::class, 'index'])->name('listadeemails.index');
+    Route::get('/listadeemails/create', [ListaDeEnviosController::class, 'create'])->name('listadeemails.create');
+    Route::post('/listadeemails', [ListaDeEnviosController::class, 'store'])->name('listadeemails.store');
+    Route::get('/listadeemails/{id}/edit', [ListaDeEnviosController::class, 'edit'])->name('listadeemails.edit');
+    Route::post('/listadeemails/{id}', [ListaDeEnviosController::class, 'update'])->name('listadeemails.update');
+    Route::get('/listadeemails/{id}/destroy', [ListaDeEnviosController::class, 'destroy'])->name('listadeemails.destroy');
 
     Route::get('/paraenviar', [ParaEnviarController::class, 'index'])->name('paraenviar.index');
     Route::get('/paraenviar/create', [ParaEnviarController::class, 'create'])->name('paraenviar.create');
