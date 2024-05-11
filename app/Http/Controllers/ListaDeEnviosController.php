@@ -161,11 +161,11 @@ class ListaDeEnviosController extends Controller
         return redirect(route('listadeenvios.index'));
     }
 
-    public function receiveListEnvios(){
-        return view('listadeenvios/receivelistenvio');
+    public function receiveListEmails(){
+        return view('listadeenvios/receivelistemails');
     }
 
-    public function storeListEnvios(Request $request){
+    public function storeListEmails(Request $request){
         $request->validate([
             'titulo'=>'required',
             'lista'=>'required'
@@ -189,9 +189,9 @@ class ListaDeEnviosController extends Controller
 
                 $envio = [
                     'user_id'=>Auth::user()->getAuthIdentifier(),
-                    'nome'=>$request->nome,
+//                    'nome'=>$request->nome,
                     'email'=>$email,
-                    'telefone'=>$request->telefone,
+//                    'telefone'=>$request->telefone,
                 ];
                 try {
                     $envio = Envios::create($envio);
