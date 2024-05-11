@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignIdFor(CorpoEmail::class)->references('id')->on('corpo_email');
             $table->foreignIdFor(TituloListaDeEnvios::class)->references('id')->on('titulo_lista_de_envios');
             $table->foreignIdFor(TituloListaDeEnvios::class,'titulo_lista_de_envios_cc_id')->nullable()->references('id')->on('titulo_lista_de_envios');
-            $table->foreignIdFor(TituloListaDeEnvios::class,'titulo_lista_de_emvios_cco_id')->nullable()->references('id')->on('titulo_lista_de_envios');
+            $table->foreignIdFor(TituloListaDeEnvios::class,'titulo_lista_de_envios_cco_id')->nullable()->references('id')->on('titulo_lista_de_envios');
             $table->boolean('continuar_envio')->default(true);
             $table->date('data_inicio')->nullable();
             $table->date('data_fim')->nullable();
