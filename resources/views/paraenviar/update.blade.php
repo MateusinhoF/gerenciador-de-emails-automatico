@@ -28,11 +28,11 @@
 
             <div class="form-control color-input-background">
                 <div class="form-group">
-                    <label for="listatitulos">Selecione uma lista de emails:</label>
+                    <label for="listatitulos">Selecione uma lista de envios:</label>
                     <select name="listatitulos" id="listatitulos" class="form-select">
                         @foreach($listatitulos as $titulo)
                             <option value="{{$titulo->id}}"
-                                @if($titulo->id == $paraenviar->titulo_lista_de_emails_id) selected @endif
+                                @if($titulo->id == $paraenviar->titulo_lista_de_envios_id) selected @endif
                             >{{$titulo->titulo}}</option>
                         @endforeach
                     </select>
@@ -40,12 +40,12 @@
             </div>
             <div class="form-control color-input-background">
                 <div class="form-group">
-                    <label for="listatituloscc">Selecione uma lista de emails para CC <span class="warning">(não obrigatório)</span>:</label>
+                    <label for="listatituloscc">Selecione uma lista de envios para CC <span class="warning">(não obrigatório)</span>:</label>
                     <select name="listatituloscc" id="listatituloscc" class="form-select">
                         <option value="">Sem Lista</option>
                         @foreach($listatitulos as $titulo)
                             <option value="{{$titulo->id}}"
-                                @if($titulo->id == $paraenviar->titulo_lista_de_emails_cc_id) selected @endif
+                                @if($titulo->id == $paraenviar->titulo_lista_de_envios_cc_id) selected @endif
                             >{{$titulo->titulo}}</option>
                         @endforeach
                     </select>
@@ -53,12 +53,12 @@
             </div>
             <div class="form-control color-input-background">
                 <div class="form-group">
-                    <label for="listatituloscco">Selecione uma lista de emails para CCO <span>(não obrigatório)</span>:</label>
+                    <label for="listatituloscco">Selecione uma lista de envios para CCO <span>(não obrigatório)</span>:</label>
                     <select name="listatituloscco" id="listatituloscco" class="form-select">
                         <option value="">Sem Lista</option>
                         @foreach($listatitulos as $titulo)
                             <option value="{{$titulo->id}}"
-                                @if($titulo->id == $paraenviar->titulo_lista_de_emails_cco_id) selected @endif
+                                @if($titulo->id == $paraenviar->titulo_lista_de_envios_cco_id) selected @endif
                             >{{$titulo->titulo}}</option>
                         @endforeach
                     </select>

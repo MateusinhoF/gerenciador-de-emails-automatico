@@ -20,7 +20,7 @@ class EnviosController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'nome'=>'required|nome',
+            'nome'=>'required',
             'email'=>'required|email'
         ]);
 
@@ -51,7 +51,7 @@ class EnviosController extends Controller
 
     public function update(Request $request, string $id){
         $request->validate([
-            'nome'=>'required|nome',
+            'nome'=>'required',
             'email'=>'required|email'
         ]);
 

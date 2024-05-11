@@ -59,8 +59,8 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/envios/{id}', [EnviosController::class, 'update'])->name('envios.update');
     Route::get('/envios/{id}/destroy', [EnviosController::class, 'destroy'])->name('envios.destroy');
 
-    Route::get('/listadeenvios/receivelistenvio', [ListaDeEnviosController::class, 'receiveListEnvio'])->name('listadeenvios.receivelistenvio');
-    Route::post('/listadeenvios/storelistenvio', [ListaDeEnviosController::class, 'storeListEnvios'])->name('listadeenvios.storelistenvio');
+    Route::get('/listadeenvios/receivelistemails', [ListaDeEnviosController::class, 'receiveListEmails'])->name('listadeenvios.receivelistemails');
+    Route::post('/listadeenvios/storelistemails', [ListaDeEnviosController::class, 'storeListEmails'])->name('listadeenvios.storelistemails');
     Route::get('/listadeenvios', [ListaDeEnviosController::class, 'index'])->name('listadeenvios.index');
     Route::get('/listadeenvios/create', [ListaDeEnviosController::class, 'create'])->name('listadeenvios.create');
     Route::post('/listadeenvios', [ListaDeEnviosController::class, 'store'])->name('listadeenvios.store');

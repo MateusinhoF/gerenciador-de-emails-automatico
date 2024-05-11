@@ -5,7 +5,7 @@
             <div class="d-flex justify-content-around mb-3">
                 <x-link-proximo href="{{route('paraenviar.index')}}" texto="Próximo"/>
                 <x-link href="{{route('listadeenvios.create')}}" texto="Cadastrar Lista"/>
-                <x-link href="{{route('listadeenvios.receivelistenvios')}}" texto="Enviar Lista"/>
+                <x-link href="{{route('listadeenvios.receivelistemails')}}" texto="Enviar Lista"/>
                 <x-link href="{{route('envios.create')}}" texto="Cadastrar Envios"/>
                 <x-link href="{{route('paraenviar.index')}}" texto="Voltar"/>
                 <x-link-sair/>

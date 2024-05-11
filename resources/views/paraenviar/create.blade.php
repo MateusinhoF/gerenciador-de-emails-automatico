@@ -25,7 +25,7 @@
 
             <div class="form-control color-input-background">
                 <div class="form-group">
-                    <label for="listatitulos">Selecione uma lista de emails:</label>
+                    <label for="listatitulos">Selecione uma lista de envios:</label>
                     <select name="listatitulos" id="listatitulos" class="form-select">
                         @foreach($listatitulos as $titulo)
                             <option value="{{$titulo->id}}">{{$titulo->titulo}}</option>
@@ -35,7 +35,7 @@
             </div>
             <div class="form-control color-input-background">
                 <div class="form-group">
-                    <label for="listatituloscc">Selecione uma lista de emails para CC <span class="warning">(não obrigatório)</span>:</label>
+                    <label for="listatituloscc">Selecione uma lista de envios para CC <span class="warning">(não obrigatório)</span>:</label>
                     <select name="listatituloscc" id="listatituloscc" class="form-select">
                         <option value="">Sem Lista</option>
                         @foreach($listatitulos as $titulo)
@@ -46,7 +46,7 @@
             </div>
             <div class="form-control color-input-background">
                 <div class="form-group">
-                    <label for="listatituloscco">Selecione uma lista de emails para CCO <span>(não obrigatório)</span>:</label>
+                    <label for="listatituloscco">Selecione uma lista de envios para CCO <span>(não obrigatório)</span>:</label>
                     <select name="listatituloscco" id="listatituloscco" class="form-select">
                         <option value="">Sem Lista</option>
                         @foreach($listatitulos as $titulo)

@@ -5,7 +5,7 @@
             <div class="d-flex justify-content-around mb-3">
                 <x-link-proximo href="{{route('corpoemail.index')}}" texto="Passo a Passo"/>
                 <x-link href="{{route('paraenviar.create')}}" texto="Cadastrar Envio"/>
-                <x-link href="{{route('listadeemails.index')}}" texto="Ver Listas de Emails"/>
+                <x-link href="{{route('listadeenvios.index')}}" texto="Ver Listas de Envios"/>
                 <x-link href="{{route('corpoemail.index')}}" texto="Ver Corpo de Emails"/>
                 <x-link href="{{route('nomes.index')}}" texto="Ver Nomes"/>
                 <x-link href="{{route('configuracoesusuario.edit',['id'=>\Illuminate\Support\Facades\Auth::user()->getAuthIdentifier()])}}" texto="Configurações"/>
@@ -22,9 +22,9 @@
                 <tr>
                     <th>Titulo</th>
                     <th>Corpo Email</th>
-                    <th>Emails</th>
-                    <th>Emails CC</th>
-                    <th>Emails CCO</th>
+                    <th>Envios</th>
+                    <th>Envios CC</th>
+                    <th>Envios CCO</th>
                     <th>Nomes</th>
                     <th>Data Inicio</th>
                     <th>Data Fim</th>
