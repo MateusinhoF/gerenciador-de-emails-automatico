@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Emails;
+use App\Models\Envios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -32,7 +32,7 @@ class EmailsController extends Controller
         ];
 
         try{
-            Emails::create($email);
+            Envios::create($email);
         }catch(Exception $e){
             return redirect(route('emails.create'))->withErrors(['errors'=>'Erro ao cadastrar o email '.$e->getMessage()]);
         }
@@ -41,7 +41,7 @@ class EmailsController extends Controller
 
     public function edit(string $id){
         try{
-            $email = Emails::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
+            $email = Envios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
         }catch(Exception $e){
             return redirect(route('emails.index'))->withErrors(['errors'=>'Erro ao encontrar email: '.$e->getMessage()]);
         }
@@ -56,7 +56,7 @@ class EmailsController extends Controller
         ]);
 
         try {
-            $email = Emails::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
+            $email = Envios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
         }catch (Exception $e){
             return redirect(route('emails.edit'))->withErrors(['errors'=>'Erro ao encontrar email: '.$e->getMessage()]);
         }
@@ -66,7 +66,7 @@ class EmailsController extends Controller
         $novoEmail->email = $request->email;
         $novoEmail->telefone = $request->telefone;
 
-        if(!Emails::Equals($email,$novoEmail)){
+        if(!Envios::Equals($email,$novoEmail)){
             try{
                 $email->nome = $novoEmail->nome;
                 $email->email = $novoEmail->email;
@@ -82,7 +82,7 @@ class EmailsController extends Controller
 
     public function destroy(string $id){
         try{
-            $email = Emails::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            $email = Envios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
             if($email){
                 $email->delete();

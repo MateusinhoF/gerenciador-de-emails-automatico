@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('titulo_lista_de_emails', function (Blueprint $table) {
+        Schema::create('titulo_lista_de_envios', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
             $table->string('titulo');
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('titulo_lista_de_emails');
+        Schema::dropIfExists('titulo_lista_de_envios');
     }
 };

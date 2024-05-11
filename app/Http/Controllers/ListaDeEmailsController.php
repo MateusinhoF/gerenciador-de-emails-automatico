@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Emails;
-use App\Models\ListaDeEmails;
-use App\Models\TituloListaDeEmails;
+use App\Models\Envios;
+use App\Models\ListaDeEnvios;
+use App\Models\TituloListaDeEnvios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -37,19 +37,19 @@ class ListaDeEmailsController extends Controller
         ]);
 
         try {
-            $titulo = TituloListaDeEmails::create(['user_id'=>Auth::user()->getAuthIdentifier(),'titulo' => $request->titulo]);
+            $titulo = TituloListaDeEnvios::create(['user_id'=>Auth::user()->getAuthIdentifier(),'titulo' => $request->titulo]);
         }catch(Exception $e){
             return redirect(route('listadeemails.create'))->withErrors(['errors'=>'Erro ao criar título '.$e->getMessage()]);
         }
         try{
             foreach ($request->email as $email){
-                $email = Emails::find($email)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+                $email = Envios::find($email)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
                 $lista = [
                     'user_id'=>Auth::user()->getAuthIdentifier(),
                     'titulo_lista_de_emails_id'=>$titulo->id,
                     'emails_id'=>$email->id
                 ];
-                ListaDeEmails::create($lista);
+                ListaDeEnvios::create($lista);
             }
             $titulo->save();
         }catch(Exception $e){
@@ -92,12 +92,12 @@ class ListaDeEmailsController extends Controller
             return redirect(route('listadeemails.edit'))->withErrors(['errors'=>'Erro ao encontrar lista: '.$e->getMessage()]);
         }
 
-        $titulo = TituloListaDeEmails::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+        $titulo = TituloListaDeEnvios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
         $novoTitulo = $titulo->replicate();
 
         $novoTitulo->titulo = $request->titulo;
 
-        if(!TituloListaDeEmails::Equals($titulo,$novoTitulo)){
+        if(!TituloListaDeEnvios::Equals($titulo,$novoTitulo)){
             try{
                 $titulo->titulo = $novoTitulo->titulo;
                 $titulo->save();
@@ -117,7 +117,7 @@ class ListaDeEmailsController extends Controller
                 }
             }
             if (!$continua){
-                ListaDeEmails::destroy($listatitulosemail->id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
+                ListaDeEnvios::destroy($listatitulosemail->id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
             }
         }
 
@@ -135,7 +135,7 @@ class ListaDeEmailsController extends Controller
                     'titulo_lista_de_emails_id'=>$id,
                     'emails_id'=>$email
                 ];
-                ListaDeEmails::create($novaLista);
+                ListaDeEnvios::create($novaLista);
             }
         }
 
@@ -147,13 +147,13 @@ class ListaDeEmailsController extends Controller
             $lista = DB::table('lista_de_emails')->where('titulo_lista_de_emails_id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->get();
             if($lista->count() > 0){
                 foreach ($lista as $index) {
-                    ListaDeEmails::destroy($index->id);
+                    ListaDeEnvios::destroy($index->id);
                 }
             }else{
                 return redirect(route('listadeemails.index'))->withErrors(['errors'=>'Erro, lista não encontrado']);
             }
-            $titulo = TituloListaDeEmails::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
-            TituloListaDeEmails::destroy($titulo->id);
+            $titulo = TituloListaDeEnvios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            TituloListaDeEnvios::destroy($titulo->id);
         }catch(Exception $e){
             return redirect(route('listadeemails.index'))->withErrors(['errors'=>'Erro na exclusão: '.$e->getMessage()]);
         }
@@ -176,7 +176,7 @@ class ListaDeEmailsController extends Controller
             'titulo'=>$request->titulo
         ];
         try {
-            $tituloListaEmail = TituloListaDeEmails::create($tituloListaEmail);
+            $tituloListaEmail = TituloListaDeEnvios::create($tituloListaEmail);
         }catch(Exception $e){
             return redirect(route('listadeemails.index'))->withErrors(['errors'=>'Erro ao cadastrar titulo: '.$e->getMessage()]);
         }
@@ -192,7 +192,7 @@ class ListaDeEmailsController extends Controller
                     'email'=>$email,
                 ];
                 try {
-                    $email = Emails::create($email);
+                    $email = Envios::create($email);
                 }catch(Exception $e){
                     return redirect(route('listadeemails.index'))->withErrors(['errors'=>'Erro ao cadastrar email: '.$e->getMessage()]);
                 }
@@ -203,7 +203,7 @@ class ListaDeEmailsController extends Controller
                         'titulo_lista_de_emails_id'=>$tituloListaEmail->id,
                         'emails_id'=>$email->id
                     ];
-                    ListaDeEmails::create($listaEmail);
+                    ListaDeEnvios::create($listaEmail);
                 }catch(Exception $e){
                     return redirect(route('listadeemails.index'))->withErrors(['errors'=>'Erro ao cadastrar lista de emails: '.$e->getMessage()]);
                 }

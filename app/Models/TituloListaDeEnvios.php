@@ -6,18 +6,18 @@ use App\Http\Controllers\TituloListaDeEmailsController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TituloListaDeEmails extends Model
+class TituloListaDeEnvios extends Model
 {
     use HasFactory;
 
-    protected $table = 'titulo_lista_de_emails';
+    protected $table = 'titulo_lista_de_envios';
 
     protected $fillable = [
         'user_id',
         'titulo'
     ];
 
-    public static function Equals(TituloListaDeEmails $titulo1, TituloListaDeEmails $titulo2)
+    public static function Equals(TituloListaDeEnvios $titulo1, TituloListaDeEnvios $titulo2)
     {
         $isEquals = true;
 

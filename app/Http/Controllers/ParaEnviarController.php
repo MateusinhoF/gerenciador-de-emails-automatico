@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CorpoEmail;
 use App\Models\Nomes;
 use App\Models\ParaEnviar;
-use App\Models\TituloListaDeEmails;
+use App\Models\TituloListaDeEnvios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -59,13 +59,13 @@ class ParaEnviarController extends Controller
 
         try{
             CorpoEmail::where('id','=',$paraenviar['corpo_email_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
-            TituloListaDeEmails::where('id','=',$paraenviar['titulo_lista_de_emails_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            TituloListaDeEnvios::where('id','=',$paraenviar['titulo_lista_de_emails_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
             if (isset($paraenviar['titulo_lista_de_emails_cc_id'])){
-                TituloListaDeEmails::where('id','=',$paraenviar['titulo_lista_de_emails_cc_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+                TituloListaDeEnvios::where('id','=',$paraenviar['titulo_lista_de_emails_cc_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
             }
             if (isset($paraenviar['titulo_lista_de_emails_cco_id'])){
-                TituloListaDeEmails::where('id','=',$paraenviar['titulo_lista_de_emails_cco_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+                TituloListaDeEnvios::where('id','=',$paraenviar['titulo_lista_de_emails_cco_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
             }
             if (isset($paraenviar['nomes_id'])){
                 Nomes::where('id','=',$paraenviar['nomes_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();

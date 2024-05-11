@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Emails extends Model
+class Envios extends Model
 {
     use HasFactory;
 
-    protected $table = 'emails';
+    protected $table = 'envios';
 
     protected $fillable = [
         'user_id',
@@ -18,17 +18,17 @@ class Emails extends Model
         'telefone'
     ];
 
-    public static function Equals(Emails $email1, Emails $email2)
+    public static function Equals(Envios $envio1, Envios $envio2)
     {
         $isEquals = true;
 
-        if ($email1->nome != $email2->nome) {
+        if ($envio1->nome != $envio2->nome) {
             $isEquals = false;
         }
-        if ($email1->email != $email2->email) {
+        if ($envio1->email != $envio2->email) {
             $isEquals = false;
         }
-        if ($email1->telefone != $email2->telefone) {
+        if ($envio1->telefone != $envio2->telefone) {
             $isEquals = false;
         }
 

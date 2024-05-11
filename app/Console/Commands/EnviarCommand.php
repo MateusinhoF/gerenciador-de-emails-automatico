@@ -15,21 +15,21 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use function Laravel\Prompts\select;
 
-class EnviarEmailCommand extends Command
+class EnviarCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'emails:enviar';
+    protected $signature = 'enviar:enviar';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Comando para efetuar o envio dos emails';
+    protected $description = 'Comando para efetuar o envio das notificações';
 
     /**
      * Execute the console command.
@@ -64,9 +64,9 @@ class EnviarEmailCommand extends Command
 
     private function enviar($enviar, $user){
 
-        $emails = $this->buscarListaEmails($enviar->titulo_lista_de_emails_id);
-        $emailscc = $this->buscarListaEmails($enviar->titulo_lista_de_emails_cc_id);
-        $emailscco = $this->buscarListaEmails($enviar->titulo_lista_de_emails_cco_id);
+        $envios = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_id);
+        $envioscc = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cc_id);
+        $envioscco = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cco_id);
 
         $corpoemail = DB::table('corpo_email')->where('id','=',$enviar->corpo_email_id)->get();
         $corpoemail = $corpoemail->get(0);
@@ -98,9 +98,9 @@ class EnviarEmailCommand extends Command
         Config::set('mail.mailers.smtp.username', $user->email);
         Config::set('mail.mailers.smtp.password', $senha_email);
 
-        Mail::to($emails)
-            ->cc($emailscc)
-            ->bcc($emailscco)
+        Mail::to($envios)
+            ->cc($envioscc)
+            ->bcc($envioscco)
             ->send(new EnviarEmail([
                 'assunto'=>$corpoemail->assunto,
                 'corpo'=>$corpoemail->texto,
@@ -112,11 +112,11 @@ class EnviarEmailCommand extends Command
 
     }
 
-    private function buscarListaEmails($titulo_lista_de_emails_id){
-        return DB::table('emails')
-            ->join('lista_de_emails','lista_de_emails.emails_id','=','emails.id')
-            ->where('lista_de_emails.titulo_lista_de_emails_id','=',$titulo_lista_de_emails_id)
-            ->select('emails.email')
+    private function buscarListaEnvios($titulo_lista_de_envios_id){
+        return DB::table('envios')
+            ->join('lista_de_envios','lista_de_envios.envios_id','=','envios.id')
+            ->where('lista_de_envios.titulo_lista_de_envios_id','=',$titulo_lista_de_envios_id)
+            ->select('envios.email')
             ->get();
     }
 }

@@ -16,9 +16,9 @@ class ParaEnviar extends Model
         'titulo',
         'nomes_id',
         'corpo_email_id',
-        'titulo_lista_de_emails_id',
-        'titulo_lista_de_emails_cc_id',
-        'titulo_lista_de_emails_cco_id',
+        'titulo_lista_de_envios_id',
+        'titulo_lista_de_envios_cc_id',
+        'titulo_lista_de_envios_cco_id',
         'continuar_envio',
         'data_inicio',
         'data_fim'
@@ -37,13 +37,13 @@ class ParaEnviar extends Model
         if ($paraEnviar1->corpo_email_id != $paraEnviar2->corpo_email_id) {
             $isEquals = false;
         }
-        if ($paraEnviar1->titulo_lista_de_emails_id != $paraEnviar2->titulo_lista_de_emails_id) {
+        if ($paraEnviar1->titulo_lista_de_envios_id != $paraEnviar2->titulo_lista_de_envios_id) {
             $isEquals = false;
         }
-        if ($paraEnviar1->titulo_lista_de_emails_cc_id != $paraEnviar2->titulo_lista_de_emails_cc_id) {
+        if ($paraEnviar1->titulo_lista_de_envios_cc_id != $paraEnviar2->titulo_lista_de_envios_cc_id) {
             $isEquals = false;
         }
-        if ($paraEnviar1->titulo_lista_de_emails_cco_id != $paraEnviar2->titulo_lista_de_emails_cco_id) {
+        if ($paraEnviar1->titulo_lista_de_envios_cco_id != $paraEnviar2->titulo_lista_de_envios_cco_id) {
             $isEquals = false;
         }
 
@@ -59,14 +59,14 @@ class ParaEnviar extends Model
     }
 
     public function tituloListaDeEmails(){
-        return $this->hasMany(TituloListaDeEmails::class);
+        return $this->hasMany(TituloListaDeEnvios::class);
     }
 
-    public function tituloListaDeEmailsCC(){
-        return $this->hasMany(TituloListaDeEmails::class);
+    public function tituloListaDeEnviosCC(){
+        return $this->hasMany(TituloListaDeEnvios::class);
     }
 
-    public function tituloListaDeEmailsCCo(){
-        return $this->hasMany(TituloListaDeEmails::class);
+    public function tituloListaDeEnviosCCo(){
+        return $this->hasMany(TituloListaDeEnvios::class);
     }
 }

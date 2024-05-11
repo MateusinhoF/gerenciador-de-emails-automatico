@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Nomes;
 use App\Models\CorpoEmail;
-use App\Models\TituloListaDeEmails;
+use App\Models\TituloListaDeEnvios;
 use App\Models\VinculadorAnexos;
 
 return new class extends Migration
@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('titulo');
             $table->foreignIdFor(Nomes::class)->nullable()->references('id')->on('nomes');
             $table->foreignIdFor(CorpoEmail::class)->references('id')->on('corpo_email');
-            $table->foreignIdFor(TituloListaDeEmails::class)->references('id')->on('titulo_lista_de_emails');
-            $table->foreignIdFor(TituloListaDeEmails::class,'titulo_lista_de_emails_cc_id')->nullable()->references('id')->on('titulo_lista_de_emails');
-            $table->foreignIdFor(TituloListaDeEmails::class,'titulo_lista_de_emails_cco_id')->nullable()->references('id')->on('titulo_lista_de_emails');
+            $table->foreignIdFor(TituloListaDeEnvios::class)->references('id')->on('titulo_lista_de_envios');
+            $table->foreignIdFor(TituloListaDeEnvios::class,'titulo_lista_de_envios_cc_id')->nullable()->references('id')->on('titulo_lista_de_envios');
+            $table->foreignIdFor(TituloListaDeEnvios::class,'titulo_lista_de_emvios_cco_id')->nullable()->references('id')->on('titulo_lista_de_envios');
             $table->boolean('continuar_envio')->default(true);
             $table->date('data_inicio')->nullable();
             $table->date('data_fim')->nullable();

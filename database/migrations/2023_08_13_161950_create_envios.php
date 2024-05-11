@@ -3,8 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\TituloListaDeEmails;
-use App\Models\Emails;
 
 return new class extends Migration
 {
@@ -13,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lista_de_emails', function (Blueprint $table) {
+        Schema::create('envios', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
-            $table->foreignIdFor(TituloListaDeEmails::class)->references('id')->on('titulo_lista_de_emails');
-            $table->foreignIdFor(Emails::class)->references('id')->on('emails');
+            $table->string('nome');
+            $table->string('email');
+            $table->string('telefone')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lista_de_emails');
+        Schema::dropIfExists('envios');
     }
 };

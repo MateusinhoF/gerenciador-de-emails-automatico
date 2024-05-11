@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Console\Commands\EnviarEmailCommand;
+use App\Console\Commands\EnviarCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -10,7 +10,7 @@ class Kernel extends ConsoleKernel
 {
 
     protected $commands = [
-        EnviarEmailCommand::class,
+        EnviarCommand::class,
     ];
 
     /**
@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 //        $schedule->command('emails:enviar')->everyMinute();
-        $schedule->command('emails:enviar')->dailyAt('12:00');
+        $schedule->command('enviar:enviar')->dailyAt('12:00');
     }
 
     /**
