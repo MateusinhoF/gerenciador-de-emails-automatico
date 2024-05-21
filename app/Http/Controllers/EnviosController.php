@@ -41,12 +41,12 @@ class EnviosController extends Controller
 
     public function edit(string $id){
         try{
-            $envios = Envios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
+            $envio = Envios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
         }catch(Exception $e){
             return redirect(route('envios.index'))->withErrors(['errors'=>'Erro ao encontrar envio: '.$e->getMessage()]);
         }
 
-        return view('envios/update',['envios'=>$envios]);
+        return view('envios/update',['envio'=>$envio]);
     }
 
     public function update(Request $request, string $id){

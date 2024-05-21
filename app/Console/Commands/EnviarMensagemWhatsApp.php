@@ -4,32 +4,30 @@ namespace App\Console\Commands;
 
 use App\Mail\EnviarEmail;
 use App\Models\Anexos;
-use App\Models\ParaEnviar;
 use Carbon\Carbon;
-use Faker\Core\File;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use function Laravel\Prompts\select;
+use Twilio\Rest\Client;
 
-class EnviarCommand extends Command
+class EnviarMensagemWhatsApp extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'enviar:email';
+    protected $signature = 'enviar:whatsapp';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Comando para efetuar o envio das notificações';
+    protected $description = 'Comando para enviar mensagem de WhatsApp';
 
     /**
      * Execute the console command.
@@ -65,8 +63,8 @@ class EnviarCommand extends Command
     private function enviar($enviar, $user){
 
         $envios = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_id);
-        $envioscc = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cc_id);
-        $envioscco = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cco_id);
+//        $envioscc = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cc_id);
+//        $envioscco = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cco_id);
 
         $corpoemail = DB::table('corpo_email')->where('id','=',$enviar->corpo_email_id)->get();
         $corpoemail = $corpoemail->get(0);
@@ -79,36 +77,7 @@ class EnviarCommand extends Command
         $corpoemail->texto = Str::replace('@nome4',$nomes->nome4??'',$corpoemail->texto);
         $corpoemail->texto = Str::replace('@nome5',$nomes->nome5??'',$corpoemail->texto);
 
-        $listaAnexos = DB::table('lista_anexos')->where('user_id','=',$user->id)->where('vinculador_anexos_id','=',$corpoemail->vinculador_anexos_id)->get();
-        $anexos = [];
-
-        if ($listaAnexos != null) {
-            foreach ($listaAnexos as $anexo) {
-                $anexo = Anexos::where('user_id', '=', $user->id)->where('id', '=', $anexo->anexos_id)->first();
-                array_push($anexos, $anexo);
-            }
-        }
-
-        $senha_email = Crypt::decrypt($user->senha_email);
-
-        Config::set('mail.mailers.smtp.driver', 'smtp');
-        Config::set('mail.mailers.smtp.host', 'smtp.gmail.com');
-        Config::set('mail.mailers.smtp.port', 587);
-        Config::set('mail.mailers.smtp.encryption', 'tls');
-        Config::set('mail.mailers.smtp.username', $user->email);
-        Config::set('mail.mailers.smtp.password', $senha_email);
-
-        Mail::to($envios)
-            ->cc($envioscc)
-            ->bcc($envioscco)
-            ->send(new EnviarEmail([
-                'assunto'=>$corpoemail->assunto,
-                'corpo'=>$corpoemail->texto,
-                'anexos'=>$anexos,
-                'assinatura'=>$user->assinatura,
-                'imagem_assinatura'=>$user->imagem_assinatura,
-                ]
-            ));
+        $this->enviarWhatsApp($envios, $corpoemail->texto);
 
     }
 
@@ -116,7 +85,20 @@ class EnviarCommand extends Command
         return DB::table('envios')
             ->join('lista_de_envios','lista_de_envios.envios_id','=','envios.id')
             ->where('lista_de_envios.titulo_lista_de_envios_id','=',$titulo_lista_de_envios_id)
-            ->select('envios.email')
+            ->select('envios.telefone')
             ->get();
+    }
+
+    private function enviarWhatsApp($listaNumeros, $texto)
+    {
+        $twilio = new Client(config('services.twilio.sid'),config('services.twilio.token'));
+        $from = config('services.twilio.whatsapp_from');
+
+        foreach ($listaNumeros as $numero){
+            $twilio->messages->create('whatsapp:+55'.$numero->telefone,[
+                "from"=>'whatsapp:+'.$from,
+                "body"=>$texto
+            ]);
+        }
     }
 }
