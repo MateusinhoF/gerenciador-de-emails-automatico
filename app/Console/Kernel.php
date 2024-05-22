@@ -22,6 +22,7 @@ class Kernel extends ConsoleKernel
 //        $schedule->command('emails:enviar')->everyMinute();
         $schedule->command('enviar:email')->dailyAt('12:00');
         $schedule->command('enviar:whatsapp')->dailyAt('12:00');
+        $schedule->command('enviar:sms')->dailyAt('12:00');
     }
 
     /**

@@ -2,32 +2,27 @@
 
 namespace App\Console\Commands;
 
-use App\Mail\EnviarEmail;
-use App\Models\Anexos;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Twilio\Rest\Client;
 
-class EnviarMensagemWhatsApp extends Command
+class EnviarMensagemSMS extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'enviar:whatsapp';
+    protected $signature = 'enviar:sms';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Comando para enviar mensagem de WhatsApp';
+    protected $description = 'Comando para enviar SMS';
 
     /**
      * Execute the console command.
@@ -66,18 +61,7 @@ class EnviarMensagemWhatsApp extends Command
 //        $envioscc = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cc_id);
 //        $envioscco = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cco_id);
 
-        $corpoemail = DB::table('corpo_email')->where('id','=',$enviar->corpo_email_id)->get();
-        $corpoemail = $corpoemail->get(0);
-        $nomes = DB::table('nomes')->where('id','=',$enviar->nomes_id)->get();
-        $nomes = $nomes->get(0);
-
-        $corpoemail->texto = Str::replace('@nome1',$nomes->nome1??'',$corpoemail->texto);
-        $corpoemail->texto = Str::replace('@nome2',$nomes->nome2??'',$corpoemail->texto);
-        $corpoemail->texto = Str::replace('@nome3',$nomes->nome3??'',$corpoemail->texto);
-        $corpoemail->texto = Str::replace('@nome4',$nomes->nome4??'',$corpoemail->texto);
-        $corpoemail->texto = Str::replace('@nome5',$nomes->nome5??'',$corpoemail->texto);
-
-        $this->enviarWhatsApp($envios, $corpoemail->texto);
+        $this->enviarSMS($envios);
 
     }
 
@@ -89,17 +73,15 @@ class EnviarMensagemWhatsApp extends Command
             ->get();
     }
 
-    private function enviarWhatsApp($listaNumeros, $texto)
+    private function enviarSMS($listaNumeros)
     {
         $twilio = new Client(config('services.twilio.sid'),config('services.twilio.token'));
-        $from = config('services.twilio.whatsapp_from');
+        $from = config('services.twilio.numero_telefone');
 
         foreach ($listaNumeros as $numero){
-
-            $telefone = substr_replace($numero->telefone, '', 2,1);
-            $twilio->messages->create('whatsapp:+55'.$telefone,[
-                "from"=>'whatsapp:+'.$from,
-                "body"=>'Você possui um e-mail favor verificar - '.$texto
+            $twilio->messages->create('+55'.$numero->telefone,[
+                "from"=>'+'.$from,
+                "body"=>'Você possui um e-mail da UTFPR, favor verificar.'
             ]);
         }
     }
