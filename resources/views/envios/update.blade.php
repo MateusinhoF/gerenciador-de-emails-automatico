@@ -12,6 +12,7 @@
             <x-input nome="nome" texto="Nome" tipo="text" valor="{{$envio->nome}}"/>
             <x-input nome="email" texto="Email" tipo="text" valor="{{$envio->email}}"/>
             <x-input nome="telefone" texto="Telefone" tipo="text" valor="{{$envio->telefone}}"/>
+            <label for="telefone">*O telefone deve ser inserido no padrão 45999707070</label>
 
             <div class="d-flex justify-content-center">
                 <input type="submit" value="Alterar Envio" class="btn btn-primary">

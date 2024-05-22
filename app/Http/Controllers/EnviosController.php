@@ -21,7 +21,8 @@ class EnviosController extends Controller
     public function store(Request $request){
         $request->validate([
             'nome'=>'required',
-            'email'=>'required|email'
+            'email'=>'required|email',
+            'telefone' => 'nullable|regex:/^\d{2}\d{9}$/'
         ]);
 
         $envios = [
@@ -52,7 +53,8 @@ class EnviosController extends Controller
     public function update(Request $request, string $id){
         $request->validate([
             'nome'=>'required',
-            'email'=>'required|email'
+            'email'=>'required|email',
+            'telefone' => 'nullable|regex:/^\d{2}\d{9}$/'
         ]);
 
         try {

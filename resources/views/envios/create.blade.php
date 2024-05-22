@@ -12,6 +12,7 @@
             <x-input nome="nome" texto="Nome" tipo="text"/>
             <x-input nome="email" texto="Email" tipo="text"/>
             <x-input nome="telefone" texto="Telefone" tipo="text"/>
+            <label for="telefone">*O telefone deve ser inserido no padrão 45999707070</label>
 
 
             <div class="d-flex justify-content-center">
