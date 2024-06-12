@@ -189,7 +189,7 @@ class ListaDeEnviosController extends Controller
 
                 $envio = [
                     'user_id'=>Auth::user()->getAuthIdentifier(),
-//                    'nome'=>$request->nome,
+                    'nome'=>$request->titulo,
                     'email'=>$email,
 //                    'telefone'=>$request->telefone,
                 ];

@@ -6,7 +6,7 @@
                 <x-link-proximo href="{{route('corpoemail.index')}}" texto="Passo a Passo"/>
                 <x-link href="{{route('paraenviar.create')}}" texto="Cadastrar Envio"/>
                 <x-link href="{{route('listadeenvios.index')}}" texto="Ver Listas de Envios"/>
-                <x-link href="{{route('corpoemail.index')}}" texto="Ver Corpo de Emails"/>
+                <x-link href="{{route('corpoemail.index')}}" texto="Ver Texto de Notificação"/>
                 <x-link href="{{route('nomes.index')}}" texto="Ver Nomes"/>
                 <x-link href="{{route('configuracoesusuario.edit',['id'=>\Illuminate\Support\Facades\Auth::user()->getAuthIdentifier()])}}" texto="Configurações"/>
                 <x-link-sair/>

@@ -1,4 +1,4 @@
-<x-template titulodapagina="Editar Corpo de Email" tituloHeader="Editar Corpo de Email">
+<x-template titulodapagina="Editar Texto de Notificação" tituloHeader="Editar Texto de Notificação">
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
             <x-link href="{{route('corpoemail.index')}}" texto="Voltar"/>
