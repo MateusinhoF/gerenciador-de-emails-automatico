@@ -17,10 +17,10 @@
             </div>
 
             <div class="form-control mt-2 mb-3 color-input-background">
-                @foreach($envios as $envio)
+                @foreach($informacoes_de_envios as $informacoes_de_envio)
                     <div class="form-check">
-                        <input type="checkbox" id="{{$envio->id}}" name="envios[]" value="{{$envio->id}}">
-                        <label for="{{$envio->id}}">{{$envio->email}}</label>
+                        <input type="checkbox" id="{{$informacoes_de_envio->id}}" name="informacoes_de_envios[]" value="{{$informacoes_de_envio->id}}">
+                        <label for="{{$informacoes_de_envio->id}}">{{$informacoes_de_envio->email}}</label>
                     </div>
                 @endforeach
             </div>

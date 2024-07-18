@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Envios;
+use App\Models\InformacoesDeEnvios;
 use App\Models\ListaDeEnvios;
 use App\Models\TituloListaDeEnvios;
 use Illuminate\Http\Request;
@@ -17,23 +17,23 @@ class ListaDeEnviosController extends Controller
         $listatitulosenvios = DB::table('lista_de_envios')
             ->where('lista_de_envios.user_id','=',Auth::user()->getAuthIdentifier())
             ->join('titulo_lista_de_envios','titulo_lista_de_envios.id','=','lista_de_envios.titulo_lista_de_envios_id')
-            ->join('envios','envios.id','=','lista_de_envios.envios_id')
-            ->select('lista_de_envios.*','titulo_lista_de_envios.titulo','envios.email')
+            ->join('informacoes_de_envios','informacoes_de_envios.id','=','lista_de_envios.envios_id')
+            ->select('lista_de_envios.*','titulo_lista_de_envios.titulo','informacoes_de_envios.email')
             ->orderBy('lista_de_envios.titulo_lista_de_envios_id','desc')->get();
 
         return view('listadeenvios/index', ['listatitulosenvios'=>$listatitulosenvios]);
     }
 
     public function create(){
-        $envios = DB::table('envios')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
-        return view('listadeenvios/create',['envios'=>$envios]);
+        $informacoes_de_envios = DB::table('informacoes_de_envios')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        return view('listadeenvios/create',['informacoes_de_envios'=>$informacoes_de_envios]);
     }
 
     public function store(Request $request){
 
         $request->validate([
             'titulo'=>'required',
-            'envios'=>'required'
+            'informacoes_de_envios'=>'required'
         ]);
 
         try {
@@ -42,12 +42,12 @@ class ListaDeEnviosController extends Controller
             return redirect(route('listadeenvios.create'))->withErrors(['errors'=>'Erro ao criar título '.$e->getMessage()]);
         }
         try{
-            foreach ($request->envios as $envio){
-                $envio = Envios::find($envio)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            foreach ($request->informacoes_de_envios as $informacoes_de_envio){
+                $informacoes_de_envio = Envios::find($informacoes_de_envio)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
                 $lista = [
                     'user_id'=>Auth::user()->getAuthIdentifier(),
                     'titulo_lista_de_envios_id'=>$titulo->id,
-                    'envios_id'=>$envio->id
+                    'informacoes_de_envios_id'=>$informacoes_de_envio->id
                 ];
                 ListaDeEnvios::create($lista);
             }
@@ -67,13 +67,13 @@ class ListaDeEnviosController extends Controller
                 ->select('lista_de_envios.*','titulo_lista_de_envios.titulo')
                 ->orderBy('lista_de_envios.id','desc')->get();
 
-            $envios = DB::table('envios')->orderBy('id','desc')->get();
+            $informacoes_de_envio = DB::table('informacoes_de_envios')->orderBy('id','desc')->get();
 
         }catch(Exception $e){
             return redirect(route('listadeenvios.index'))->withErrors(['errors'=>'Erro ao encontrar as partes da lista: '.$e->getMessage()]);
         }
 
-        return view('listadeenvios/update',['listatitulosenvios'=>$listatitulosenvios, 'envios'=>$envios]);
+        return view('listadeenvios/update',['listatitulosenvios'=>$listatitulosenvios, 'informacoes_de_envios'=>$informacoes_de_envio]);
     }
 
     public function update(Request $request, string $id){
@@ -106,12 +106,12 @@ class ListaDeEnviosController extends Controller
             }
         }
 
-        $envios = $request->envio;
+        $informacoes_de_envio = $request->envio;
 
         foreach ($listatitulosenvios as $listatitulosenvio) {
             $continua = false;
-            foreach ($envios as $envio){
-                if($listatitulosenvio->envios_id == $envio){
+            foreach ($informacoes_de_envios as $informacoes_de_envio){
+                if($listatitulosenvio->informacoes_de_envios_id == $informacoes_de_envio){
                     $continua = true;
                     break;
                 }
@@ -121,10 +121,10 @@ class ListaDeEnviosController extends Controller
             }
         }
 
-        foreach ($envios as $envio){
+        foreach ($informacoes_de_envios as $informacoes_de_envio){
             $novo = true;
             foreach ($listatitulosenvios as $listatitulosenvio) {
-                if($envio == $listatitulosenvio->envios_id){
+                if($informacoes_de_envio == $listatitulosenvio->informacoes_de_envios_id){
                     $novo = false;
                     break;
                 }
@@ -133,7 +133,7 @@ class ListaDeEnviosController extends Controller
                 $novaLista = [
                     'user_id'=>Auth::user()->getAuthIdentifier(),
                     'titulo_lista_de_envios_id'=>$id,
-                    'envios_id'=>$envio
+                    'informacoes_de_envios_id'=>$informacoes_de_envio
                 ];
                 ListaDeEnvios::create($novaLista);
             }
@@ -187,14 +187,14 @@ class ListaDeEnviosController extends Controller
             if (strpos($possivelemail, "@") > 0){
                 $email = preg_replace('/[^a-zA-Z0-9@\.\-_]/', '', $possivelemail);
 
-                $envio = [
+                $informacoes_de_envio = [
                     'user_id'=>Auth::user()->getAuthIdentifier(),
                     'nome'=>$request->titulo,
                     'email'=>$email,
 //                    'telefone'=>$request->telefone,
                 ];
                 try {
-                    $envio = Envios::create($envio);
+                    $informacoes_de_envio = InformacoesDeEnvios::create($informacoes_de_envio);
                 }catch(Exception $e){
                     return redirect(route('listadeenvios.index'))->withErrors(['errors'=>'Erro ao cadastrar envio: '.$e->getMessage()]);
                 }
@@ -203,7 +203,7 @@ class ListaDeEnviosController extends Controller
                     $listaEnvio = [
                         'user_id'=>Auth::user()->getAuthIdentifier(),
                         'titulo_lista_de_envios_id'=>$tituloListaEnvios->id,
-                        'envios_id'=>$envio->id
+                        'informacoes_de_envios_id'=>$informacoes_de_envio->id
                     ];
                     ListaDeEnvios::create($listaEnvio);
                 }catch(Exception $e){

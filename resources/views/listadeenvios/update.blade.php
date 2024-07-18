@@ -14,16 +14,16 @@
 
 
             <div class="form-control mt-2 mb-3">
-                @foreach($envios as $envio)
+                @foreach($informacoes_de_envios as $informacoes_de_envio)
                     <div class="form-check">
-                        <input class="color-input-background" type="checkbox" id="{{$envio->id}}" name="envio[]" value="{{$envio->id}}"
+                        <input class="color-input-background" type="checkbox" id="{{$informacoes_de_envio->id}}" name="informacoes_de_envio[]" value="{{$informacoes_de_envio->id}}"
                             @foreach($listatitulosenvios as $enviomarcado)
-                                @if($envio->id == $enviomarcado->envios_id)
+                                @if($informacoes_de_envio->id == $enviomarcado->informacoes_de_envios_id)
                                     checked
                                 @endif
                             @endforeach
                         >
-                        <label for="{{$envio->id}}">{{$envio->email}}</label>
+                        <label for="{{$informacoes_de_envio->id}}">{{$informacoes_de_envio->email}}</label>
                     </div>
                 @endforeach
             </div>

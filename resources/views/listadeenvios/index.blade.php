@@ -6,7 +6,7 @@
                 <x-link-proximo href="{{route('paraenviar.index')}}" texto="Próximo"/>
                 <x-link href="{{route('listadeenvios.create')}}" texto="Cadastrar Lista"/>
                 <x-link href="{{route('listadeenvios.receivelistemails')}}" texto="Enviar Lista de Emails"/>
-                <x-link href="{{route('envios.create')}}" texto="Cadastrar Envios"/>
+                <x-link href="{{route('informacoes_de_envios.create')}}" texto="Cadastrar Informações de Envios"/>
                 <x-link href="{{route('paraenviar.index')}}" texto="Voltar"/>
                 <x-link-sair/>
             </div>

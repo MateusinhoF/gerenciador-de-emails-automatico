@@ -14,7 +14,7 @@ class ListaDeEnvios extends Model
     protected $fillable = [
         'user_id',
         'titulo_lista_de_envios_id',
-        'envios_id'
+        'informacoes_de_envios_id'
     ];
 
     public static function Equals(ListaDeEnvios $lista1, ListaDeEnvios $lista2)
@@ -24,7 +24,7 @@ class ListaDeEnvios extends Model
         if ($lista1->titulo_lista_de_envios_id != $lista2->titulo_lista_de_envios_id) {
             $isEquals = false;
         }
-        if ($lista1->envios_id != $lista2->envios_id) {
+        if ($lista1->informacoes_de_envios_id != $lista2->informacoes_de_envios_id) {
             $isEquals = false;
         }
 
