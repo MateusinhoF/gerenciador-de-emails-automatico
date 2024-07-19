@@ -13,17 +13,17 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Mockery\Exception;
 
-class CorpoEmailController extends Controller
+class MensagemController extends Controller
 {
 
     public function index(){
 
-        $corpoemails = DB::table('corpo_email')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
-        return view('corpoemail/index',['corpoemails'=>$corpoemails]);
+        $mensagems = DB::table('mensagem')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        return view('mensagem/index',['mensagems'=>$mensagems]);
     }
 
     public function create(){
-        return view('corpoemail/create');
+        return view('mensagem/create');
     }
 
     public function store(Request $request){
@@ -42,7 +42,7 @@ class CorpoEmailController extends Controller
             try{
                 $vinculadoranexosDB = VinculadorAnexos::create($vinculadoranexos);
             }catch (Exception $e){
-                return redirect(route('corpoemail.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email, vincular anexo: '.$e->getMessage()]);
+                return redirect(route('mensagem.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email, vincular anexo: '.$e->getMessage()]);
             }
 
             foreach ($request->file('anexos') as $anexo){
@@ -59,7 +59,7 @@ class CorpoEmailController extends Controller
                     try{
                         $anexoDB = Anexos::create($anexoDB);
                     }catch (Exception $e){
-                        return redirect(route('corpoemail.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email, anexo: '.$e->getMessage()]);
+                        return redirect(route('mensagem.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email, anexo: '.$e->getMessage()]);
                     }
 
                     $listaanexos = [
@@ -71,10 +71,10 @@ class CorpoEmailController extends Controller
                     try{
                         ListaAnexos::create($listaanexos);
                     }catch (Exception $e){
-                        return redirect(route('corpoemail.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email, lista de anexo: '.$e->getMessage()]);
+                        return redirect(route('mensagem.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email, lista de anexo: '.$e->getMessage()]);
                     }
                 }else{
-                    return redirect(route('corpoemail.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email, erro no anexo: '.$anexo->getErrorMessage()]);
+                    return redirect(route('mensagem.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email, erro no anexo: '.$anexo->getErrorMessage()]);
                 }
             }
         }
@@ -88,17 +88,17 @@ class CorpoEmailController extends Controller
         ];
 
         try{
-            CorpoEmail::create($corpo);
+            Mensagem::create($corpo);
         }catch(Exception $e){
-            return redirect(route('corpoemail.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email '.$e->getMessage()]);
+            return redirect(route('mensagem.create'))->withErrors(['errors'=>'Erro ao cadastrar corpo de email '.$e->getMessage()]);
         }
-        return redirect(route('corpoemail.index'));
+        return redirect(route('mensagem.index'));
     }
 
     public function edit(string $id){
         try{
-            $corpoemail = CorpoEmail::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
-            $vinculadoranexos = VinculadorAnexos::where('id','=',$corpoemail->vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            $mensagem = Mensagem::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            $vinculadoranexos = VinculadorAnexos::where('id','=',$mensagem->vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
             $listaanexos = DB::table('lista_anexos')->where('vinculador_anexos_id','=', $vinculadoranexos->id)->where('user_id','=',Auth::user()->getAuthIdentifier())->get();
             $anexos = [];
             foreach ($listaanexos as $identificador){
@@ -107,10 +107,10 @@ class CorpoEmailController extends Controller
                 array_push($anexos, base_path().'/anexos/'.$anexo->hashname);
             }
         }catch(Exception $e){
-            return redirect(route('corpoemail.index'))->withErrors(['errors'=>'Erro ao encontrar corpo de email: '.$e->getMessage()]);
+            return redirect(route('mensagem.index'))->withErrors(['errors'=>'Erro ao encontrar corpo de email: '.$e->getMessage()]);
         }
 
-        return view('corpoemail/update',['corpoemail'=>$corpoemail, 'anexos'=>$anexos]);
+        return view('mensagem/update',['mensagem'=>$mensagem, 'anexos'=>$anexos]);
     }
 
     public function update(Request $request, string $id){
@@ -121,9 +121,9 @@ class CorpoEmailController extends Controller
         ]);
 
         try {
-            $corpo = CorpoEmail::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            $corpo = Mensagem::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
         }catch (Exception $e){
-            return redirect(route('corpoemail.edit'))->withErrors(['errors'=>'Erro ao encontrar corpo de email: '.$e->getMessage()]);
+            return redirect(route('mensagem.edit'))->withErrors(['errors'=>'Erro ao encontrar corpo de email: '.$e->getMessage()]);
         }
         $novoCorpo = $corpo->replicate();
 
@@ -131,23 +131,23 @@ class CorpoEmailController extends Controller
         $novoCorpo->assunto = $request->assunto;
         $novoCorpo->texto = $request->texto;
 
-        if(!CorpoEmail::Equals($corpo,$novoCorpo)){
+        if(!Mensagem::Equals($corpo,$novoCorpo)){
             try{
                 $corpo->titulo = $novoCorpo->titulo;
                 $corpo->assunto = $novoCorpo->assunto;
                 $corpo->texto = $novoCorpo->texto;
                 $corpo->save();
             }catch (Exception $e){
-                return redirect(route('corpoemail.edit'))->withErrors(['errors'=>'Erro ao salvar novo corpo de email: '.$e->getMessage()]);
+                return redirect(route('mensagem.edit'))->withErrors(['errors'=>'Erro ao salvar novo corpo de email: '.$e->getMessage()]);
             }
         }
 
-        return redirect(route('corpoemail.index'));
+        return redirect(route('mensagem.index'));
     }
 
     public function destroy(string $id){
         try{
-            $corpo = CorpoEmail::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            $corpo = Mensagem::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
             if($corpo){
                 $vinculadoranexos = VinculadorAnexos::where('id','=',$corpo->vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
@@ -166,13 +166,13 @@ class CorpoEmailController extends Controller
                 $vinculadoranexos->delete();
 
             }else{
-                return redirect(route('corpoemail.index'))->withErrors(['errors'=>'Erro, corpo de email não encontrado']);
+                return redirect(route('mensagem.index'))->withErrors(['errors'=>'Erro, corpo de email não encontrado']);
             }
         }catch(Exception $e){
-            return redirect(route('corpoemail.index'))->withErrors(['errors'=>'Erro na exclusão: '.$e->getMessage()]);
+            return redirect(route('mensagem.index'))->withErrors(['errors'=>'Erro na exclusão: '.$e->getMessage()]);
         }
 
-        return redirect(route('corpoemail.index'));
+        return redirect(route('mensagem.index'));
     }
 
 }

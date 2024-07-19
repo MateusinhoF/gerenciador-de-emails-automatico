@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CorpoEmail extends Model
+class Mensagem extends Model
 {
     use HasFactory;
 
-    protected $table = 'corpo_email';
+    protected $table = 'mensagem';
 
     protected $fillable = [
         'user_id',
@@ -19,7 +19,7 @@ class CorpoEmail extends Model
         'vinculador_anexos_id'
     ];
 
-    public static function Equals(CorpoEmail $corpo1, CorpoEmail $corpo2)
+    public static function Equals(Mensagem $corpo1, Mensagem $corpo2)
     {
         $isEquals = true;
 

@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AcessoNegadoController;
 use App\Http\Controllers\NomesController;
 use App\Http\Controllers\EnviosController;
-use App\Http\Controllers\CorpoEmailController;
+use App\Http\Controllers\MensagemController;
 use App\Http\Controllers\ListaDeEnviosController;
 use App\Http\Controllers\ParaEnviarController;
 //use App\Http\Controllers\TituloListaDeEmailsController;
@@ -45,12 +45,12 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/nomes/{id}', [NomesController::class, 'update'])->name('nomes.update');
     Route::get('/nomes/{id}/destroy', [NomesController::class, 'destroy'])->name('nomes.destroy');
 
-    Route::get('/corpoemail', [CorpoEmailController::class, 'index'])->name('corpoemail.index');
-    Route::get('/corpoemail/create', [CorpoEmailController::class, 'create'])->name('corpoemail.create');
-    Route::post('/corpoemail', [CorpoEmailController::class, 'store'])->name('corpoemail.store');
-    Route::get('/corpoemail/{id}/edit', [CorpoEmailController::class, 'edit'])->name('corpoemail.edit');
-    Route::post('/corpoemail/{id}', [CorpoEmailController::class, 'update'])->name('corpoemail.update');
-    Route::get('/corpoemail/{id}/destroy', [CorpoEmailController::class, 'destroy'])->name('corpoemail.destroy');
+    Route::get('/mensagem', [MensagemController::class, 'index'])->name('mensagem.index');
+    Route::get('/mensagem/create', [MensagemController::class, 'create'])->name('mensagem.create');
+    Route::post('/mensagem', [MensagemController::class, 'store'])->name('mensagem.store');
+    Route::get('/mensagem/{id}/edit', [MensagemController::class, 'edit'])->name('mensagem.edit');
+    Route::post('/mensagem/{id}', [MensagemController::class, 'update'])->name('mensagem.update');
+    Route::get('/mensagem/{id}/destroy', [MensagemController::class, 'destroy'])->name('mensagem.destroy');
 
     Route::get('/envios', [EnviosController::class, 'index'])->name('envios.index');
     Route::get('/envios/create', [EnviosController::class, 'create'])->name('envios.create');
@@ -78,9 +78,9 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('/anexos/{vinculador_anexos_id}', [AnexosController::class, 'index'])->name('anexos.index');
     Route::get('/anexos/create/{vinculador_anexos_id}', [AnexosController::class, 'create'])->name('anexos.create');
-    Route::get('/anexos/novoAnexo/{corpoemail_id}', [AnexosController::class, 'novoAnexo'])->name('anexos.novoAnexo');
+    Route::get('/anexos/novoAnexo/{mensagem_id}', [AnexosController::class, 'novoAnexo'])->name('anexos.novoAnexo');
     Route::post('/anexos/{vinculador_anexos_id}', [AnexosController::class, 'store'])->name('anexos.store');
-    Route::post('/anexos/{corpoemail_id}/storeNovoAnexo', [AnexosController::class, 'storeNovoAnexo'])->name('anexos.storeNovoAnexo');
+    Route::post('/anexos/{mensagem_id}/storeNovoAnexo', [AnexosController::class, 'storeNovoAnexo'])->name('anexos.storeNovoAnexo');
     Route::get('/anexos/{id}/{vinculador_anexos_id}/edit', [AnexosController::class, 'edit'])->name('anexos.edit');
     Route::post('/anexos/{id}/{vinculador_anexos_id}', [AnexosController::class, 'update'])->name('anexos.update');
     Route::get('/anexos/{id}/{vinculador_anexos_id}/destroy', [AnexosController::class, 'destroy'])->name('anexos.destroy');

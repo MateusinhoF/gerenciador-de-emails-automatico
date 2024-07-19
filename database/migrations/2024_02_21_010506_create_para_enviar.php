@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Nomes;
-use App\Models\CorpoEmail;
+use App\Models\Mensagem;
 use App\Models\TituloListaDeEnvios;
 use App\Models\VinculadorAnexos;
 
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
             $table->string('titulo');
             $table->foreignIdFor(Nomes::class)->nullable()->references('id')->on('nomes');
-            $table->foreignIdFor(CorpoEmail::class)->references('id')->on('corpo_email');
+            $table->foreignIdFor(Mensagem::class)->references('id')->on('mensagem');
             $table->foreignIdFor(TituloListaDeEnvios::class)->references('id')->on('titulo_lista_de_envios');
             $table->foreignIdFor(TituloListaDeEnvios::class,'titulo_lista_de_envios_cc_id')->nullable()->references('id')->on('titulo_lista_de_envios');
             $table->foreignIdFor(TituloListaDeEnvios::class,'titulo_lista_de_envios_cco_id')->nullable()->references('id')->on('titulo_lista_de_envios');

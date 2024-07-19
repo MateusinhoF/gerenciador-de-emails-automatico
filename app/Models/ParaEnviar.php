@@ -15,7 +15,7 @@ class ParaEnviar extends Model
         'user_id',
         'titulo',
         'nomes_id',
-        'corpo_email_id',
+        'mensagem_id',
         'titulo_lista_de_envios_id',
         'titulo_lista_de_envios_cc_id',
         'titulo_lista_de_envios_cco_id',
@@ -34,7 +34,7 @@ class ParaEnviar extends Model
         if ($paraEnviar1->nomes_id != $paraEnviar2->nomes_id) {
             $isEquals = false;
         }
-        if ($paraEnviar1->corpo_email_id != $paraEnviar2->corpo_email_id) {
+        if ($paraEnviar1->mensagem_id != $paraEnviar2->mensagem_id) {
             $isEquals = false;
         }
         if ($paraEnviar1->titulo_lista_de_envios_id != $paraEnviar2->titulo_lista_de_envios_id) {
@@ -54,8 +54,8 @@ class ParaEnviar extends Model
         return $this->hasMany(Nomes::class);
     }
 
-    public function corpoEmail(){
-        return $this->hasMany(CorpoEmail::class);
+    public function mensagem(){
+        return $this->hasMany(Mensagem::class);
     }
 
     public function tituloListaDeEmails(){

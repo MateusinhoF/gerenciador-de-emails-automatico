@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('corpo_email', function (Blueprint $table) {
+        Schema::create('mensagem', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users');
             $table->string('titulo');
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('corpo_email');
+        Schema::dropIfExists('mensagem');
     }
 };

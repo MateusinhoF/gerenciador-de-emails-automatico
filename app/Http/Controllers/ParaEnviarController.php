@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CorpoEmail;
+use App\Models\Mensagem;
 use App\Models\Nomes;
 use App\Models\ParaEnviar;
 use App\Models\TituloListaDeEnvios;
@@ -17,12 +17,12 @@ class ParaEnviarController extends Controller
         $paraenviar = DB::table('para_enviar')
             ->where('para_enviar.user_id','=',Auth::user()->getAuthIdentifier())
             ->leftJoin('nomes','nomes.id','=','para_enviar.nomes_id')
-            ->leftJoin('corpo_email','corpo_email.id','=','para_enviar.corpo_email_id')
+            ->leftJoin('mensagem','mensagem.id','=','para_enviar.mensagem_id')
             ->leftJoin('titulo_lista_de_envios AS titulo_envio','titulo_envio.id','=','para_enviar.titulo_lista_de_envios_id')
             ->leftJoin('titulo_lista_de_envios AS titulo_cc','titulo_cc.id','=','para_enviar.titulo_lista_de_envios_cc_id')
             ->leftJoin('titulo_lista_de_envios AS titulo_cco','titulo_cco.id','=','para_enviar.titulo_lista_de_envios_cco_id')
             ->select('para_enviar.*','nomes.nome1','nomes.nome2','nomes.nome3','nomes.nome4','nomes.nome5',
-                'corpo_email.titulo as corpo_email_titulo',
+                'mensagem.titulo as mensagem_titulo',
                 'titulo_envio.titulo AS titulo_envio', 'titulo_cc.titulo AS titulo_cc', 'titulo_cco.titulo AS titulo_cco')
             ->orderBy('continuar_envio', 'desc')
             ->orderBy('para_enviar.id','desc')->get();
@@ -33,22 +33,22 @@ class ParaEnviarController extends Controller
     public function create(){
         $listatitulos = DB::table('titulo_lista_de_envios')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         $nomes = DB::table('nomes')->orderBy('nome1')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('nome2')->orderBy('nome3')->orderBy('nome4')->orderBy('nome5')->get();
-        $corpoemails = DB::table('corpo_email')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        $mensagems = DB::table('mensagem')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
 
-        return view('paraenviar/create', ['listatitulos'=>$listatitulos,'nomes'=>$nomes,'corpoemails'=>$corpoemails]);
+        return view('paraenviar/create', ['listatitulos'=>$listatitulos,'nomes'=>$nomes,'mensagems'=>$mensagems]);
     }
 
     public function store(Request $request){
         $request->validate([
             'titulo'=>'required',
-            'corpoemail'=>'required',
+            'mensagem'=>'required',
             'listatitulos'=>'required'
         ]);
 
         $paraenviar = [
             'user_id'=>Auth::user()->getAuthIdentifier(),
             'titulo'=>$request->titulo,
-            'corpo_email_id'=>$request->corpoemail,
+            'mensagem_id'=>$request->mensagem,
             'titulo_lista_de_envios_id'=>$request->listatitulos,
             'titulo_lista_de_envios_cc_id'=>$request->listatituloscc,
             'titulo_lista_de_envios_cco_id'=>$request->listatituloscco,
@@ -58,7 +58,7 @@ class ParaEnviarController extends Controller
         ];
 
         try{
-            CorpoEmail::where('id','=',$paraenviar['corpo_email_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            Mensagem::where('id','=',$paraenviar['mensagem_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
             TituloListaDeEnvios::where('id','=',$paraenviar['titulo_lista_de_envios_id'])->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
             if (isset($paraenviar['titulo_lista_de_envios_cc_id'])){
@@ -88,16 +88,16 @@ class ParaEnviarController extends Controller
             return redirect(route('paraenbiar.index'))->withErrors(['errors'=>'Erro ao encontrar envio: '.$e->getMessage()]);
         }
 
-        $corpoemails = DB::table('corpo_email')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        $mensagems = DB::table('mensagem')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         $listatitulos = DB::table('titulo_lista_de_envios')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         $nomes = DB::table('nomes')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
-        return view('paraenviar/update',['paraenviar'=>$paraenviar, 'corpoemails'=>$corpoemails, 'listatitulos'=>$listatitulos, 'nomes'=>$nomes]);
+        return view('paraenviar/update',['paraenviar'=>$paraenviar, 'mensagems'=>$mensagems, 'listatitulos'=>$listatitulos, 'nomes'=>$nomes]);
     }
 
     public function update(Request $request, string $id){
         $request->validate([
             'titulo'=>'required',
-            'corpoemail'=>'required',
+            'mensagem'=>'required',
             'listatitulos'=>'required'
         ]);
 
@@ -109,7 +109,7 @@ class ParaEnviarController extends Controller
         $novoParaEnviar = $paraenviar->replicate();
 
         $novoParaEnviar->titulo = $request->titulo;
-        $novoParaEnviar->corpo_email_id = $request->corpoemail;
+        $novoParaEnviar->mensagem_id = $request->mensagem;
         $novoParaEnviar->nomes_id = $request->nomes;
         $novoParaEnviar->titulo_lista_de_envios_id = $request->listatitulos;
         $novoParaEnviar->titulo_lista_de_envios_cc_id = $request->listatituloscc;
@@ -120,7 +120,7 @@ class ParaEnviarController extends Controller
         if(!ParaEnviar::Equals($paraenviar,$novoParaEnviar)){
             try{
                 $paraenviar->titulo = $novoParaEnviar->titulo;
-                $paraenviar->corpo_email_id = $novoParaEnviar->corpo_email_id;
+                $paraenviar->mensagem_id = $novoParaEnviar->mensagem_id;
                 $paraenviar->nomes_id = $novoParaEnviar->nomes_id;
                 $paraenviar->titulo_lista_de_envios_id = $novoParaEnviar->titulo_lista_de_envios_id;
                 $paraenviar->titulo_lista_de_envios_cc_id = $novoParaEnviar->titulo_lista_de_envios_cc_id;
