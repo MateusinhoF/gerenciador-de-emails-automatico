@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\DB;
 class InformacoesDeEnviosController extends Controller
 {
     public function index(){
-        $informacoes_de_envios = DB::table('informacoes_de_envios')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
-        return view('informacoes_de_envios/index', ['informacoes_de_envios'=>$informacoes_de_envios]);
+        $informacoesdeenvios = DB::table('informacoesdeenvios')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        return view('informacoesdeenvios/index', ['informacoesdeenvios'=>$informacoesdeenvios]);
     }
 
     public function create(){
-        return view('informacoes_de_envios/create');
+        return view('informacoesdeenvios/create');
     }
 
     public function store(Request $request){
@@ -25,7 +25,7 @@ class InformacoesDeEnviosController extends Controller
             'telefone' => 'nullable|regex:/^\d{2}\d{9}$/'
         ]);
 
-        $informacoes_de_envios = [
+        $informacoesdeenvios = [
             'user_id' => Auth::user()->getAuthIdentifier(),
             'nome'=>$request->nome,
             'email'=>$request->email,
@@ -33,21 +33,21 @@ class InformacoesDeEnviosController extends Controller
         ];
 
         try{
-            InformacoesDeEnvios::create($informacoes_de_envios);
+            InformacoesDeEnvios::create($informacoesdeenvios);
         }catch(Exception $e){
-            return redirect(route('informacoes_de_envios.create'))->withErrors(['errors'=>'Erro ao cadastrar o envio '.$e->getMessage()]);
+            return redirect(route('informacoesdeenvios.create'))->withErrors(['errors'=>'Erro ao cadastrar o envio '.$e->getMessage()]);
         }
-        return redirect(route('informacoes_de_envios.index'));
+        return redirect(route('informacoesdeenvios.index'));
     }
 
     public function edit(string $id){
         try{
-            $informacoes_de_envio = InformacoesDeEnvios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
+            $informacoesdeenvios = InformacoesDeEnvios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
         }catch(Exception $e){
-            return redirect(route('informacoes_de_envios.index'))->withErrors(['errors'=>'Erro ao encontrar envio: '.$e->getMessage()]);
+            return redirect(route('informacoesdeenvios.index'))->withErrors(['errors'=>'Erro ao encontrar envio: '.$e->getMessage()]);
         }
 
-        return view('informacoes_de_envios/update',['informacoes_de_envios'=>$informacoes_de_envio]);
+        return view('informacoesdeenvios/update',['informacoesdeenvios'=>$informacoesdeenvios]);
     }
 
     public function update(Request $request, string $id){
@@ -58,44 +58,44 @@ class InformacoesDeEnviosController extends Controller
         ]);
 
         try {
-            $informacoes_de_envios = InformacoesDeEnvios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
+            $informacoesdeenvios = InformacoesDeEnvios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();;
         }catch (Exception $e){
-            return redirect(route('informacoes_de_envios.edit'))->withErrors(['errors'=>'Erro ao encontrar envio: '.$e->getMessage()]);
+            return redirect(route('informacoesdeenvios.edit'))->withErrors(['errors'=>'Erro ao encontrar envio: '.$e->getMessage()]);
         }
-        $novoEnvios = $informacoes_de_envios->replicate();
+        $novoEnvios = $informacoesdeenvios->replicate();
 
         $novoEnvios->nome = $request->nome;
         $novoEnvios->email = $request->email;
         $novoEnvios->telefone = $request->telefone;
 
-        if(!Envios::Equals($informacoes_de_envios,$novoEnvios)){
+        if(!Envios::Equals($informacoesdeenvios,$novoEnvios)){
             try{
-                $informacoes_de_envios->nome = $novoEnvios->nome;
-                $informacoes_de_envios->email = $novoEnvios->email;
-                $informacoes_de_envios->telefone = $novoEnvios->telefone;
-                $informacoes_de_envios->save();
+                $informacoesdeenvios->nome = $novoEnvios->nome;
+                $informacoesdeenvios->email = $novoEnvios->email;
+                $informacoesdeenvios->telefone = $novoEnvios->telefone;
+                $informacoesdeenvios->save();
             }catch (Exception $e){
-                return redirect(route('informacoes_de_envios.edit'))->withErrors(['errors'=>'Erro ao salvar novo envio: '.$e->getMessage()]);
+                return redirect(route('informacoesdeenvios.edit'))->withErrors(['errors'=>'Erro ao salvar novo envio: '.$e->getMessage()]);
             }
         }
 
-        return redirect(route('informacoes_de_envios.index'));
+        return redirect(route('informacoesdeenvios.index'));
     }
 
     public function destroy(string $id){
         try{
-            $informacoes_de_envios = InformacoesDeEnvios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            $informacoesdeenvios = InformacoesDeEnvios::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
-            if($informacoes_de_envios){
-                $informacoes_de_envios->delete();
+            if($informacoesdeenvios){
+                $informacoesdeenvios->delete();
             }else{
-                return redirect(route('informacoes_de_envios.index'))->withErrors(['errors'=>'Erro, envio não encontrado']);
+                return redirect(route('informacoesdeenvios.index'))->withErrors(['errors'=>'Erro, envio não encontrado']);
             }
         }catch(Exception $e){
-            return redirect(route('informacoes_de_envios.index'))->withErrors(['errors'=>'Erro na exclusão: '.$e->getMessage()]);
+            return redirect(route('informacoesdeenvios.index'))->withErrors(['errors'=>'Erro na exclusão: '.$e->getMessage()]);
         }
 
-        return redirect(route('informacoes_de_envios.index'));
+        return redirect(route('informacoesdeenvios.index'));
     }
 
 }

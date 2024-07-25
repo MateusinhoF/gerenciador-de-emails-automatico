@@ -2,11 +2,11 @@
     <div class="mx-auto col-md-12 bg-secondary">
 
         <div class="d-flex justify-content-around m-3">
-            <x-link href="{{route('envios.index')}}" texto="Voltar"/>
+            <x-link href="{{route('informacoesdeenvios.index')}}" texto="Voltar"/>
             <x-link-sair/>
         </div>
 
-        <form action="{{route('envios.update',['id'=>$envio->id])}}" method="post" class="m-3 p-4 color-forms-background">
+        <form action="{{route('informacoesdeenvios.update',['id'=>$envio->id])}}" method="post" class="m-3 p-4 color-forms-background">
 
             @csrf
             <x-input nome="nome" texto="Nome" tipo="text" valor="{{$envio->nome}}"/>

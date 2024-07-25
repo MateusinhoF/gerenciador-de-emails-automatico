@@ -3,7 +3,7 @@
 
         <div class="d-flex justify-content-around m-3">
             <x-link-proximo href="{{route('listadeenvios.index')}}" texto="Próximo"/>
-            <x-link href="{{route('envios.create')}}" texto="Cadastrar Envio"/>
+            <x-link href="{{route('informacoesdeenvios.create')}}" texto="Cadastrar Envio"/>
             <x-link href="{{route('paraenviar.index')}}" texto="Voltar"/>
             <x-link-sair/>
         </div>
@@ -25,8 +25,8 @@
                         <td>{{$envio->email}}</td>
                         <td>{{$envio->telefone}}</td>
                         <td>
-                            <x-link-editar href="{{route('envios.edit', ['id'=>$envio->id])}}"/>
-                            <x-link-excluir href="{{route('envios.destroy', ['id'=>$envio->id])}}"/>
+                            <x-link-editar href="{{route('informacoesdeenvios.edit', ['id'=>$envio->id])}}"/>
+                            <x-link-excluir href="{{route('informacoesdeenvios.destroy', ['id'=>$envio->id])}}"/>
                         </td>
                     </tr>
                 @endforeach
