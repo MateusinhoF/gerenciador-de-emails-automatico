@@ -3,7 +3,7 @@
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
             <x-link href="{{route('anexos.create', ['vinculador_anexos_id'=>$vinculador_anexos_id])}}" texto="Adicionar Anexo"/>
-            <x-link href="{{route('corpoemail.index')}}" texto="Voltar"/>
+            <x-link href="{{route('mensagem.index')}}" texto="Voltar"/>
             <x-link-sair/>
         </div>
 
