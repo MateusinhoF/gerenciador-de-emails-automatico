@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class InformacoesDeEnviosController extends Controller
 {
     public function index(){
-        $informacoesdeenvios = DB::table('informacoesdeenvios')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        $informacoesdeenvios = DB::table('informacoes_de_envios')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         return view('informacoesdeenvios/index', ['informacoesdeenvios'=>$informacoesdeenvios]);
     }
 

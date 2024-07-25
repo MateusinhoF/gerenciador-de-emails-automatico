@@ -19,14 +19,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($envios as $envio)
+                @foreach ($informacoesdeenvios as $informacoesdeenvio)
                     <tr>
-                        <td>{{$envio->nome}}</td>
-                        <td>{{$envio->email}}</td>
-                        <td>{{$envio->telefone}}</td>
+                        <td>{{$informacoesdeenvio->nome}}</td>
+                        <td>{{$informacoesdeenvio->email}}</td>
+                        <td>{{$informacoesdeenvio->telefone}}</td>
                         <td>
-                            <x-link-editar href="{{route('informacoesdeenvios.edit', ['id'=>$envio->id])}}"/>
-                            <x-link-excluir href="{{route('informacoesdeenvios.destroy', ['id'=>$envio->id])}}"/>
+                            <x-link-editar href="{{route('informacoesdeenvios.edit', ['id'=>$informacoesdeenvio->id])}}"/>
+                            <x-link-excluir href="{{route('informacoesdeenvios.destroy', ['id'=>$informacoesdeenvio->id])}}"/>
                         </td>
                     </tr>
                 @endforeach

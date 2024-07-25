@@ -3,7 +3,7 @@
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
             <x-link-proximo href="{{route('nomes.index')}}" texto="Próximo"/>
-            <x-link href="{{route('corpoemail.create')}}" texto="Cadastrar Texto de Notificação"/>
+            <x-link href="{{route('mensagem.create')}}" texto="Cadastrar Texto de Notificação"/>
             <x-link href="{{route('paraenviar.index')}}" texto="Voltar"/>
             <x-link-sair/>
         </div>

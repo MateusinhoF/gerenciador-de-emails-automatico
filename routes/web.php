@@ -51,12 +51,12 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/mensagem/{id}', [MensagemController::class, 'update'])->name('mensagem.update');
     Route::get('/mensagem/{id}/destroy', [MensagemController::class, 'destroy'])->name('mensagem.destroy');
 
-    Route::get('/informacoesdeenvios', [InformacoesDeEnviosController::class, 'index'])->name('envios.index');
-    Route::get('/informacoesdeenvios/create', [InformacoesDeEnviosController::class, 'create'])->name('envios.create');
-    Route::post('/informacoesdeenvios', [InformacoesDeEnviosController::class, 'store'])->name('envios.store');
-    Route::get('/informacoesdeenvios/{id}/edit', [InformacoesDeEnviosController::class, 'edit'])->name('envios.edit');
-    Route::post('/informacoesdeenvios/{id}', [InformacoesDeEnviosController::class, 'update'])->name('envios.update');
-    Route::get('/informacoesdeenvios/{id}/destroy', [InformacoesDeEnviosController::class, 'destroy'])->name('envios.destroy');
+    Route::get('/informacoesdeenvios', [InformacoesDeEnviosController::class, 'index'])->name('informacoesdeenvios.index');
+    Route::get('/informacoesdeenvios/create', [InformacoesDeEnviosController::class, 'create'])->name('informacoesdeenvios.create');
+    Route::post('/informacoesdeenvios', [InformacoesDeEnviosController::class, 'store'])->name('informacoesdeenvios.store');
+    Route::get('/informacoesdeenvios/{id}/edit', [InformacoesDeEnviosController::class, 'edit'])->name('informacoesdeenvios.edit');
+    Route::post('/informacoesdeenvios/{id}', [InformacoesDeEnviosController::class, 'update'])->name('informacoesdeenvios.update');
+    Route::get('/informacoesdeenvios/{id}/destroy', [InformacoesDeEnviosController::class, 'destroy'])->name('informacoesdeenvios.destroy');
 
     Route::get('/listadeenvios/receivelistemails', [ListaDeEnviosController::class, 'receiveListEmails'])->name('listadeenvios.receivelistemails');
     Route::post('/listadeenvios/storelistemails', [ListaDeEnviosController::class, 'storeListEmails'])->name('listadeenvios.storelistemails');

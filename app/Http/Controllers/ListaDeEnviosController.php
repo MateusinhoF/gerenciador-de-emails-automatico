@@ -17,15 +17,15 @@ class ListaDeEnviosController extends Controller
         $listatitulosenvios = DB::table('lista_de_envios')
             ->where('lista_de_envios.user_id','=',Auth::user()->getAuthIdentifier())
             ->join('titulo_lista_de_envios','titulo_lista_de_envios.id','=','lista_de_envios.titulo_lista_de_envios_id')
-            ->join('informacoesdeenvios','informacoesdeenvios.id','=','lista_de_envios.envios_id')
-            ->select('lista_de_envios.*','titulo_lista_de_envios.titulo','informacoesdeenvios.email')
+            ->join('informacoes_de_envios','informacoes_de_envios.id','=','lista_de_envios.informacoes_de_envios_id')
+            ->select('lista_de_envios.*','titulo_lista_de_envios.titulo','informacoes_de_envios.email')
             ->orderBy('lista_de_envios.titulo_lista_de_envios_id','desc')->get();
 
         return view('listadeenvios/index', ['listatitulosenvios'=>$listatitulosenvios]);
     }
 
     public function create(){
-        $informacoesdeenvios = DB::table('informacoesdeenvios')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        $informacoesdeenvios = DB::table('informacoes_de_envios')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         return view('listadeenvios/create',['informacoesdeenvios'=>$informacoesdeenvios]);
     }
 
@@ -42,16 +42,20 @@ class ListaDeEnviosController extends Controller
             return redirect(route('listadeenvios.create'))->withErrors(['errors'=>'Erro ao criar título '.$e->getMessage()]);
         }
         try{
-            foreach ($request->informacoesdeenvios as $informacoesdeenvios){
-                $informacoesdeenvios = Envios::find($informacoesdeenvios)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+            foreach ($request->informacoesdeenvios as $informacoesdeenvio){
+                $informacoesdeenvio = InformacoesDeEnvios::find($informacoesdeenvio)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
                 $lista = [
                     'user_id'=>Auth::user()->getAuthIdentifier(),
                     'titulo_lista_de_envios_id'=>$titulo->id,
-                    'informacoesdeenvios'=>$informacoesdeenvios->id
+                    'informacoes_de_envios_id'=>$informacoesdeenvio->id
                 ];
-                ListaDeEnvios::create($lista);
+                try{
+                    ListaDeEnvios::create($lista);
+                }catch(Exception $e){
+                    TituloListaDeEnvios::destroy($titulo);
+                    return redirect(route('listadeenvios.create'))->withErrors(['errors'=>'Erro ao cadastrar lista '.$e->getMessage()]);
+                }
             }
-            $titulo->save();
         }catch(Exception $e){
             return redirect(route('listadeenvios.create'))->withErrors(['errors'=>'Erro ao cadastrar lista '.$e->getMessage()]);
         }
@@ -67,7 +71,7 @@ class ListaDeEnviosController extends Controller
                 ->select('lista_de_envios.*','titulo_lista_de_envios.titulo')
                 ->orderBy('lista_de_envios.id','desc')->get();
 
-            $informacoesdeenvios = DB::table('informacoesdeenvios')->orderBy('id','desc')->get();
+            $informacoesdeenvios = DB::table('informacoes_de_envios')->orderBy('id','desc')->get();
 
         }catch(Exception $e){
             return redirect(route('listadeenvios.index'))->withErrors(['errors'=>'Erro ao encontrar as partes da lista: '.$e->getMessage()]);

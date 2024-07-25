@@ -18,8 +18,8 @@ class MensagemController extends Controller
 
     public function index(){
 
-        $mensagems = DB::table('mensagem')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
-        return view('mensagem/index',['mensagems'=>$mensagems]);
+        $mensagens = DB::table('mensagem')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        return view('mensagem/index',['mensagens'=>$mensagens]);
     }
 
     public function create(){

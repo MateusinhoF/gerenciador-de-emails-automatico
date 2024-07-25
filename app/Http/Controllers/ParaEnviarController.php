@@ -33,9 +33,9 @@ class ParaEnviarController extends Controller
     public function create(){
         $listatitulos = DB::table('titulo_lista_de_envios')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         $nomes = DB::table('nomes')->orderBy('nome1')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('nome2')->orderBy('nome3')->orderBy('nome4')->orderBy('nome5')->get();
-        $mensagems = DB::table('mensagem')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        $mensagens = DB::table('mensagem')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
 
-        return view('paraenviar/create', ['listatitulos'=>$listatitulos,'nomes'=>$nomes,'mensagems'=>$mensagems]);
+        return view('paraenviar/create', ['listatitulos'=>$listatitulos,'nomes'=>$nomes,'mensagens'=>$mensagens]);
     }
 
     public function store(Request $request){
@@ -88,10 +88,10 @@ class ParaEnviarController extends Controller
             return redirect(route('paraenbiar.index'))->withErrors(['errors'=>'Erro ao encontrar envio: '.$e->getMessage()]);
         }
 
-        $mensagems = DB::table('mensagem')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
+        $mensagens = DB::table('mensagem')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         $listatitulos = DB::table('titulo_lista_de_envios')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
         $nomes = DB::table('nomes')->where('user_id','=',Auth::user()->getAuthIdentifier())->orderBy('id','desc')->get();
-        return view('paraenviar/update',['paraenviar'=>$paraenviar, 'mensagems'=>$mensagems, 'listatitulos'=>$listatitulos, 'nomes'=>$nomes]);
+        return view('paraenviar/update',['paraenviar'=>$paraenviar, 'mensagens'=>$mensagens, 'listatitulos'=>$listatitulos, 'nomes'=>$nomes]);
     }
 
     public function update(Request $request, string $id){
