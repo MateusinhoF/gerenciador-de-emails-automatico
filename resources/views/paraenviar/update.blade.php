@@ -15,12 +15,12 @@
 
             <div class="form-control color-input-background">
                 <div class="form-group">
-                    <label for="corpoemail">Selecione um corpo de emails:</label>
-                    <select name="corpoemail" id="corpoemail" class="form-select">
-                        @foreach($corpoemails as $corpoemail)
-                            <option value="{{$corpoemail->id}}"
-                                @if($corpoemail->id == $paraenviar->corpo_email_id) selected @endif
-                            >{{$corpoemail->titulo}}</option>
+                    <label for="mensagem">Selecione uma mensagem:</label>
+                    <select name="mensagem" id="mensagem" class="form-select">
+                        @foreach($mensagens as $mensagem)
+                            <option value="{{$mensagem->id}}"
+                                @if($mensagem->id == $paraenviar->mensagem_id) selected @endif
+                            >{{$mensagem->titulo}}</option>
                         @endforeach
                     </select>
                 </div>

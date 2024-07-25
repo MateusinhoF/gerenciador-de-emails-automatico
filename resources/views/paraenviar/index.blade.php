@@ -3,16 +3,16 @@
 
         <div class="m-3">
             <div class="d-flex justify-content-around mb-3">
-                <x-link-proximo href="{{route('corpoemail.index')}}" texto="Passo a Passo"/>
+                <x-link-proximo href="{{route('mensagem.index')}}" texto="Passo a Passo"/>
                 <x-link href="{{route('paraenviar.create')}}" texto="Cadastrar Envio"/>
                 <x-link href="{{route('listadeenvios.index')}}" texto="Ver Listas de Envios"/>
-                <x-link href="{{route('corpoemail.index')}}" texto="Ver Texto de Notificação"/>
+                <x-link href="{{route('mensagem.index')}}" texto="Ver Texto de Notificação"/>
                 <x-link href="{{route('nomes.index')}}" texto="Ver Nomes"/>
                 <x-link href="{{route('configuracoesusuario.edit',['id'=>\Illuminate\Support\Facades\Auth::user()->getAuthIdentifier()])}}" texto="Configurações"/>
                 <x-link-sair/>
             </div>
             <div class="font-size-small">
-                <p class="m-0 p-0">*Para cadastrar um novo envio é necessário antes preencher um corpo de emaill e uma lista de email.</p>
+                <p class="m-0 p-0">*Para cadastrar um novo envio é necessário antes preencher uma mensagem e uma lista de envio.</p>
                 <p class="m-0 p-0">*Os nomes não são obrigatórios para envio.</p>
             </div>
         </div>
@@ -21,7 +21,7 @@
                 <thead>
                 <tr>
                     <th>Titulo</th>
-                    <th>Corpo Email</th>
+                    <th>Mensagem</th>
                     <th>Envios</th>
                     <th>Envios CC</th>
                     <th>Envios CCO</th>
@@ -39,7 +39,7 @@
                             {{$envio->titulo}}
                         </td>
                         <td>
-                            {{$envio->corpo_email_titulo}}
+                            {{$envio->mensagem_titulo}}
                         </td>
                         <td>
                             {{$envio->titulo_envio}}

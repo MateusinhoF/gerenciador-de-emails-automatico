@@ -14,10 +14,10 @@
 
             <div class="form-control color-input-background">
                 <div class="form-group">
-                    <label for="corpoemail">Selecione um corpo de emails:</label>
-                    <select name="corpoemail" id="corpoemail" class="form-select">
-                        @foreach($corpoemails as $corpoemail)
-                            <option value="{{$corpoemail->id}}">{{$corpoemail->titulo}}</option>
+                    <label for="mensagem">Selecione uma mensagem:</label>
+                    <select name="mensagem" id="mensagem" class="form-select">
+                        @foreach($mensagens as $mensagem)
+                            <option value="{{$mensagem->id}}">{{$mensagem->titulo}}</option>
                         @endforeach
                     </select>
                 </div>
