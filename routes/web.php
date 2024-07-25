@@ -4,14 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AcessoNegadoController;
 use App\Http\Controllers\NomesController;
-use App\Http\Controllers\EnviosController;
 use App\Http\Controllers\MensagemController;
 use App\Http\Controllers\ListaDeEnviosController;
 use App\Http\Controllers\ParaEnviarController;
 //use App\Http\Controllers\TituloListaDeEmailsController;
 use App\Http\Controllers\ConfiguracoesUsuarioController;
 use App\Http\Controllers\AnexosController;
-
+use App\Http\Controllers\InformacoesDeEnviosController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,12 +51,12 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/mensagem/{id}', [MensagemController::class, 'update'])->name('mensagem.update');
     Route::get('/mensagem/{id}/destroy', [MensagemController::class, 'destroy'])->name('mensagem.destroy');
 
-    Route::get('/envios', [EnviosController::class, 'index'])->name('envios.index');
-    Route::get('/envios/create', [EnviosController::class, 'create'])->name('envios.create');
-    Route::post('/envios', [EnviosController::class, 'store'])->name('envios.store');
-    Route::get('/envios/{id}/edit', [EnviosController::class, 'edit'])->name('envios.edit');
-    Route::post('/envios/{id}', [EnviosController::class, 'update'])->name('envios.update');
-    Route::get('/envios/{id}/destroy', [EnviosController::class, 'destroy'])->name('envios.destroy');
+    Route::get('/informacoesdeenvios', [InformacoesDeEnviosController::class, 'index'])->name('envios.index');
+    Route::get('/informacoesdeenvios/create', [InformacoesDeEnviosController::class, 'create'])->name('envios.create');
+    Route::post('/informacoesdeenvios', [InformacoesDeEnviosController::class, 'store'])->name('envios.store');
+    Route::get('/informacoesdeenvios/{id}/edit', [InformacoesDeEnviosController::class, 'edit'])->name('envios.edit');
+    Route::post('/informacoesdeenvios/{id}', [InformacoesDeEnviosController::class, 'update'])->name('envios.update');
+    Route::get('/informacoesdeenvios/{id}/destroy', [InformacoesDeEnviosController::class, 'destroy'])->name('envios.destroy');
 
     Route::get('/listadeenvios/receivelistemails', [ListaDeEnviosController::class, 'receiveListEmails'])->name('listadeenvios.receivelistemails');
     Route::post('/listadeenvios/storelistemails', [ListaDeEnviosController::class, 'storeListEmails'])->name('listadeenvios.storelistemails');
