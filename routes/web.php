@@ -77,6 +77,7 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('/anexos/{vinculador_anexos_id}', [AnexosController::class, 'index'])->name('anexos.index');
     Route::get('/anexos/create/{vinculador_anexos_id}', [AnexosController::class, 'create'])->name('anexos.create');
+    //Route::get('/anexos/novoAnexo', [AnexosController::class, 'novoAnexo'])->name('anexos.novoAnexo');
     Route::get('/anexos/novoAnexo/{mensagem_id}', [AnexosController::class, 'novoAnexo'])->name('anexos.novoAnexo');
     Route::post('/anexos/{vinculador_anexos_id}', [AnexosController::class, 'store'])->name('anexos.store');
     Route::post('/anexos/{mensagem_id}/storeNovoAnexo', [AnexosController::class, 'storeNovoAnexo'])->name('anexos.storeNovoAnexo');

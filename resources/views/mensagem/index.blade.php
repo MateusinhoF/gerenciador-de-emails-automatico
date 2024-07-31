@@ -1,4 +1,4 @@
-<x-template titulodapagina="Texto de Notificação" tituloHeader="Texto de Notificação">
+<x-template titulodapagina="Mensagem" tituloHeader="Mensagem">
 
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
