@@ -99,18 +99,18 @@ class MensagemController extends Controller
         try{
             $mensagem = Mensagem::where('id','=',$id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
             $vinculadoranexos = VinculadorAnexos::where('id','=',$mensagem->vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
-            $listaanexos = DB::table('lista_anexos')->where('vinculador_anexos_id','=', $vinculadoranexos->id)->where('user_id','=',Auth::user()->getAuthIdentifier())->get();
+            /*$listaanexos = DB::table('lista_anexos')->where('vinculador_anexos_id','=', $vinculadoranexos->id)->where('user_id','=',Auth::user()->getAuthIdentifier())->get();
             $anexos = [];
             foreach ($listaanexos as $identificador){
                 $anexo = Anexos::where('id','=',$identificador->anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
 
                 array_push($anexos, base_path().'/anexos/'.$anexo->hashname);
-            }
+            }*/
         }catch(Exception $e){
             return redirect(route('mensagem.index'))->withErrors(['errors'=>'Erro ao encontrar mensagem: '.$e->getMessage()]);
         }
 
-        return view('mensagem/update',['mensagem'=>$mensagem, 'anexos'=>$anexos]);
+    return view('mensagem/update',['mensagem'=>$mensagem/*, /*'anexos'=>$anexos*/]);
     }
 
     public function update(Request $request, string $id){
