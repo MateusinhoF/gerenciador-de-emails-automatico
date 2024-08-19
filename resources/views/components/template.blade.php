@@ -13,7 +13,7 @@
 <header>
     <div class="container mt-4 mb-4 mx-auto d-flex justify-content-center align-items-center">
         <h1 class="text-white">
-            Gerenciador de Notificações
+            AwGem
         </h1>
     </div>
     <div class="container mt-4 mb-4 mx-auto d-flex justify-content-center align-items-center">
