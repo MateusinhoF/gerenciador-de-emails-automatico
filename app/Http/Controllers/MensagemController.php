@@ -151,19 +151,22 @@ class MensagemController extends Controller
 
             if($mensagem){
                 $vinculadoranexos = VinculadorAnexos::where('id','=',$mensagem->vinculador_anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
-                $listaanexos = DB::table('lista_anexos')->where('vinculador_anexos_id','=', $vinculadoranexos->id)->where('user_id','=',Auth::user()->getAuthIdentifier())->get();
-                $mensagem->delete();
+                if ($vinculadoranexos->id != null){
+                    $listaanexos = DB::table('lista_anexos')->where('vinculador_anexos_id','=', $vinculadoranexos->id)->where('user_id','=',Auth::user()->getAuthIdentifier())->get();
+                    
+                    foreach ($listaanexos as $identificador){
+                        $anexo = Anexos::where('id','=',$identificador->anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+    
+                        File::delete(base_path().'/anexos/'.$anexo->hashname);
+    
+                        $anexo->delete();
+                    }
+    
+                    ListaAnexos::destroy($listaanexos);
+                    $vinculadoranexos->delete();
 
-                foreach ($listaanexos as $identificador){
-                    $anexo = Anexos::where('id','=',$identificador->anexos_id)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
-
-                    File::delete(base_path().'/anexos/'.$anexo->hashname);
-
-                    $anexo->delete();
                 }
-
-                ListaAnexos::destroy($listaanexos);
-                $vinculadoranexos->delete();
+                $mensagem->delete();
 
             }else{
                 return redirect(route('mensagem.index'))->withErrors(['errors'=>'Erro, mensagem não encontrado']);
