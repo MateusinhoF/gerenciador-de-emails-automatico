@@ -1,9 +1,9 @@
-<x-template titulodapagina="Emails" tituloHeader="Emails">
+<x-template titulodapagina="Informações de Envio" tituloHeader="Informações de Envio">
     <div class="mx-auto col-md-12 bg-secondary">
 
         <div class="d-flex justify-content-around m-3">
             <x-link-proximo href="{{route('listadeenvios.index')}}" texto="Próximo"/>
-            <x-link href="{{route('informacoesdeenvios.create')}}" texto="Cadastrar Envio"/>
+            <x-link href="{{route('informacoesdeenvios.create')}}" texto="Cadastrar Informações de Envio"/>
             <x-link href="{{route('paraenviar.index')}}" texto="Voltar"/>
             <x-link-sair/>
         </div>

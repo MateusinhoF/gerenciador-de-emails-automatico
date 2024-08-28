@@ -1,4 +1,4 @@
-<x-template titulodapagina="Cadastrar Envio" tituloHeader="Cadastrar Envio">
+<x-template titulodapagina="Cadastrar Informações de Envio" tituloHeader="Cadastrar Informações de Envio">
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
             <x-link href="{{route('informacoesdeenvios.index')}}" texto="Voltar"/>
@@ -16,7 +16,7 @@
 
 
             <div class="d-flex justify-content-center">
-                <input type="submit" value="Cadastrar Envio" class="btn btn-primary">
+                <input type="submit" value="Cadastrar Informações de Envio" class="btn btn-primary">
             </div>
 
         </form>

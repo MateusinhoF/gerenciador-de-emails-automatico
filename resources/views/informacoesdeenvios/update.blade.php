@@ -1,4 +1,4 @@
-<x-template titulodapagina="Editar Envio" tituloHeader="Editar Envio">
+<x-template titulodapagina="Editar Informações de Envio" tituloHeader="Editar Informações de Envio">
     <div class="mx-auto col-md-12 bg-secondary">
 
         <div class="d-flex justify-content-around m-3">
@@ -15,7 +15,7 @@
             <label for="telefone">*O telefone deve ser inserido no padrão 45999707070</label>
 
             <div class="d-flex justify-content-center">
-                <input type="submit" value="Alterar Envio" class="btn btn-primary">
+                <input type="submit" value="Alterar Informações de Envio" class="btn btn-primary">
             </div>
 
         </form>

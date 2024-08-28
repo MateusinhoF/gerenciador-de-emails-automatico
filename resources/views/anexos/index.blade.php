@@ -1,4 +1,4 @@
-<x-template titulodapagina="Anexos de Email" tituloHeader="Anexos de Email">
+<x-template titulodapagina="Anexos" tituloHeader="Anexos">
 
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">

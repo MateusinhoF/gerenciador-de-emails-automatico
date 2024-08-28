@@ -1,4 +1,4 @@
-<x-template titulodapagina="Cadastrar Texto de Notificação" tituloHeader="Cadastrar Texto de Notificação">
+<x-template titulodapagina="Cadastrar Mensagem" tituloHeader="Cadastrar Mensagem">
     <div class="mx-auto col-md-12 bg-secondary">
 
         <div class="d-flex justify-content-around m-3">

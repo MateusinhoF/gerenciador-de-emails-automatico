@@ -1,4 +1,4 @@
-<x-template titulodapagina="Editar Texto de Notificação" tituloHeader="Editar Texto de Notificação">
+<x-template titulodapagina="Editar Mensagem" tituloHeader="Editar Mensagem">
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
             <x-link href="{{route('mensagem.index')}}" texto="Voltar"/>

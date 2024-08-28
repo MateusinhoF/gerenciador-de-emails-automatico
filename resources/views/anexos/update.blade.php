@@ -1,4 +1,4 @@
-<x-template titulodapagina="Editar Anexo de Email" tituloHeader="Editar Anexo de Email">
+<x-template titulodapagina="Editar Anexo" tituloHeader="Editar Anexo">
     <div class="mx-auto col-md-12 bg-secondary">
         <div class="d-flex justify-content-around m-3">
             <x-link href="{{route('anexos.index', ['vinculador_anexos_id'=>$vinculador_anexos_id])}}" texto="Voltar"/>

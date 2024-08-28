@@ -61,7 +61,9 @@ class EnviarMensagemSMS extends Command
 //        $envioscc = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cc_id);
 //        $envioscco = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cco_id);
 
-        $this->enviarSMS($envios);
+        if ($envios != null){
+            $this->enviarSMS($envios);
+        }
 
     }
 

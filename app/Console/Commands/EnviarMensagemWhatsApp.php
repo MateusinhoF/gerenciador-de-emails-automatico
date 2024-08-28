@@ -66,19 +66,22 @@ class EnviarMensagemWhatsApp extends Command
 //        $envioscc = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cc_id);
 //        $envioscco = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cco_id);
 
-        $corpoemail = DB::table('corpo_email')->where('id','=',$enviar->corpo_email_id)->get();
-        $corpoemail = $corpoemail->get(0);
-        $nomes = DB::table('nomes')->where('id','=',$enviar->nomes_id)->get();
-        $nomes = $nomes->get(0);
+        if ($envios != null){
+            $corpoemail = DB::table('corpo_email')->where('id','=',$enviar->corpo_email_id)->get();
+            $corpoemail = $corpoemail->get(0);
+            $nomes = DB::table('nomes')->where('id','=',$enviar->nomes_id)->get();
+            $nomes = $nomes->get(0);
 
-        $corpoemail->texto = Str::replace('@nome1',$nomes->nome1??'',$corpoemail->texto);
-        $corpoemail->texto = Str::replace('@nome2',$nomes->nome2??'',$corpoemail->texto);
-        $corpoemail->texto = Str::replace('@nome3',$nomes->nome3??'',$corpoemail->texto);
-        $corpoemail->texto = Str::replace('@nome4',$nomes->nome4??'',$corpoemail->texto);
-        $corpoemail->texto = Str::replace('@nome5',$nomes->nome5??'',$corpoemail->texto);
+            $corpoemail->texto = Str::replace('@nome1',$nomes->nome1??'',$corpoemail->texto);
+            $corpoemail->texto = Str::replace('@nome2',$nomes->nome2??'',$corpoemail->texto);
+            $corpoemail->texto = Str::replace('@nome3',$nomes->nome3??'',$corpoemail->texto);
+            $corpoemail->texto = Str::replace('@nome4',$nomes->nome4??'',$corpoemail->texto);
+            $corpoemail->texto = Str::replace('@nome5',$nomes->nome5??'',$corpoemail->texto);
 
-        $this->enviarWhatsApp($envios, $corpoemail->texto);
-
+        
+            $this->enviarWhatsApp($envios, $corpoemail->texto);
+        }
+        
     }
 
     private function buscarListaEnvios($titulo_lista_de_envios_id){
