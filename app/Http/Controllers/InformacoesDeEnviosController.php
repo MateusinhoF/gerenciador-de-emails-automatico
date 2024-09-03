@@ -68,7 +68,7 @@ class InformacoesDeEnviosController extends Controller
         $novoEnvios->email = $request->email;
         $novoEnvios->telefone = $request->telefone;
 
-        if(!Envios::Equals($informacoesdeenvios,$novoEnvios)){
+        if(!InformacoesDeEnvios::Equals($informacoesdeenvios,$novoEnvios)){
             try{
                 $informacoesdeenvios->nome = $novoEnvios->nome;
                 $informacoesdeenvios->email = $novoEnvios->email;

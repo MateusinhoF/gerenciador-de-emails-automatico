@@ -18,7 +18,7 @@ class InformacoesDeEnvios extends Model
         'telefone'
     ];
 
-    public static function Equals(Envios $envio1, Envios $envio2)
+    public static function Equals(InformacoesDeEnvios $envio1, InformacoesDeEnvios $envio2)
     {
         $isEquals = true;
 
