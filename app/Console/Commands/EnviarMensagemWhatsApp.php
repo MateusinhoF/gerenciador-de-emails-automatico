@@ -67,28 +67,28 @@ class EnviarMensagemWhatsApp extends Command
 //        $envioscco = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cco_id);
 
         if ($envios != null){
-            $corpoemail = DB::table('corpo_email')->where('id','=',$enviar->corpo_email_id)->get();
-            $corpoemail = $corpoemail->get(0);
+
+            $mensagem = DB::table('mensagem')->where('id','=',$enviar->mensagem_id)->get();
+            $mensagem = $mensagem->get(0);
             $nomes = DB::table('nomes')->where('id','=',$enviar->nomes_id)->get();
             $nomes = $nomes->get(0);
 
-            $corpoemail->texto = Str::replace('@nome1',$nomes->nome1??'',$corpoemail->texto);
-            $corpoemail->texto = Str::replace('@nome2',$nomes->nome2??'',$corpoemail->texto);
-            $corpoemail->texto = Str::replace('@nome3',$nomes->nome3??'',$corpoemail->texto);
-            $corpoemail->texto = Str::replace('@nome4',$nomes->nome4??'',$corpoemail->texto);
-            $corpoemail->texto = Str::replace('@nome5',$nomes->nome5??'',$corpoemail->texto);
+            $mensagem->texto = Str::replace('@nome1',$nomes->nome1??'',$mensagem->texto);
+            $mensagem->texto = Str::replace('@nome2',$nomes->nome2??'',$mensagem->texto);
+            $mensagem->texto = Str::replace('@nome3',$nomes->nome3??'',$mensagem->texto);
+            $mensagem->texto = Str::replace('@nome4',$nomes->nome4??'',$mensagem->texto);
+            $mensagem->texto = Str::replace('@nome5',$nomes->nome5??'',$mensagem->texto);
 
-        
-            $this->enviarWhatsApp($envios, $corpoemail->texto);
+            $this->enviarWhatsApp($envios, $mensagem->texto);
         }
         
     }
 
     private function buscarListaEnvios($titulo_lista_de_envios_id){
-        return DB::table('envios')
-            ->join('lista_de_envios','lista_de_envios.envios_id','=','envios.id')
+        return DB::table('informacoes_de_envios')
+            ->join('lista_de_envios','lista_de_envios.informacoes_de_envios_id','=','informacoes_de_envios.id')
             ->where('lista_de_envios.titulo_lista_de_envios_id','=',$titulo_lista_de_envios_id)
-            ->select('envios.telefone')
+            ->select('informacoes_de_envios.telefone')
             ->get();
     }
 

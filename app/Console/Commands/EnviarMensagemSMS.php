@@ -68,10 +68,10 @@ class EnviarMensagemSMS extends Command
     }
 
     private function buscarListaEnvios($titulo_lista_de_envios_id){
-        return DB::table('envios')
-            ->join('lista_de_envios','lista_de_envios.envios_id','=','envios.id')
+        return DB::table('informacoes_de_envios')
+            ->join('lista_de_envios','lista_de_envios.informacoes_de_envios_id','=','informacoes_de_envios.id')
             ->where('lista_de_envios.titulo_lista_de_envios_id','=',$titulo_lista_de_envios_id)
-            ->select('envios.telefone')
+            ->select('informacoes_de_envios.telefone')
             ->get();
     }
 
