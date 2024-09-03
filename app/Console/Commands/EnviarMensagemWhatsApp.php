@@ -66,21 +66,19 @@ class EnviarMensagemWhatsApp extends Command
 //        $envioscc = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cc_id);
 //        $envioscco = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cco_id);
 
-        if ($envios != null){
+        $mensagem = DB::table('mensagem')->where('id','=',$enviar->mensagem_id)->get();
+        $mensagem = $mensagem->get(0);
+        $nomes = DB::table('nomes')->where('id','=',$enviar->nomes_id)->get();
+        $nomes = $nomes->get(0);
 
-            $mensagem = DB::table('mensagem')->where('id','=',$enviar->mensagem_id)->get();
-            $mensagem = $mensagem->get(0);
-            $nomes = DB::table('nomes')->where('id','=',$enviar->nomes_id)->get();
-            $nomes = $nomes->get(0);
+        $mensagem->texto = Str::replace('@nome1',$nomes->nome1??'',$mensagem->texto);
+        $mensagem->texto = Str::replace('@nome2',$nomes->nome2??'',$mensagem->texto);
+        $mensagem->texto = Str::replace('@nome3',$nomes->nome3??'',$mensagem->texto);
+        $mensagem->texto = Str::replace('@nome4',$nomes->nome4??'',$mensagem->texto);
+        $mensagem->texto = Str::replace('@nome5',$nomes->nome5??'',$mensagem->texto);
 
-            $mensagem->texto = Str::replace('@nome1',$nomes->nome1??'',$mensagem->texto);
-            $mensagem->texto = Str::replace('@nome2',$nomes->nome2??'',$mensagem->texto);
-            $mensagem->texto = Str::replace('@nome3',$nomes->nome3??'',$mensagem->texto);
-            $mensagem->texto = Str::replace('@nome4',$nomes->nome4??'',$mensagem->texto);
-            $mensagem->texto = Str::replace('@nome5',$nomes->nome5??'',$mensagem->texto);
-
-            $this->enviarWhatsApp($envios, $mensagem->texto);
-        }
+        $this->enviarWhatsApp($envios, $mensagem->texto);
+    
         
     }
 
@@ -98,12 +96,13 @@ class EnviarMensagemWhatsApp extends Command
         $from = config('services.twilio.whatsapp_from');
 
         foreach ($listaNumeros as $numero){
-
-            $telefone = substr_replace($numero->telefone, '', 2,1);
-            $twilio->messages->create('whatsapp:+55'.$telefone,[
-                "from"=>'whatsapp:+'.$from,
-                "body"=>'Você possui um e-mail favor verificar - '.$texto
-            ]);
+            if ($numero != null){
+                $telefone = substr_replace($numero->telefone, '', 2,1);
+                $twilio->messages->create('whatsapp:+55'.$telefone,[
+                    "from"=>'whatsapp:+'.$from,
+                    "body"=>'Você possui um e-mail favor verificar - '.$texto
+                ]);
+            }
         }
     }
 

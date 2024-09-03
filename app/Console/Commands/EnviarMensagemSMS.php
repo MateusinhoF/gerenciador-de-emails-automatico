@@ -61,10 +61,8 @@ class EnviarMensagemSMS extends Command
 //        $envioscc = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cc_id);
 //        $envioscco = $this->buscarListaEnvios($enviar->titulo_lista_de_envios_cco_id);
 
-        if ($envios != null){
-            $this->enviarSMS($envios);
-        }
-
+        $this->enviarSMS($envios);
+        
     }
 
     private function buscarListaEnvios($titulo_lista_de_envios_id){
@@ -81,10 +79,12 @@ class EnviarMensagemSMS extends Command
         $from = config('services.twilio.numero_telefone');
 
         foreach ($listaNumeros as $numero){
-            $twilio->messages->create('+55'.$numero->telefone,[
-                "from"=>'+'.$from,
-                "body"=>'Você possui um e-mail da UTFPR, favor verificar.'
-            ]);
+            if ($numero != null){
+                $twilio->messages->create('+55'.$numero->telefone,[
+                    "from"=>'+'.$from,
+                    "body"=>'Você possui um e-mail da UTFPR, favor verificar.'
+                ]);
+            }
         }
     }
 
