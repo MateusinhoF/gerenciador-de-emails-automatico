@@ -79,7 +79,7 @@ class EnviarMensagemSMS extends Command
         $from = config('services.twilio.numero_telefone');
 
         foreach ($listaNumeros as $numero){
-            if ($numero != null){
+            if ($numero->telefone != null){
                 $twilio->messages->create('+55'.$numero->telefone,[
                     "from"=>'+'.$from,
                     "body"=>'Você possui um e-mail da UTFPR, favor verificar.'

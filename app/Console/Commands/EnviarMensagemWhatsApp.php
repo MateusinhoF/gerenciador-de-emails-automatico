@@ -96,7 +96,7 @@ class EnviarMensagemWhatsApp extends Command
         $from = config('services.twilio.whatsapp_from');
 
         foreach ($listaNumeros as $numero){
-            if ($numero != null){
+            if ($numero->telefone != null){
                 $telefone = substr_replace($numero->telefone, '', 2,1);
                 $twilio->messages->create('whatsapp:+55'.$telefone,[
                     "from"=>'whatsapp:+'.$from,
