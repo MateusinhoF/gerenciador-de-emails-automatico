@@ -41,9 +41,11 @@ class ListaDeEnviosController extends Controller
         }catch(Exception $e){
             return redirect(route('listadeenvios.create'))->withErrors(['errors'=>'Erro ao criar título '.$e->getMessage()]);
         }
+
         try{
             foreach ($request->informacoesdeenvios as $informacoesdeenvio){
-                $informacoesdeenvio = InformacoesDeEnvios::find($informacoesdeenvio)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+                $informacoesdeenvio = InformacoesDeEnvios::where('id','=', $informacoesdeenvio)->where('user_id','=',Auth::user()->getAuthIdentifier())->first();
+                
                 $lista = [
                     'user_id'=>Auth::user()->getAuthIdentifier(),
                     'titulo_lista_de_envios_id'=>$titulo->id,
@@ -208,7 +210,7 @@ class ListaDeEnviosController extends Controller
                     $listaEnvio = [
                         'user_id'=>Auth::user()->getAuthIdentifier(),
                         'titulo_lista_de_envios_id'=>$tituloListaEnvios->id,
-                        'informacoesdeenvios_id'=>$informacoesdeenvios->id
+                        'informacoes_de_envios_id'=>$informacoesdeenvios->id
                     ];
                     ListaDeEnvios::create($listaEnvio);
                 }catch(Exception $e){
